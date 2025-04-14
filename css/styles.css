@@ -7860,7 +7860,7 @@ textarea.form-control-lg {
 
 .bg-sect-software {
   --bs-bg-opacity: 1;
-  background: linear-gradient(to right, rgba(26,0,24,0.75) 0%, rgba(0,50,50,0.75) 100%), url("../assets/img/otherpics/2018_66.gif");
+  background: linear-gradient(to right, rgba(26,0,24,0.75) 0%, rgba(0,50,50,0.75) 100%), url("../assets/img/otherpics/giphy.gif");
 }
 
 .inter-bg {
@@ -7870,11 +7870,33 @@ textarea.form-control-lg {
 }
 
 .bg-sect-team {
-  --bs-bg-opacity: 1;
-  background: linear-gradient(to top, lightblue 0%, rgba(32, 77, 220, 0.4) 100%), url("../assets/img/bg-team.PNG");
+  --bs-bg-opacity: 2;
+  background: linear-gradient(to top, lightblue 0%, rgba(32, 77, 220, 0.2) 100%), url("../assets/img/bg-team3.PNG");
 }
 
  
+#funding {
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../assets/img/funding.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+
+#contact {
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("../assets/img/contact.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+
 
 .bg-black {
   --bs-bg-opacity: 1;
@@ -11421,7 +11443,7 @@ hr.divider-light {
 header.masthead {
   padding-top: 10rem;
   padding-bottom: calc(10rem - 4.5rem);
-  background: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 100%), url("../assets/img/pexels-johannes-plenio-1146708.jpg");
+  background: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 100%), url("../assets/img/BackgroundWebApril2025_2.png");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;

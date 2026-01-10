@@ -7844,7 +7844,7 @@ textarea.form-control-lg {
 }
 
 .bg-light-transparent {
-  --bs-bg-opacity: 1;
+  --bs-bg-opacity: 0.4;
  background: linear-gradient(to top, rgba(248,249,250,0.7) 0%, rgba(248,249,250,0.4) 100%), url("../assets/img/pexels-rakicevic-nenad-1274260.png");
 }
 

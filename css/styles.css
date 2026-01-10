@@ -7869,10 +7869,17 @@ textarea.form-control-lg {
     
 }
 
-.bg-sect-team {
+.bg-sect-team{
   --bs-bg-opacity: 2;
-  background: linear-gradient(to top, lightblue 0%, rgba(32, 77, 220, 0.2) 100%), url("../assets/img/bg-team3.PNG");
+  background:
+    linear-gradient(to top, lightblue 0%, rgba(32, 77, 220, 0.2) 100%),
+    url("../assets/img/bg-team3.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
+
+
 
  
 #funding {

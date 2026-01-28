@@ -952,6 +952,13 @@
             box-shadow: var(--shadow-md);
         }
 
+        .teaching-folder-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
         .teaching-folder i {
             color: var(--color-accent);
         }
@@ -1101,6 +1108,31 @@
             border-color: var(--color-accent);
             transform: translateY(-5px);
             box-shadow: var(--shadow-md);
+        }
+
+        .contact-link svg {
+            color: var(--color-accent);
+            flex-shrink: 0;
+            display: block;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .contact-icon-fallback {
+            width: 50px;
+            height: 50px;
+            background: var(--color-accent);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
         }
 
         .contact-link i {
@@ -1302,7 +1334,6 @@
             </div>
         </div>
     </header>
-
 
     <!-- About Section -->
     <section id="about">
@@ -1968,17 +1999,17 @@
         <p class="teaching-resources-label">Teaching Resources</p>
         <div class="teaching-resources">
             <a href="assets/img/portfolio/Teaching_material/Presentations/" class="teaching-folder">
-                <i data-lucide="presentation" style="width: 28px; height: 28px;"></i>
+                <img src="assets/img/portfolio/Pics/presentations.png" alt="Presentations" class="teaching-folder-img">
                 <span>Presentations</span>
                 <small>Slides & PPT files</small>
             </a>
             <a href="assets/img/portfolio/Teaching_material/Quantitative Genetics/" class="teaching-folder">
-                <i data-lucide="book-open" style="width: 28px; height: 28px;"></i>
+                <img src="assets/img/portfolio/Pics/QGenetics.png" alt="Quantitative Genetics" class="teaching-folder-img">
                 <span>Quantitative Genetics</span>
                 <small>Course materials</small>
             </a>
             <a href="assets/img/portfolio/Teaching_material/WorkBooks/" class="teaching-folder">
-                <i data-lucide="file-text" style="width: 28px; height: 28px;"></i>
+                <img src="assets/img/portfolio/Pics/workbook.png" alt="WorkBooks" class="teaching-folder-img">
                 <span>WorkBooks</span>
                 <small>Exercises & PDFs</small>
             </a>
@@ -2134,20 +2165,24 @@
         <div class="contact-content">
             <p style="color: var(--color-text-muted); margin-bottom: 2rem;">Interested in collaboration or joining the lab?</p>
             <div class="contact-links">
-                <a href="/cdn-cgi/l/email-protection#c7adaeb4aea3b5a8e9b0a8b5ac87a0aaa6aeabe9a4a8aa" class="contact-link" target="_blank">
-                    <i data-lucide="mail" style="width: 32px; height: 32px;"></i>
+                <a href="mailto:jisidro.work@gmail.com" class="contact-link">
+                    <img src="assets/img/portfolio/Pics/email-icon.png" alt="Email" class="contact-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="contact-icon-fallback" style="display:none; width:40px; height:40px; background:#2d6a4f; border-radius:8px; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">@</div>
                     <span>Email</span>
                 </a>
                 <a href="https://github.com/TheRocinante-lab" class="contact-link" target="_blank">
-                    <i data-lucide="github" style="width: 32px; height: 32px;"></i>
+                    <img src="assets/img/portfolio/Pics/github-icon.png" alt="GitHub" class="contact-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="contact-icon-fallback" style="display:none; width:40px; height:40px; background:#2d6a4f; border-radius:8px; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">GH</div>
                     <span>GitHub</span>
                 </a>
                 <a href="https://www.cbgp.upm.es/index.php/es/informacion-cientifica/genomic-assisted-breeding" class="contact-link" target="_blank">
-                    <i data-lucide="building" style="width: 32px; height: 32px;"></i>
+                    <img src="assets/img/portfolio/Pics/cbgp-icon.png" alt="CBGP" class="contact-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="contact-icon-fallback" style="display:none; width:40px; height:40px; background:#2d6a4f; border-radius:8px; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">CB</div>
                     <span>CBGP Profile</span>
                 </a>
                 <a href="https://www.linkedin.com/in/rocinante-lab-b96351395/" class="contact-link" target="_blank">
-                    <i data-lucide="linkedin" style="width: 32px; height: 32px;"></i>
+                    <img src="assets/img/portfolio/Pics/linkedin-icon.png" alt="LinkedIn" class="contact-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="contact-icon-fallback" style="display:none; width:40px; height:40px; background:#2d6a4f; border-radius:8px; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">in</div>
                     <span>LinkedIn</span>
                 </a>
             </div>
@@ -2164,7 +2199,7 @@
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Initialize Lucide icons
         lucide.createIcons();
 

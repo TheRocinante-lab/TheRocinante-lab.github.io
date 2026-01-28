@@ -1,1641 +1,2221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="The Rocinante Lab: Crop Genomics and Breeding Methods. Researching genomic prediction, selection, and machine learning in agriculture." />
-    <meta name="author" content="Julio Isidro Sánchez" />
-    <title>TheRocinante-lab</title>
-
-    <!-- Favicon-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Rocinante Lab: Crop Genomics and Breeding Methods. Researching genomic prediction, selection, and machine learning in agriculture.">
+    <meta name="author" content="Julio Isidro Sánchez">
+    <title>The Rocinante Lab | Crop Genomics & Breeding Methods</title>
+    
     <link rel="icon" type="image/x-icon" href="assets/rocin_new_favicon.ico" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --color-bg: #ffffff;
+            --color-bg-light: #f8faf8;
+            --color-bg-card: #ffffff;
+            --color-bg-dark: #1a2e22;
+            --color-accent: #2d6a4f;
+            --color-accent-light: #40916c;
+            --color-accent-gold: #b5830a;
+            --color-accent-rust: #c65d3b;
+            --color-accent-purple: #7b5ea7;
+            --color-accent-olive: #6b8e23;
+            --color-accent-berry: #8b0a50;
+            --color-text: #1a2e22;
+            --color-text-muted: #5a7265;
+            --color-border: rgba(45, 106, 79, 0.15);
+            --color-border-strong: rgba(45, 106, 79, 0.25);
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'Outfit', system-ui, sans-serif;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-sm: 0 2px 8px rgba(26, 46, 34, 0.06);
+            --shadow-md: 0 4px 20px rgba(26, 46, 34, 0.08);
+            --shadow-lg: 0 10px 40px rgba(26, 46, 34, 0.12);
+        }
 
-    <!-- Bootstrap Icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <!-- Google Fonts: Inter for body, Space Grotesk for headings -->
-   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Space+Grotesk:wght@400;700&amp;display=swap" rel="stylesheet" />
+        html {
+            scroll-behavior: smooth;
+        }
 
-    <!-- SimpleLightbox plugin CSS-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+        body {
+            font-family: var(--font-body);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
 
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            transition: var(--transition);
+        }
 
-    <!-- Font Awesome Icons-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 3rem;
+            border-bottom: 1px solid var(--color-border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-text);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .logo span {
+            color: var(--color-accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--color-accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--color-text);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 8rem 3rem 4rem;
+            overflow: hidden;
+            background: linear-gradient(180deg, var(--color-bg-light) 0%, var(--color-bg) 100%);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(45, 106, 79, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(181, 131, 10, 0.04) 0%, transparent 40%),
+                radial-gradient(ellipse at 90% 10%, rgba(198, 93, 59, 0.03) 0%, transparent 30%);
+        }
+
+        .hero-dna {
+            position: absolute;
+            right: -10%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 800px;
+            height: 800px;
+            opacity: 0.06;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 200'%3E%3Cpath d='M20 0 Q50 25 80 0 Q50 25 20 50 Q50 75 80 50 Q50 75 20 100 Q50 125 80 100 Q50 125 20 150 Q50 175 80 150 Q50 175 20 200' fill='none' stroke='%232d6a4f' stroke-width='0.5'/%3E%3Cpath d='M80 0 Q50 25 20 0 Q50 25 80 50 Q50 75 20 50 Q50 75 80 100 Q50 125 20 100 Q50 125 80 150 Q50 175 20 150 Q50 175 80 200' fill='none' stroke='%232d6a4f' stroke-width='0.5'/%3E%3C/svg%3E") repeat-y;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(-20px); }
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: none;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            color: var(--color-text);
+            animation: fadeInUp 0.8s ease-out 0.1s both;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--color-accent);
+        }
+
+        .hero-subtitle {
+            font-size: 1.35rem;
+            color: var(--color-text-muted);
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+            line-height: 1.6;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--color-accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: var(--transition);
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+            box-shadow: 0 4px 15px rgba(45, 106, 79, 0.3);
+        }
+
+        .hero-btn:hover {
+            background: var(--color-accent-light);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(45, 106, 79, 0.4);
+        }
+
+        /* Crops Section */
+        .crops-section {
+            margin-top: 4rem;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .crops-label {
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .crops-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1.25rem;
+        }
+
+        .crop-card {
+            text-align: center;
+            cursor: default;
+        }
+
+        .crop-image-wrapper {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .crop-card:hover .crop-image-wrapper {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .crop-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .crop-card:hover .crop-image {
+            transform: scale(1.05);
+        }
+
+        .crop-name {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--color-text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .crop-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .crop-card.wheat .crop-dot { background: var(--color-accent-rust); }
+        .crop-card.maize .crop-dot { background: transparent; }
+        .crop-card.sunflower .crop-dot { background: var(--color-accent-gold); }
+        .crop-card.olives .crop-dot { background: transparent; }
+        .crop-card.grapes .crop-dot { background: var(--color-accent-gold); }
+        .crop-card.berries .crop-dot { background: transparent; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 8rem 3rem;
+            position: relative;
+        }
+
+        .section-header {
+            max-width: 800px;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+        }
+
+        .section-tag::before {
+            content: '';
+            width: 30px;
+            height: 2px;
+            background: var(--color-accent);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            color: var(--color-text);
+        }
+
+        /* About Section */
+        #about {
+            background: var(--color-bg-light);
+            padding: 6rem 3rem;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .about-left {
+            position: sticky;
+            top: 100px;
+        }
+
+        .about-title {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.15;
+            color: var(--color-text);
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+
+        .about-block {
+            margin-bottom: 2.5rem;
+        }
+
+        .about-block-title {
+            font-family: var(--font-body);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+
+        .about-block p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--color-text-muted);
+        }
+
+        .about-block strong {
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        .about-right h3 {
+            font-family: var(--font-body);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 1.5rem;
+        }
+
+        .research-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .research-card {
+            background: white;
+            padding: 1.25rem;
+            border-radius: 12px;
+            border-left: 3px solid var(--color-accent);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .research-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+
+        .research-card-icon {
+            display: none;
+        }
+
+        .research-card h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 0.4rem;
+            line-height: 1.3;
+        }
+
+        .research-card p {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            line-height: 1.5;
+        }
+
+        @media (max-width: 900px) {
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .about-left {
+                position: static;
+            }
+
+            .about-title {
+                font-size: 2.5rem;
+            }
+
+            .research-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .research-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Software Section */
+        #software {
+            background: var(--color-bg-light);
+        }
+
+        .software-grid {
+            display: grid;
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .software-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 2rem;
+            align-items: start;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .software-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--color-accent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .software-card:hover {
+            border-color: var(--color-accent);
+            transform: translateX(10px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .software-card:hover::before {
+            opacity: 1;
+        }
+
+        .software-year {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--color-accent);
+            line-height: 1;
+        }
+
+        .software-info h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .software-info h3 span {
+            color: var(--color-accent-gold);
+        }
+
+        .software-authors {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .software-desc {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .software-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .software-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(45, 106, 79, 0.08);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            color: var(--color-text);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .software-link:hover {
+            background: var(--color-accent);
+            color: white;
+            border-color: var(--color-accent);
+        }
+
+        /* Publications Section */
+        #publications {
+            background: var(--color-bg);
+        }
+
+        .publications-year-group {
+            margin-bottom: 3rem;
+        }
+
+        .publications-year {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        .publication-item {
+            display: flex;
+            gap: 1.25rem;
+            padding: 1.25rem 0;
+            border-bottom: 1px solid var(--color-border);
+            transition: var(--transition);
+            align-items: flex-start;
+        }
+
+        .publication-item:hover {
+            padding-left: 0.5rem;
+            background: rgba(45, 106, 79, 0.02);
+        }
+
+        .pub-image {
+            flex-shrink: 0;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pub-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .pub-content {
+            flex: 1;
+        }
+
+        .pub-content a {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--color-text);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.4rem;
+            line-height: 1.4;
+            transition: var(--transition);
+        }
+
+        .pub-content a:hover {
+            color: var(--color-accent);
+        }
+
+        .pub-content span {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            line-height: 1.5;
+        }
+
+        .pub-content em {
+            color: var(--color-accent-gold);
+            font-style: italic;
+        }
+
+        .google-scholar-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: var(--color-accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 100px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .google-scholar-link:hover {
+            background: var(--color-accent-light);
+            transform: translateY(-2px);
+        }
+
+        /* Team Section */
+        #team {
+            background: var(--color-bg-dark);
+            color: white;
+        }
+
+        #team .section-tag {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        #team .section-tag::before {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        #team .section-title {
+            color: white;
+        }
+
+        .team-groups {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .team-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 2rem;
+            margin-top: 4rem;
+        }
+
+        .team-label:first-of-type {
+            margin-top: 0;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--color-accent-light);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .team-card.leader .team-avatar {
+            width: 140px;
+            height: 140px;
+            border: 4px solid var(--color-accent-gold);
+        }
+
+        .team-name {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+            color: white;
+        }
+
+        .team-role {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1rem;
+        }
+
+        .team-links {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .team-links a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.7);
+            transition: var(--transition);
+        }
+
+        .team-links a:hover {
+            background: var(--color-accent);
+            border-color: var(--color-accent);
+            color: white;
+        }
+
+        .alumni-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .alumni-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            transition: var(--transition);
+        }
+
+        .alumni-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--color-accent-light);
+        }
+
+        .alumni-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .alumni-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+            color: white;
+        }
+
+        .alumni-position {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .alumni-links {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .alumni-links a {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.6);
+            transition: var(--transition);
+        }
+
+        .alumni-links a:hover {
+            background: var(--color-accent);
+            color: white;
+        }
+
+        /* Teaching Section */
+        #teaching {
+            background: var(--color-bg);
+        }
+
+        .teaching-list {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .teaching-item {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 3rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .teaching-year {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-accent);
+        }
+
+        .teaching-content h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .teaching-content p {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+        }
+
+        .teaching-resources-label {
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            max-width: 1000px;
+        }
+
+        .teaching-resources {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 1000px;
+        }
+
+        .teaching-folder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 2rem 1.5rem;
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            text-decoration: none;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .teaching-folder:hover {
+            border-color: var(--color-accent);
+            background: white;
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .teaching-folder i {
+            color: var(--color-accent);
+        }
+
+        .teaching-folder span {
+            font-weight: 600;
+            color: var(--color-text);
+            font-size: 1rem;
+        }
+
+        .teaching-folder small {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .teaching-resources {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Projects Section */
+        #projects {
+            background: var(--color-bg-light);
+        }
+
+        .projects-category {
+            margin-bottom: 4rem;
+        }
+
+        .projects-category-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--color-accent-gold);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .project-item {
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .project-item:hover {
+            border-color: var(--color-accent);
+            box-shadow: var(--shadow-md);
+        }
+
+        .project-title {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .project-meta {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        .project-meta .amount {
+            color: var(--color-accent);
+            font-weight: 500;
+        }
+
+        /* Funding Section */
+        #funding {
+            background: var(--color-bg);
+            text-align: center;
+        }
+
+        .funding-intro {
+            font-size: 1.1rem;
+            color: var(--color-text-muted);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .funding-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .funding-item {
+            padding: 1rem 1.5rem;
+            background: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+            border-radius: 100px;
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            transition: var(--transition);
+        }
+
+        .funding-item:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+            background: rgba(45, 106, 79, 0.05);
+        }
+
+        /* Contact Section */
+        #contact {
+            background: var(--color-bg-light);
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 2rem;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--color-text);
+            transition: var(--transition);
+            min-width: 150px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .contact-link:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .contact-link i {
+            width: 40px;
+            height: 40px;
+            color: var(--color-accent);
+        }
+
+        .contact-link span {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-bg-dark);
+            padding: 3rem;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 1.5rem;
+        }
+
+        .visitor-badge {
+            margin-top: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                box-shadow: var(--shadow-md);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            section {
+                padding: 5rem 1.5rem;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .crops-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .software-card {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .software-year {
+                font-size: 1.5rem;
+            }
+
+            .teaching-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .crops-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .crop-name {
+                font-size: 0.85rem;
+            }
+
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .alumni-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
 </head>
-    <body id="page-top">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="https://github.com/TheRocinante-lab/" style="font-size:125%;">TheRocinante-lab</a>
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="logo">
+            <img src="assets/img/portfolio/TheRocinanteLab.png" alt="The Rocinante Lab Logo" class="logo-img">
+            The<span>Rocinante</span>Lab
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#research">Research</a></li>
+            <li><a href="#software">Software</a></li>
+            <li><a href="#publications">Publications</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#teaching">Teaching</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="mobile-menu-btn" onclick="toggleMenu()">
+            <i data-lucide="menu" style="width: 24px; height: 24px;"></i>
+        </button>
+    </nav>
 
-
-                        <li class="nav-item"><a class="nav-link" href="#page-top">Research</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#software">Software</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#publications">Publications</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#teaching">Teaching</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#funding">Funding</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-
-
-                    </ul>
-                </div>
+    <!-- Hero Section -->
+    <header class="hero" id="research">
+        <div class="hero-bg"></div>
+        <div class="hero-dna"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i data-lucide="dna" style="width: 14px; height: 14px;"></i>
+                Crop Genomics & Breeding Methods
             </div>
-        </nav>
-        <!-- Masthead-->
-        <header class="masthead">
-            <div class="container px-4 px-lg-5 h-100">
-                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
-                <div class="col-lg-8 align-self-end pt-5"> <h1 class="text-white fw-bold display-1" style="opacity: 0.8;">
-                    Crop Genomics and Breeding Methods The Rocinante-Lab
-                </h1>
-                <hr class="divider" />
-            </div>
-                    <div class="col-lg-8 align-self-baseline">
-                        <p class="text-white-75 mb-5" style="font-size: 0.9rem; line-height: 1.5; text-align: justify;">
-                            At <strong style="color:#FFFFFF;">The Rocinante Lab</strong>, we integrate cutting-edge technologies, including molecular genomics, phenomics, physiology, pathology, statistics, and breeding, to develop innovative strategies for creating superior crop varieties. Our research emphasizes <strong style="color:#FFFFFF;"> genomic prediction and selection</strong>, association mapping, and the characterization of allelic diversity.
-                            Expanding our <strong>global perspective</strong>, <strong style="color:#FFFFFF;">leverage advanced machine learning and artificial intelligence</strong>
-                            methodologies to enhance the accuracy and efficiency of our breeding programs. By focusing on <strong style="color:#FFFFFF;"> optimizing the selection and mating</strong> of individuals, we aim to <strong style="color:#FFFFFF;"> accelerate genetic gains</strong> and improve trait performance across diverse environments.
-                            <br><br>
-                            Our work encompasses a variety of crops, including <strong style="color:#E44E3C;">small grains</strong>, <strong style="color:#FFCA56;">sunflower</strong>, and <strong style="color:#4F9B81;">berries</strong>, reflecting our commitment to addressing global food security challenges through interdisciplinary and data-driven approaches.
-                        </p>
+            <h1>Crop Genomics & Breeding<br>Methods</h1>
+            <p class="hero-subtitle">
+                Integrating molecular genomics, phenomics, and AI to develop innovative strategies for superior crop varieties and sustainable agriculture.
+            </p>
+            <a href="#about" class="hero-btn">Explore Our Work</a>
+            
+      <!-- Crops Section with Images -->
+            <div class="crops-section">
+                <p class="crops-label">Crops We Work With</p>
+                <div class="crops-grid">
+                    <div class="crop-card wheat">
+                        <div class="crop-image-wrapper">
+                            <img src="assets/img/portfolio/crops/wheat.png" alt="Small Grains" class="crop-image">
+                        </div>
+                        <p class="crop-name"><span class="crop-dot"></span>Small Grains</p>
+                    </div>
+                    <div class="crop-card maize">
+                        <div class="crop-image-wrapper">
+                            <img src="assets/img/portfolio/crops/maize.png" alt="Maize" class="crop-image">
+                        </div>
+                        <p class="crop-name">Maize</p>
+                    </div>
+                    <div class="crop-card sunflower">
+                        <div class="crop-image-wrapper">
+                            <img src="assets/img/portfolio/crops/sunflower.png" alt="Sunflower" class="crop-image">
+                        </div>
+                        <p class="crop-name"><span class="crop-dot"></span>Sunflower</p>
+                    </div>
+                    <div class="crop-card olives">
+                        <div class="crop-image-wrapper">
+                            <img src="assets/img/portfolio/crops/olives.png" alt="Olives" class="crop-image">
+                        </div>
+                        <p class="crop-name">Olives</p>
+                    </div>
+                    <div class="crop-card grapes">
+                        <div class="crop-image-wrapper">
+                            <img src="assets/img/portfolio/crops/grapes.png" alt="Table Grapes" class="crop-image">
+                        </div>
+                        <p class="crop-name"><span class="crop-dot"></span>Table Grapes</p>
+                    </div>
+                    <div class="crop-card berries">
+                        <div class="crop-image-wrapper">
+                            <img src="assets/img/portfolio/crops/berries.png" alt="Berries" class="crop-image">
+                        </div>
+                        <p class="crop-name">Berries</p>
                     </div>
                 </div>
             </div>
-        </header>
-
-<div class="inter-bg">
-    <br><br>
-       </div>
-<section id="software" class="bg-sect-software text-white">
-    <div class="container">
-        <h1 class="section-heading text-white"><br><strong>Software</strong></h1> <br>
-            <h4 class="text-white">
-                We develop open-source software tools for practical applications in genomic selection.
-            </h4>
-            <hr class="text-white">
+        </div>
+    </header>
 
 
-        <div class="row text-left">
-                <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/packages/generic-Rpackage.png" class="img-responsive" alt="R Package Icon"></span>
+    <!-- About Section -->
+    <section id="about">
+        <div class="about-container">
+            <div class="about-left">
+                <h2 class="about-title">Bridging Genomics and Field Breeding</h2>
+                
+                <div class="about-block">
+                    <h3 class="about-block-title">Mission</h3>
+                    <p>The Rocinante Lab develops and applies quantitative genomics to accelerate crop improvement. We integrate genomics, phenomics, statistics, and field experimentation to deliver robust models and decision tools that increase genetic gain, improve resilience, and support breeding programs across diverse environments.</p>
                 </div>
-                <div class="col-md-10">
-                    <h4><a>
-                        <strong>2025: MateR:</strong> Genomic Mating package. Optimize mating plans using genomic information to maximize genetic gain, within-family variance, and genetic diversity.
-                    </a></h4>
-                    <p>
-                        Javier Fernández González, Seif Maetwally, Julio Isidro Sánchez
-                    </p>
-                    <p>
-                         <a class="text-white" href="#">
-                        Optimize mating plans using genomic information to maximize genetic gain, within-family variance, and genetic diversity. Supports polyploids, multi-trait optimization, additive and dominance effects, directional dominance (inbreeding and heterosis), and testers. </a>
-                   <h2>
-                       <a class="software-links" href="https://github.com/TheRocinante-lab/MateR/blob/main/Installation.txt">Installation&nbsp;&nbsp;</a>
-                       <a class="software-links" href="https://github.com/TheRocinante-lab/MateR">Github&nbsp;&nbsp;</a>
-                        <a class="software-links" href="https://www.biorxiv.org/content/10.1101/2025.09.24.678244v1">Paper&nbsp;&nbsp;</a>
-                    </h2>
+                
+                <div class="about-block">
+                    <h3 class="about-block-title">Vision</h3>
+                    <p>We envision breeding pipelines where <strong>data-driven prediction and optimized mating</strong> translate biological understanding into measurable, sustainable progress—enabling the rapid development of high-performing crop varieties while safeguarding genetic diversity for long-term improvement.</p>
                 </div>
-                    <hr class="text-white">
             </div>
-
-
-        <div class="row text-left">
-                <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/packages/generic-Rpackage.png" class="img-responsive" alt="R Package Icon"></span>
+            
+            <div class="about-right">
+                <h3>What we do</h3>
+                <div class="research-cards">
+                    <div class="research-card">
+                        <h4>Genomic prediction & selection</h4>
+                        <p>Models and experimental designs that maximize predictive accuracy for complex traits.</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <h4>Association mapping</h4>
+                        <p>Identifying loci, haplotypes, and genomic regions that explain trait variation.</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <h4>AI/ML for breeding</h4>
+                        <p>Improving selection, mate allocation, and resource allocation under real program constraints.</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <h4>G×E and stability</h4>
+                        <p>Quantitative methods to model performance across environments and target adaptation.</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <h4>Open-source software</h4>
+                        <p>Reproducible tools that make advanced methods usable in practical breeding workflows.</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <h4>Training & education</h4>
+                        <p>International courses and workshops advancing genomic selection knowledge worldwide.</p>
+                    </div>
                 </div>
-                <div class="col-md-10">
-                    <h4><a>
-                        <strong>2024: GEmetrics:</strong> an R package to calculate BLUP of the  Genotype by environment metrics.
-                    </a></h4>
-                    <p>
-                        Simon Rio, Humberto Fanelli, Julio Isidro Sánchez
-                    </p>
-                    <p>
-                        Metrics for : ecovalence, environmental variance, Finlay and Wilkinson regression and Lin and Binns superiority measure.: <a class="text-white" href="#"> Humberto Fanelli Carvalho, Simon Rio, Julian Garcia-Abadillo1, Julio Isidro y Sánchez.
-                        "Revisiting superiority and stability metrics of cultivar performances using genomic data: derivations of new estimators </a>
-                   <h2>
-                       <a class="software-links" href="https://cran.r-project.org/web/packages/GEmetrics/index.html">CRAN&nbsp;&nbsp;</a>
-                       <a class="software-links" href="https://github.com/TheRocinante-lab/GEmetrics">Github&nbsp;&nbsp;</a>
-                        <a class="software-links" href="#">Paper&nbsp;&nbsp;</a>
-                    </h2>
-                </div>
-                    <hr class="text-white">
             </div>
+        </div>
+    </section>
 
+    <!-- Software Section -->
+    <section id="software">
+        <div class="section-header">
+            <div class="section-tag">Open Source</div>
+            <h2 class="section-title">Software Tools for Genomic Selection</h2>
+        </div>
 
-
-            <div class="row text-left ">
-                <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/packages/generic-Rpackage.png" class="img-responsive" alt="R Package Icon"></span>
+        <div class="software-grid">
+            <div class="software-card">
+                <div class="software-year">2025</div>
+                <div class="software-info">
+                    <h3><span>MateR:</span> Genomic Mating Package</h3>
+                    <p class="software-authors">Javier Fernández González, Seif Maetwally, Julio Isidro Sánchez</p>
+                    <p class="software-desc">Optimize mating plans using genomic information to maximize genetic gain, within-family variance, and genetic diversity. Supports polyploids, multi-trait optimization, additive and dominance effects, directional dominance, and testers.</p>
                 </div>
-                <div class="col-md-10">
-                    <h4><a>
-                        <strong> 2021: TrainSel:</strong> an R package for selection of training populations
-                    </a></h4>
-                    <p>
-                        Deniz Akdemir and Julio Isidro y Sánchez
-                    </p>
-                    <p>
-                        TrainSel is an R package developed for optimization task in the training set (TRS) while performing
-                        statistical analysis or machine learning approaches. It solves combinatorial problems using
-                        metaheuristics like simulated annealing (SA) and Genetic algorithms (GA) to find the best subset
-                        within the whole TRS.
-                   <h2>
-                        <a class="software-links" href="https://github.com/TheRocinante-lab/TrainSel">Code&nbsp;&nbsp;</a>
-                        <a class="software-links" href="https://www.frontiersin.org/articles/10.3389/fgene.2016.00210/full">Paper&nbsp;&nbsp;</a>
-                    </h2>
-                </div>
-                    <hr class="text-white">
-            </div>
-
-
-
-            <div class="row text-left">
-                <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/packages/generic-Rpackage.png" class="img-responsive" alt="R Package Icon"></span>
-                </div>
-                <div class="col-md-10">
-                    <h4><a>
-                        <strong>2020: CovCombR:</strong> Combine Partial Covariance / Relationship Matrices
-                    </a></h4>
-                    <p>
-                        Deniz Akdemir, Mohamed Somo, Julio Isidro Sanchez
-                    </p>
-                    <p>
-                        Combine partial covariance matrices using a Wishart-EM algorithm. It can be used to combine partially overlapping covariance matrices from independent trials, partially overlapping multi-view relationship data from genomic experiments, partially overlapping Gaussian graphs described by their covariance structures.
-                   <h2>
-                        <a class="software-links" href="https://cran.r-project.org/web/packages/CovCombR/CovCombR.pdf">Docs&nbsp;&nbsp;</a>
-                        <a class="software-links" href="https://www.biorxiv.org/content/10.1101/857425v4">Paper&nbsp;&nbsp;</a>
-                    </h2>
-                </div>
-                    <hr class="text-white">
-            </div>
-
-
-
-        <div class="row text-left">
-                <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/packages/generic-Rpackage.png" class="img-responsive" alt="R Package Icon"></span>
-                </div>
-                <div class="col-md-10">
-                    <h4><a>
-                        <strong> 2016: GenomicMating:</strong> an R package for efficient Breeding by Genomic Mating
-                    </a></h4>
-                    <p>
-                        Deniz Akdemir, Julio Isidro Sánchez, Hanna Haikka, Itaraju Baracuhy Brum
-                    </p>
-                    <p>
-                        Implements the mate selection approach in: <a class="text-white" href="https://www.frontiersin.org/articles/10.3389/fgene.2016.00210/full"> Akdemir and Sanchez.
-                        "Efficient Breeding by Genomic Mating." Frontiers in Genetics (2016). </a>
-                   <h2>
-                        <a class="software-links" href="https://cran.r-project.org/web/packages/GenomicMating/GenomicMating.pdf">Docs&nbsp;&nbsp;</a>
-                        <a class="software-links" href="https://www.frontiersin.org/articles/10.3389/fgene.2016.00210/full">Paper&nbsp;&nbsp;</a>
-                    </h2>
-                </div>
-                    <hr class="text-white">
-            </div>
-
-
-
-            <div class="row text-left">
-                <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/packages/generic-Rpackage.png" class="img-responsive" alt="R Package Icon"></span>
-                </div>
-                <div class="col-md-10">
-                    <h4><a>
-                        <strong>2015: STPGA:</strong> Selection of Training Populations by Genetic Algorithm
-                    </a></h4>
-                    <p>
-                        Deniz Akdemir
-                    </p>
-                    <p>
-                        Combining Predictive Analytics and Experimental Design to Optimize Results. To be utilized to select a test data calibrated training population in high dimensional prediction problems and assumes that the explanatory variables are observed for all of the individuals.
-                   <h2>
-                        <a class="software-links" href="https://cran.r-project.org/web/packages/STPGA/STPGA.pdf">Docs&nbsp;&nbsp;</a>
-                        <a class="software-links" href="https://www.researchgate.net/publication/259983932_Training_population_selection_for_breeding_value_prediction">Paper&nbsp;&nbsp;</a>
-                    </h2>
-
-                </div>
-                    <hr class="text-white">
-            </div>
-
-
-
-                                    <br><br><br>
-                </div>
-
-
-</section>
-
-
-
-
-<section id="publications" class="bg-light-gray bg-white">
-    <div class="container SMALLER-text">
-        <h1 class="section-heading"><br><strong>Publications</strong></h1>
-
-              <h2 class="section-heading"><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>2026</strong></h2>
-        <br><br>
-
-        <div class="row text-left">
-            <div class="col-md-2">
-                <span><img src="assets/img/portfolio/journal/genetics.png" class="journal-pos" alt="BMC Genomics Journal" style="width: 130px;"></span>
-            </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1093/genetics/iyag013" style="color: black;">
-                   MateR: a novel genomic mating framework
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    <strong>Javier Fernández-González , Seifelden M Metwally , & </strong>, <strong>Isidro y Sánchez, J</strong>,
-                    <br>
-                    <a href="https://doi.org/10.1093/genetics/iyag013">
-                        https://doi.org/10.1093/genetics/iyag013
+                <div class="software-links">
+                    <a href="https://github.com/TheRocinante-lab/MateR" class="software-link" target="_blank">
+                        <i data-lucide="github" style="width: 14px; height: 14px;"></i>
+                        GitHub
                     </a>
-                </p>
-            </div>
-        </div>
-
-
-
-              <h2 class="section-heading"><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>2025</strong></h2>
-        <br><br>
-
-
-        <div class="row text-left">
-            <div class="col-md-2">
-                <span><img src="assets/img/portfolio/journal/BMC.png" class="journal-pos" alt="BMC Genomics Journal" style="width: 130px;"></span>
-            </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1186/s12864-025-12174-9" style="color: black;">
-                   Integrating host–pathogen interaction genomics to boost wheat defense against septoria tritici blotch
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    <strong>Alejandro Domínguez-Rondón, Rocio Tirado, Ignacio Solís, Andrea Sánchez-Vallet & </strong>, <strong>Isidro y Sánchez, J</strong>,
-                    <br>
-                    <a href="https://doi.org/10.1186/s12864-025-12174-9">
-                        https://doi.org/10.1186/s12864-025-12174-9
+                    <a href="https://doi.org/10.1093/genetics/iyag013" class="software-link" target="_blank">
+                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                        Paper
                     </a>
-                </p>
+                </div>
             </div>
-        </div>
 
-
-
-        <div class="row text-left">
-            <div class="col-md-2">
-                <span><img src="assets/img/portfolio/journal/plant_genome.PNG" class="journal-pos" alt="The Plant Genome Journal" style="width: 130px;"></span>
-            </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1002/tpg2.70124" style="color: black;">
-                   Mapping novel yellow and leaf rust loci and predicting resistance in cross derived Canadian durum wheat.
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    <strong>Menor de Gaspar, J., Domínguez Rondón, A., García-Abadillo, J., Knox, R. et al  </strong>, <strong>Isidro y Sánchez, J</strong>,
-                    <br>
-                    <a href="https://doi.org/10.1002/tpg2.70124">
-                        https://doi.org/10.1002/tpg2.70124
+            <div class="software-card">
+                <div class="software-year">2024</div>
+                <div class="software-info">
+                    <h3><span>GEmetrics:</span> Genotype-by-Environment Metrics</h3>
+                    <p class="software-authors">Simon Rio, Humberto Fanelli, Julio Isidro Sánchez</p>
+                    <p class="software-desc">Calculate BLUP of genotype-by-environment metrics including ecovalence, environmental variance, Finlay and Wilkinson regression, and Lin and Binns superiority measure.</p>
+                </div>
+                <div class="software-links">
+                    <a href="https://cran.r-project.org/web/packages/GEmetrics/index.html" class="software-link" target="_blank">
+                        <i data-lucide="package" style="width: 14px; height: 14px;"></i>
+                        CRAN
                     </a>
-                </p>
-            </div>
-        </div>
-
-
-
-
-        <div class="row text-left">
-            <div class="col-md-2">
-                <span><img src="assets/img/portfolio/journal/TAG.PNG" class="journal-pos" alt="Theoretical and Applied Genetics" style="width: 130px;"></span>
-            </div>
-                <div class="col-md-10">
-                    <h5>
-                        <a href="https://doi.org/10.1007/s00122-025-04861-8" style="color: black;">
-                            Maximizing the accuracy of genetic variance estimation...
-                        </a>
-                    </h5>
-                    <p class="text-muted smaller-text">
-                        <strong>Fernández-González, J</strong>, <strong>Isidro y Sánchez, J</strong>,
-                        <br>
-                        <a href="https://doi.org/10.1007/s00122-025-04861-8">
-                            https://doi.org/10.1007/s00122-025-04861-8
-                        </a>
-                    </p>
-                </div>
-        </div>
-
-        <div class="row text-left">
-            <div class="col-md-2">
-                <span><img src="assets/img/portfolio/journal/plos_one.png" class="journal-pos" alt="PLOS ONE Journal" style="width: 130px;"></span>
-            </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1371/journal.pone.0312122" style="color: black;">
-                    Phenotypic plasticity of bread wheat contributes to yield reliability under heat and drought stress
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    <strong>Jatinder Singh Sangha et.al  </strong>,
-                    <br>
-                    <a href="https://doi.org/10.1371/journal.pone.0312122">
-                        https://doi.org/10.1371/journal.pone.0312122
+                    <a href="https://github.com/TheRocinante-lab/GEmetrics" class="software-link" target="_blank">
+                        <i data-lucide="github" style="width: 14px; height: 14px;"></i>
+                        GitHub
                     </a>
-                </p>
+                </div>
             </div>
-        </div>
 
-
-
-
-                 <div class="row text-left">
-    <div class="col-md-2">
-        <span><img src="assets/img/portfolio/journal/Plant-Methods.png" class="journal-pos" alt="Plant Methods Journal" style="width: 130px;"></span>
-    </div>
-    <div class="col-md-10">
-        <h5><a href="https://doi.org/10.1186/s13007-024-01318-9" style="color: black;">
-            Optimizing fully-efficient two-stage models for genomic selection using open-source software
-        </a></h5>
-        <p class="text-muted smaller-text">
-            <strong>Fernández-González,J  </strong>, <strong>Isidro y Sánchez, J</strong>,
-            <br>
-            <a href="https://doi.org/10.1186/s13007-024-01318-9">
-                https://doi.org/10.1186/s13007-024-01318-9
-            </a>
-        </p>
-    </div>
-</div>
-
-
-
-        <div class="row text-left">
-    <div class="col-md-2">
-        <span><img src="assets/img/portfolio/journal/Nature_logo.png" class="journal-pos" alt="Nature Journal" style="width: 130px;"></span>
-    </div>
-    <div class="col-md-10">
-        <h5><a href="https://www.biorxiv.org/content/10.1101/2024.10.23.619697v1" style="color: black;">
-            A pangenome and pantranscriptome of hexaploid oat
-        </a></h5>
-        <p class="text-muted smaller-text">
-            <strong>Avni R </strong>, <strong>et al</strong>,
-            <br>
-            <a href="https://www.biorxiv.org/content/10.1101/2024.10.23.619697v1">
-                https://doi.org/10.1101/2024.10.23.619697v1
-            </a>
-        </p>
-    </div>
-</div>
-
-
-            <div class="row text-left">
-    <div class="col-md-2">
-        <span><img src="assets/img/portfolio/journal/Nature_com.png" class="journal-pos" alt="Nature Communications Journal" style="width: 130px;"></span>
-    </div>
-    <div class="col-md-10">
-        <h5><a href="https://assets-eu.researchsquare.com/files/rs-5726397/v1/331ea3c0-d83d-42ed-95f5-33d2ecb606f3.pdf?c=1735645181" style="color: black;">
-            Global genomic population structure of wild and cultivated oat reveals signatures of chromosome rearrangements
-        </a></h5>
-        <p class="text-muted smaller-text">
-            <strong>Bekele, WA  </strong>, <strong>et al.</strong>,
-            <br>
-            <a href="https://assets-eu.researchsquare.com/files/rs-5726397/v1/331ea3c0-d83d-42ed-95f5-33d2ecb606f3.pdf?c=1735645181">
-                https://doi.org/10.21203/rs.3.rs-5726397/v1
-            </a>
-        </p>
-    </div>
-</div>
-
-
-                 <div class="row text-left">
-    <div class="col-md-2">
-        <span><img src="assets/img/portfolio/journal/plant_genome.PNG" class="journal-pos" alt="The Plant Genome Journal" style="width: 130px;"></span>
-    </div>
-    <div class="col-md-10">
-        <h5><a href="https://acsess.onlinelibrary.wiley.com/doi/full/10.1002/tpg2.20539" style="color: black;">
-            Priority actions for Fusarium head blight resistance in durum wheat: Insights from the wheat initiative
-        </a></h5>
-        <p class="text-muted smaller-text">
-            <strong>Viviani, A.  </strong> <strong>et al.</strong>,
-            <br>
-            <a href="https://acsess.onlinelibrary.wiley.com/doi/full/10.1002/tpg2.20539">
-                https://doi.org/10.1002/tpg2.20539
-            </a>
-        </p>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-        <h2 class="section-heading"><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>2024</strong></h2>
-        <br><br>
-
-        <div class="row text-left">
-    <div class="col-md-2">
-        <span><img src="assets/img/portfolio/journal/Plant-Methods.png" class="journal-pos" alt="Plant Methods Journal" style="width: 130px;"></span>
-    </div>
-    <div class="col-md-10">
-        <h5><a href="https://plantmethods.biomedcentral.com/articles/10.1186/s13007-024-01151-0" style="color: black;">
-            Maximizing Efficiency in Sunflower Breeding through Historical Data Optimization.
-        </a></h5>
-        <p class="text-muted smaller-text">
-            <strong>Fernández-Gónzalez Javier</strong>, <strong>Haquin B</strong>, <strong>Combes E</strong>, <strong>Bernard K</strong>, <strong>Allard A</strong>, and <strong>Isidro y Sánchez, J</strong>
-            <br>
-            <a href="https://plantmethods.biomedcentral.com/articles/10.1186/s13007-024-01151-0">
-                https://doi.org/10.1186/s13007-024-01151-0
-            </a>
-        </p>
-    </div>
-</div>
-
-
-        <!-- Add other publications for 2024 here -->
-<div class="row text-left">
-    <div class="col-md-2">
-        <span><img src="assets/img/portfolio/journal/Horticulture.png" class="journal-pos" alt="Horticulture Research Journal" style="width: 130px;"></span>
-    </div>
-    <div class="col-md-10">
-        <h5><a href="https://academic.oup.com/hr/article/11/2/uhad283/7505757" style="color: black;">
-            Dissecting the Complex Genetic Basis of Pre and Post-harvest Traits in Vitis vinifera L. using Genome-Wide Association Studies
-        </a></h5>
-        <p class="text-muted smaller-text">
-            <strong>García-Abadillo, J., Barba, P., Carvalho, T., Sosa-Zuniga, V., Lozano, R., Carvalho, H.F., Garcia- Rojas, M., Salazar, E. and Isidro y Sánchez, J</strong>
-            <br>
-            <a href="https://academic.oup.com/hr/article/11/2/uhad283/7505757">
-                https://academic.oup.com/hr/article/11/2/uhad283/7505757
-            </a>
-        </p>
-    </div>
-</div>
-
-
-<div class="row text-left">
-    <div class="col-md-2">
-        <span><img src="assets/img/portfolio/journal/agriculture.png" class="journal-pos" alt="Agriculture Journal" style="width: 130px;"></span>
-    </div>
-    <div class="col-md-10">
-        <h5><a href="https://doi.org/10.3390/agriculture14020215" style="color: black;">
-            Assessing the Genotype-by-Environment G×E Interaction in Desi Chickpea via the Bayesian Additive Main Effects and Multiplicative Interaction Model
-        </a></h5>
-        <p class="text-muted smaller-text">
-            <strong>Din, A.; Gul, R.; Khan, H.; Garcia-Abadillo Velasco, J.; Persa, R.; Isidro y Sánchez, J.; Jarquin, D.</strong>
-            <br>
-            <a href="https://doi.org/10.3390/agriculture14020215">
-                https://doi.org/10.3390/agriculture14020215
-            </a>
-        </p>
-    </div>
-</div>
-
-<div class="row text-left">
-    <div class="col-md-2">
-        <span><img src="assets/img/portfolio/journal/MolecularPlant.png" class="journal-pos" alt="Molecular Plant Journal" style="width: 130px;"></span>
-    </div>
-    <div class="col-md-10">
-        <h5><a href="https://doi.org/10.1016/j.molp.2024.03.007" style="color: black;">
-            Genomic Selection in Plant Breeding: Key Factors Shaping Two Decades of Progress
-        </a></h5>
-        <p class="text-muted smaller-text">
-            <strong>Admas Alemu Abebe</strong>, <strong>Johanna Åstrand</strong>, <strong>Osval A Montesinos-López</strong>, <strong>Julio Isidro-Sánchez</strong>, <strong>Javier Fernández-Gónzalez</strong>, <strong>Wuletaw Tadesse</strong>, <strong>Ramesh R. Vetukuri</strong>, <strong>Anders S. Carlsson</strong>, <strong>Alf Ceplitis</strong>, <strong>José Crossa</strong>, <strong>Rodomiro Ortiz</strong>, <strong>Aakash Chawade</strong>, <strong>Isidro y Sánchez, J.</strong>
-            <br>
-            <a href="https://doi.org/10.1016/j.molp.2024.03.007">
-                https://doi.org/10.1016/j.molp.2024.03.007
-            </a>
-        </p>
-    </div>
-</div>
-
-
-<div class="row text-left">
-    <div class="col-md-2">
-        <span><img src="assets/img/portfolio/journal/frontiers_plant_science.png" class="journal-pos" alt="Frontiers in Plant Science Journal" style="width: 130px;"></span>
-    </div>
-    <div class="col-md-10">
-        <h5><a href="https://www.frontiersin.org/articles/10.3389/fpls.2024.1400000/full" style="color: black;">
-            Sparse testing designs for optimizing predictive ability in sugarcane populations
-        </a></h5>
-        <p class="text-muted smaller-text">
-            <strong>Garcia-Abadillo J</strong>, <strong>Adunola P</strong>, <strong>Aguilar FS</strong>, <strong>Trujillo-Montenegro JH</strong>, <strong> Riascos JJ</strong>, <strong>Persa R</strong>, <strong>Isidro y Sanchez J</strong>, <strong> Jarqun D</strong>
-            <br>
-            <a href="https://www.frontiersin.org/articles/10.3389/fpls.2024.1400000/full">
-                https://doi.org/10.3389/fpls.2024.1400000
-            </a>
-        </p>
-    </div>
-</div>
-
-     <div class="row text-left">
-    <div class="col-md-2">
-        <span><img src="assets/img/portfolio/journal/Plant-Methods.png" class="journal-pos" alt="Plant Methods Journal" style="width: 130px;"></span>
-    </div>
-    <div class="col-md-10">
-        <h5><a href="https://plantmethods.biomedcentral.com/articles/10.1186/s13007-024-01207-1" style="color: black;">
-            Revisiting superiority and stability metrics of cultivar performances using genomic data: derivations of new estimators
-        </a></h5>
-        <p class="text-muted smaller-text">
-            <strong>Humberto Fanelli Carvalho</strong>, <strong>Simon Rio</strong>, <strong>Julian García‐Abadillo</strong>, <strong>Julio Isidro y Sánchez</strong>
-            <br>
-            <a href="https://plantmethods.biomedcentral.com/articles/10.1186/s13007-024-01207-1">
-                https://doi.org/10.1186/s13007-024-01207-1
-            </a>
-        </p>
-    </div>
-</div>
-
-
-
-             <div class="row text-left">
-    <div class="col-md-2">
-        <span><img src="assets/img/portfolio/journal/frontiers_plant_science.png" class="journal-pos" alt="Frontiers in Plant Science Journal" style="width: 130px;"></span>
-    </div>
-    <div class="col-md-10">
-        <h5><a href="https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2024.1454473/full" style="color: black;">
-            Leveraging trait and QTL covariates to improve genomic prediction of resistance to Fusarium head blight in Central European winter wheat
-        </a></h5>
-        <p class="text-muted smaller-text">
-            <strong>Laura Morales</strong>, <strong>et.al</strong>
-            <br>
-            <a href="https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2024.1454473/full">
-                https://doi.org/10.3389/fpls.2024.1454473
-            </a>
-        </p>
-    </div>
-</div>
-
-               <div class="row text-left">
-    <div class="col-md-2">
-        <span><img src="assets/img/portfolio/journal/JCS.png" class="journal-pos" alt="Journal of Cereal Science" style="width: 130px;"></span>
-    </div>
-    <div class="col-md-10">
-        <h5><a href="https://doi.org/10.1016/j.jcs.2024.103956" style="color: black;">
-            Genome wide association mapping of end-use gluten properties in bread wheat landraces (Triticum aestivum L.)
-        </a></h5>
-        <p class="text-muted smaller-text">
-            <strong>Matilde López-Fernández</strong>, <strong>Chozas A</strong>,<strong>Benavente E</strong>, <strong>Alonso-Rueda, E</strong>,<strong>Isidro y Sánchez J </strong>, <strong>Pascual L</strong>, <strong>Giraldo P</strong>
-            <br>
-            <a href="https://doi.org/10.1016/j.jcs.2024.103956">
-                https://doi.org/10.1016/j.jcs.2024.103956
-            </a>
-        </p>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-
-    <!-- Add HR or other separators here if needed -->
-
-    <div class="container SMALLER-text">
-        <h2 class="section-heading"><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>2023</strong></h2>
-        <br><br>
-
-        <div class="row text-left">
-            <div class="col-md-2">
-                <span><img src="assets/img/portfolio/journal/axioms-logo.png" class="journal-pos" alt="Axioms Journal" style="width: 250px;"></span>
-            </div>
-            <div class="col-md-10">
-                <h5><a href="https://www.mdpi.com/2075-1680/12/2/161">
-                    Expectation Maximization Algorithm for Combining a Sample of Partially Overlapping Covariance Matrices
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    <strong>Akdemir Deniz</strong>, <strong>Somo, M</strong>, and <strong>Isidro y Sánchez, J</strong>
-                    <br>
-                    <a href="https://www.mdpi.com/2075-1680/12/2/161">
-                        https://doi.org/10.3390/axioms12020161
+            <div class="software-card">
+                <div class="software-year">2021</div>
+                <div class="software-info">
+                    <h3><span>TrainSel:</span> Training Population Selection</h3>
+                    <p class="software-authors">Deniz Akdemir, Julio Isidro y Sánchez</p>
+                    <p class="software-desc">R package for optimization tasks in training set selection using metaheuristics like simulated annealing and genetic algorithms to find the best subset within the whole training set.</p>
+                </div>
+                <div class="software-links">
+                    <a href="https://github.com/TheRocinante-lab/TrainSel" class="software-link" target="_blank">
+                        <i data-lucide="github" style="width: 14px; height: 14px;"></i>
+                        GitHub
                     </a>
-                </p>
-            </div>
-        </div>
-
-        <!-- Add other publications for 2023 here -->
-
-        <hr> <!-- Add a horizontal rule to separate the sections if needed -->
-
-    </div>
-
-
-
-
-        <div class="container SMALLER-text">
-    <h2 class="section-heading"><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>2022</strong></h2>
-        <br><br>
-        <div class="row text-left">
-
-
-        <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/GS_book.png" class="journal-pos" alt="Genomic Selection Book" width="110"></span>
-                </div>
-            <div class="col-md-10">
-                <h5><a href="https://www.taylorfrancis.com/chapters/edit/10.1201/9781003214991-2/hands-training-optimization-genomic-selection-isidro-s%C3%A1nchez-julio-rio-simon-akdemir-deniz">
-                    Hands on Training Optimization in Genomic Selection
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    <strong>Julio Isidro Sánchez</strong>, <strong>Simon Rio</strong> and <strong>Deniz Akdemir</strong>
-                    <br>
-                    <a href="https://www.taylorfrancis.com/chapters/edit/10.1201/9781003214991-2/hands-training-optimization-genomic-selection-isidro-s%C3%A1nchez-julio-rio-simon-akdemir-deniz">
-                     10.1201/9781003214991-2
-                </a>
-                </p>
-            </div>
-                    <br><br><br><br><br><br><br><br><br><br><br>
-                    <hr>
-
-                <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/TAG.PNG" class="journal-pos" alt="Theoretical and Applied Genetics" width="130"></span>
-                </div>
-            <div class="col-md-10">
-                <h5><a href="https://link.springer.com/article/10.1007/s00122-023-04265-6">
-                    A comparison of methods for training population optimization in genomic selection
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    <strong>Javier Fernández-González</strong>, <strong>Deniz Akdemir</strong> and <strong>Isidro y Sánchez, J</strong>
-                    <br>
-                    <a href="https://link.springer.com/article/10.1007/s00122-023-04265-6">
-                        https://doi.org/10.1007/s00122-023-04265-6
+                    <a href="https://doi.org/10.3389/fgene.2021.655287" class="software-link" target="_blank">
+                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                        Paper
                     </a>
-                </p>
-            </div>
-        <hr>
-
-                <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/TAG.PNG" class="journal-pos" alt="Theoretical and Applied Genetics" width="130"></span>
                 </div>
-            <div class="col-md-10">
-                <h5><a href="https://link.springer.com/content/pdf/10.1007/s00122-022-04202-z.pdf">
-                Genome‐wide association study and genomic prediction of resistance to stripe rust in current Central and Northern European winter wheat germplasm
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    Fahimeh Shahinnia et. al, <strong>Isidro y Sánchez, J</strong>
-                    <br>
-                    <a href="https://link.springer.com/content/pdf/10.1007/s00122-022-04202-z.pdf">
-                     https://doi.org/10.1007/s00122-022-04202-z
-                </a>
-                </p>
+            </div>
+
+            <div class="software-card">
+                <div class="software-year">2020</div>
+                <div class="software-info">
+                    <h3><span>CovCombR:</span> Combine Covariance Matrices</h3>
+                    <p class="software-authors">Deniz Akdemir, Mohamed Somo, Julio Isidro Sánchez</p>
+                    <p class="software-desc">Combine partial covariance matrices using a Wishart-EM algorithm for independent trials, multi-view relationship data from genomic experiments, and Gaussian graphs.</p>
+                </div>
+                <div class="software-links">
+                    <a href="https://github.com/cran/CovCombR" class="software-link" target="_blank">
+                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                        Docs
+                    </a>
+                    <a href="https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2020.00947/full" class="software-link" target="_blank">
+                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                        Paper
+                    </a>
+                </div>
+            </div>
+
+            <div class="software-card">
+                <div class="software-year">2016</div>
+                <div class="software-info">
+                    <h3><span>GenomicMating:</span> Efficient Breeding</h3>
+                    <p class="software-authors">Deniz Akdemir, Julio Isidro Sánchez, Hanna Haikka, Itaraju Baracuhy Brum</p>
+                    <p class="software-desc">Implements the mate selection approach for efficient breeding by genomic mating, as published in Frontiers in Genetics.</p>
+                </div>
+                <div class="software-links">
+                    <a href="https://cran.r-project.org/src/contrib/Archive/GenomicMating/" class="software-link" target="_blank">
+                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                        Docs
+                    </a>
+                    <a href="https://doi.org/10.3389/fgene.2016.00210" class="software-link" target="_blank">
+                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                        Paper
+                    </a>
+                </div>
+            </div>
+
+            <div class="software-card">
+                <div class="software-year">2015</div>
+                <div class="software-info">
+                    <h3><span>STPGA:</span> Selection by Genetic Algorithm</h3>
+                    <p class="software-authors">Deniz Akdemir</p>
+                    <p class="software-desc">Selection of Training Populations by Genetic Algorithm. Combines predictive analytics and experimental design to optimize results in high dimensional prediction problems.</p>
+                </div>
+                <div class="software-links">
+                    <a href="https://cran.r-project.org/web/packages/STPGA/STPGA.pdf" class="software-link" target="_blank">
+                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                        Docs
+                    </a>
+                    <a href="https://link.springer.com/article/10.1186/s12711-015-0116-6" class="software-link" target="_blank">
+                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                        Paper
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section id="publications">
+        <div class="section-header">
+            <div class="section-tag">Research Output</div>
+            <h2 class="section-title">Selected Publications</h2>
+        </div>
+
+        <div class="publications-year-group">
+            <h3 class="publications-year">2026</h3>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/genetics.png" alt="Genetics">
+                </div>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.1093/genetics/iyag013" target="_blank">MateR: a novel genomic mating framework</a>
+                    <span>Javier Fernández-González, Seifelden M Metwally, Julio Isidro Sánchez. <em>Genetics</em>.</span>
+                </div>
             </div>
         </div>
 
-
-
-    <div class="container SMALLER-text">
-    <h2 class="section-heading"><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>2021</strong></h2>
-        <br><br>
-        <div class="row text-left">
-                <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/TAG.PNG" class="journal-pos" alt="Theoretical and Applied Genetics" width="130"></span>
+        <div class="publications-year-group">
+            <h3 class="publications-year">2025</h3>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/BMC.png" alt="BMC Genomics">
                 </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1007/s00122-021-03972-2">
-                Assessment of genomic prediction reliability and optimization of experimental designs in multi-environment trials
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    Rio S, Akdemir D, Carvalho T, <strong>Isidro y Sánchez, J</strong>
-                    <br>
-                    <a href="https://doi.org/10.1007/s00122-021-03972-2">
-                     https://doi.org/10.1007/s00122-021-03972-2
-                </a>
-                </p>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.1186/s12864-025-12174-9" target="_blank">Integrating host–pathogen interaction genomics to boost wheat defense against septoria tritici blotch</a>
+                    <span>Alejandro Domínguez-Rondón et al. <em>BMC Genomics</em>.</span>
+                </div>
+            </div>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/plant_genome.PNG" alt="The Plant Genome">
+                </div>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.1002/tpg2.70124" target="_blank">Mapping novel yellow and leaf rust loci and predicting resistance in cross derived Canadian durum wheat</a>
+                    <span>Menor de Gaspar, J. et al. <em>The Plant Genome</em>.</span>
+                </div>
+            </div>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/TAG.PNG" alt="TAG">
+                </div>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.1007/s00122-025-04861-8" target="_blank">Maximizing the accuracy of genetic variance estimation</a>
+                    <span>Fernández-González, J., Isidro y Sánchez, J. <em>Theoretical and Applied Genetics</em>.</span>
+                </div>
+            </div>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/plos_one.png" alt="PLOS ONE">
+                </div>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.1371/journal.pone.0312122" target="_blank">Phenotypic plasticity of bread wheat contributes to yield reliability under heat and drought stress</a>
+                    <span>Jatinder Singh Sangha et al. <em>PLOS ONE</em>.</span>
+                </div>
             </div>
         </div>
-        <hr>
 
-        <div class="row text-left">
-                <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/frontiers_plant_science.png" class="journal-pos" alt="Frontiers in Plant Science Journal"></span>
+        <div class="publications-year-group">
+            <h3 class="publications-year">2024</h3>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/Plant-Methods.png" alt="Plant Methods">
                 </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.3389/fpls.2021.715910">
-                Training set optimization for sparse phenotyping in genomic selection
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    <strong>Isidro y Sánchez, J</strong> and Deniz Akdemir <br>
-                    <a href="https://doi.org/10.3389/fpls.2021.715910">
-                    https://doi.org/10.3389/fpls.2021.715910
-                </a>
-                </p>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.1186/s13007-024-01318-9" target="_blank">Optimizing fully-efficient two-stage models for genomic selection using open-source software</a>
+                    <span>Fernández-González, J., Isidro y Sánchez, J. <em>Plant Methods</em>.</span>
+                </div>
+            </div>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/Plant-Methods.png" alt="Plant Methods">
+                </div>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.1186/s13007-024-01151-0" target="_blank">Maximizing Efficiency in Sunflower Breeding through Historical Data Optimization</a>
+                    <span>Fernández-Gónzalez Javier et al. <em>Plant Methods</em>.</span>
+                </div>
+            </div>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/Nature_logo.png" alt="Nature">
+                </div>
+                <div class="pub-content">
+                    <a href="https://www.biorxiv.org/content/10.1101/2024.10.23.619697v1" target="_blank">A pangenome and pantranscriptome of hexaploid oat</a>
+                    <span>Avni R et al. <em>Nature</em>.</span>
+                </div>
+            </div>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/Nature_com.png" alt="Nature Communications">
+                </div>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.21203/rs.3.rs-5726397/v1" target="_blank">Global genomic population structure of wild and cultivated oat reveals signatures of chromosome rearrangements</a>
+                    <span>Bekele, WA et al. <em>Nature Communications</em>.</span>
+                </div>
+            </div>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/Horticulture.png" alt="Horticulture Research">
+                </div>
+                <div class="pub-content">
+                    <a href="https://academic.oup.com/hr/article/11/2/uhad283/7505757" target="_blank">Dissecting the Complex Genetic Basis of Pre and Post-harvest Traits in Vitis vinifera L. using GWAS</a>
+                    <span>García-Abadillo, J. et al. <em>Horticulture Research</em>.</span>
+                </div>
+            </div>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/agriculture.png" alt="Agriculture">
+                </div>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.3390/agriculture14020215" target="_blank">Assessing Genotype-by-Environment Interaction in Desi Chickpea via Bayesian Additive Main Effects</a>
+                    <span>Din, A. et al. <em>Agriculture</em>.</span>
+                </div>
+            </div>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/MolecularPlant.png" alt="Molecular Plant">
+                </div>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.1016/j.molp.2024.03.007" target="_blank">Genomic Selection in Plant Breeding: Key Factors Shaping Two Decades of Progress</a>
+                    <span>Admas Alemu Abebe et al. <em>Molecular Plant</em>.</span>
+                </div>
             </div>
         </div>
-        <hr>
 
-        <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/TAG.PNG" class="journal-pos" alt="Theoretical and Applied Genetics"></span>
+        <div class="publications-year-group">
+            <h3 class="publications-year">2023</h3>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/axioms-logo.png" alt="Axioms">
                 </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1007/s00122-021-03916-w">
-                Genomic prediction and training set optimization in a structured Mediterranean oat population
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    Simon Rio, Luis Gallego-Sánchez, Gracia Montilla-Bascón,
-                    Francisco J. Canales, <strong>Isidro y Sánchez, J</strong> and Elena Prats <br>
-                <a href="https://doi.org/10.1007/s00122-021-03916-w">
-                    https://doi.org/10.1007/s00122-021-03916-w
-                </a>
-</p>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.3390/axioms12020161" target="_blank">Expectation Maximization Algorithm for Combining a Sample of Partially Overlapping Covariance Matrices</a>
+                    <span>Akdemir Deniz, Somo M, Isidro y Sánchez J. <em>Axioms</em>.</span>
+                </div>
             </div>
         </div>
-        <hr>
 
-        <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/agronomy.PNG" class="journal-pos" alt="Agronomy Journal"></span>
+        <div class="publications-year-group">
+            <h3 class="publications-year">2022</h3>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/GS_book.png" alt="Book">
                 </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.3390/agronomy11030499">
-                Genotype by Environment Interaction Analysis of Agronomic Spring Barley Traits in Iceland Using AMMI,
-                Factorial Regression Model and Linear Mixed Model
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    Hilmarsson, H.S, Rio, S, <strong>Isidro y Sánchez, J</strong>. <br>
-                    <a href="https://doi.org/10.3390/agronomy11030499">
-                    https://doi.org/10.3390/agronomy11030499
-                </a>
-                </p>
+                <div class="pub-content">
+                    <a href="https://www.taylorfrancis.com/chapters/edit/10.1201/9781003214991-2" target="_blank">Hands on Training Optimization in Genomic Selection</a>
+                    <span>Julio Isidro Sánchez, Simon Rio, Deniz Akdemir. <em>Genomic Selection Book</em>.</span>
+                </div>
+            </div>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/TAG.PNG" alt="TAG">
+                </div>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.1007/s00122-023-04265-6" target="_blank">A comparison of methods for training population optimization in genomic selection</a>
+                    <span>Javier Fernández-González, Deniz Akdemir, Isidro y Sánchez J. <em>Theoretical and Applied Genetics</em>.</span>
+                </div>
+            </div>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/TAG.PNG" alt="TAG">
+                </div>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.1007/s00122-022-04202-z" target="_blank">GWAS and genomic prediction of resistance to stripe rust in Central European winter wheat</a>
+                    <span>Fahimeh Shahinnia et al, Isidro y Sánchez J. <em>Theoretical and Applied Genetics</em>.</span>
+                </div>
             </div>
         </div>
-        <hr>
 
-        <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/frontiers_plant_science.png" class="journal-pos" alt="Frontiers in Plant Science Journal"></span>
+        <div class="publications-year-group">
+            <h3 class="publications-year">2021</h3>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/TAG.PNG" alt="TAG">
                 </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.3389/fgene.2021.655287">
-                TrainSel: an R package for selection of training populations
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    Akdemir D, Rio S and <strong>Isidro y Sánchez, J</strong>.<br>
-                    <a href="https://doi.org/10.3389/fgene.2021.655287">
-                    https://doi.org/10.3389/fgene.2021.655287
-                 </a>
-                </p>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.1007/s00122-021-03972-2" target="_blank">Assessment of genomic prediction reliability and optimization of experimental designs in multi-environment trials</a>
+                    <span>Rio S, Akdemir D, Carvalho T, Isidro y Sánchez J. <em>Theoretical and Applied Genetics</em>.</span>
+                </div>
+            </div>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/frontiers_plant_science.png" alt="Frontiers">
+                </div>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.3389/fpls.2021.715910" target="_blank">Training set optimization for sparse phenotyping in genomic selection</a>
+                    <span>Isidro y Sánchez J, Deniz Akdemir. <em>Frontiers in Plant Science</em>.</span>
+                </div>
+            </div>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/TAG.PNG" alt="TAG">
+                </div>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.1007/s00122-021-03916-w" target="_blank">Genomic prediction and training set optimization in a structured Mediterranean oat population</a>
+                    <span>Rio S et al, Isidro y Sánchez J. <em>Theoretical and Applied Genetics</em>.</span>
+                </div>
+            </div>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/frontiers_plant_science.png" alt="Frontiers">
+                </div>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.3389/fgene.2021.655287" target="_blank">TrainSel: an R package for selection of training populations</a>
+                    <span>Akdemir D, Rio S, Isidro y Sánchez J. <em>Frontiers in Genetics</em>.</span>
+                </div>
             </div>
         </div>
-        <br>
 
-
-
-
-        <h2 class="section-heading"><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>2020</strong></h2>
-        <br>
-
-        <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/plant_genome.PNG" class="journal-pos" alt="The Plant Genome Journal"></span>
+        <div class="publications-year-group">
+            <h3 class="publications-year">2020</h3>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/plant_genome.PNG" alt="The Plant Genome">
                 </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1002/tpg2.20023">
-                Genome‐wide association mapping of Fusarium langsethiae infection and mycotoxin accumulation in oat (Avena sativa L.)
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    <strong>Isidro y Sánchez, J.</strong>, D'Arcy Cusack, K., Verheecke‐Vaessen, C., Kahla, A., Bekele, W., Doohan, F., Magan, N. and Medina, A. <br>
-                     <a href="https://doi.org/10.1002/tpg2.20023">
-                     https://doi.org/10.1002/tpg2.20023
-                </a>
-                </p>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.1002/tpg2.20023" target="_blank">Genome‐wide association mapping of Fusarium langsethiae infection in oat</a>
+                    <span>Isidro y Sánchez J et al. <em>The Plant Genome</em>.</span>
+                </div>
+            </div>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/frontiers_plant_science.png" alt="Frontiers">
+                </div>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.3389/fpls.2020.00947" target="_blank">Combining Partially Overlapping MultiOmics Data in Databases Using Relationship Matrices</a>
+                    <span>Akdemir D, Knox R, Isidro-Sánchez J. <em>Frontiers in Plant Science</em>.</span>
+                </div>
             </div>
         </div>
-        <hr>
 
-        <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/frontiers_plant_science.png" class="journal-pos" alt="Frontiers in Plant Science Journal"></span>
+        <div class="publications-year-group">
+            <h3 class="publications-year">Earlier</h3>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/frontiers_genetics.png" alt="Frontiers">
                 </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.3389/fpls.2020.00947">
-                Combining Partially Overlapping MultiOmics Data in Databases Using Relationship Matrices
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    Deniz Akdemir, Ron Knox and <strong>Julio Isidro-Sánchez</strong>
-                    <br>
-                    <a href="https://doi.org/10.3389/fpls.2020.00947">
-                    https://doi.org/10.3389/fpls.2020.00947
-                 </a>
-                </p>
-            </div>
-        </div>
-        <hr>
-
-         <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/book_climate.PNG" class="journal-pos" alt="Climate Resilience Book"></span>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.3389/fgene.2016.00210" target="_blank">Efficient Breeding by Genomic Mating</a>
+                    <span>Akdemir D, Isidro y Sánchez J. <em>Frontiers in Genetics</em> (2016).</span>
                 </div>
-            <div class="col-md-10">
-                <h5><a href="https://link.springer.com/chapter/10.1007/978-3-319-93381-8_4">
-                Genomic approaches for climate resilience breeding in Oats
-                </a></h5>
-                <h5 class="text-muted smaller-text">Book Chapter</h5>
-                <p class="text-muted smaller-text">
-                    <strong>Isidro y Sánchez, J.</strong>, Elena Prats, Catherine Howarth, Tim Langdon, Gracia Montilla-Bascón
-                    <br> <a href="https://link.springer.com/chapter/10.1007/978-3-319-93381-8_4">
-                     https://link.springer.com/chapter/10.1007/978-3-319-93381-8_4
-                </a>
-                </p>
             </div>
-        </div>
-        <br><br>
-
-        <h2 class="section-heading"><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>2019</strong></h2>
-        <br>
-                <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/scientific_reports.PNG" class="journal-pos" alt="Scientific Reports Journal"></span>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/TAG.PNG" alt="TAG">
                 </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1038/s41598-018-38081-6">
-                Design of training populations for genomic prediction
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    Deniz Akdemir and <strong>Isidro-Sánchez Julio</strong><br>
-                    <a href="https://doi.org/10.1038/s41598-018-38081-6">
-                    https://doi.org/10.1038/s41598-018-38081-6
-                </a>
-                </p>
-            </div>
-        </div>
-        <hr>
-
-        <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/plant_breeding_review.PNG" class="journal-pos" alt="Plant Breeding Review"></span>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.1007/s00122-014-2418-4" target="_blank">Training set optimization under population structure in genomic selection</a>
+                    <span>Isidro y Sánchez J et al. <em>Theoretical and Applied Genetics</em> (2015).</span>
                 </div>
-            <div class="col-md-10">
-                <h5><a href="https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781119521358">
-                    Mark E. Sorrells: Plant Breeder, Geneticist, Innovator, Mentor
-                </a></h5>
-                <p class="text-muted smaller-text">
-                   Gul, A., Diepenbrock, et.al and <strong>Isidro y Sánchez, J</strong>.
-                    <br><a href="https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781119521358">
-                    https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781119521358
-                </a>
-                </p>
             </div>
-        </div>
-        <hr>
-
-        <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/heredity.PNG" class="journal-pos" alt="Heredity Journal"></span>
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img src="assets/img/portfolio/journal/annals_botany.PNG" alt="Annals of Botany">
                 </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1038/s41437-018-0147-1">
-                Multiobjective optimized genomic breeding strategies for sustainable food improvement
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    Deniz Akdemir, William Beavis, Roberto Fritsche-Neto, Asheesh K.Singh <strong>Isidro y Sánchez, J</strong>.
-                    <br><a href="https://doi.org/10.1038/s41437-018-0147-1">
-                    https://doi.org/10.1038/s41437-018-0147-1
-                 </a>
-                </p>
-            </div>
-        </div>
-        <br>
-
-
-        <h2 class="section-heading"><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>2018</strong></h2>
-        <br>
-         <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/plos_one.png" class="journal-pos" alt="PLOS ONE Journal"></span>
+                <div class="pub-content">
+                    <a href="https://doi.org/10.1093/aob/mcr063" target="_blank">Changes duration of developmental phases of durum wheat caused by breeding in Spain and Italy</a>
+                    <span>Isidro y Sánchez J et al. <em>Annals of Botany</em> (2011).</span>
                 </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1371/journal.pone.0192261">
-                High-Density Genetic Mapping of a Major QTL for Resistance to Multiple Races of Loose Smut in a
-                Tetraploid Wheat Cross
-                </a></h5>
-                <p class="text-muted smaller-text">
-                    Kumar S, Knox R, Asheesh K.Singh, Depauw Ron, Campbell Heather, <strong>Isidro y Sánchez, J</strong>., et al.
-                    <br><a href="https://doi.org/10.1371/journal.pone.0192261">
-                   https://doi.org/10.1371/journal.pone.0192261
-                 </a>
-                </p>
             </div>
-        </div>
-        <br>
-
-
-
-        <h2 class="section-heading"><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>2017</strong></h2>
-        <br>
-
-
-        <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/agronomy_journal.PNG" class="journal-pos" alt="Agronomy Journal"></span>
-                </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.2134/agronj2016.09.0527">
-                    Effects of Seeding Rate on Durum Crop Production and Physiological Responses
-                </a></h5>
-                <p class="text-muted smaller-text">
-                   <strong>Isidro y Sánchez, J.</strong>, Ben Perry, Asheesh K. Singh, Hong Wang, Ronald M. DePauw et al.
-                    <br><a href="https://doi.org/10.2134/agronj2016.09.0527">
-                     https://doi.org/10.2134/agronj2016.09.05278
-                </a>
-                </p>
-            </div>
-        </div>
-        <hr>
-
-        <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/gse.PNG" class="journal-pos" alt="Genetics Selection Evolution Journal"></span>
-                </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1186/s12711-017-0348-8">
-                Locally Epistatic Models for Genome-wide Prediction and Association by Importance Sampling
-                </a></h5>
-                <p class="text-muted smaller-text">
-                   Akdemir D, Jannink JL, <strong>Isidro y Sánchez, J.</strong><br>
-                    <a href="https://doi.org/10.1186/s12711-017-0348-8">
-                    https://doi.org/10.1186/s12711-017-0348-8
-                 </a>
-                </p>
-            </div>
-        </div>
-        <br><br>
-
-
-
-        <h2 class="section-heading"><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>2016</strong></h2>
-        <br>
-
-                <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/frontiers_genetics.png" class="journal-pos" alt="Frontiers in Genetics Journal"></span>
-                </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.3389/fgene.2016.00210">
-                    Efficient Breeding by Genomic Mating
-                </a></h5>
-                <p class="text-muted smaller-text">
-                   Akdemir D, <strong>Isidro y Sánchez, J.</strong><br>
-                    <a href="https://doi.org/10.3389/fgene.2016.00210">
-                    https://doi.org/10.3389/fgene.2016.00210
-                 </a>
-                </p>
-            </div>
-        </div>
-        <hr>
-
-                <div class="row text-left">
-                <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/book_worldwheat.PNG" class="journal-pos" alt="World Wheat Book"></span>
-                </div>
-            <div class="col-md-10">
-                <h5><a>
-                Genomic Selection
-                </a></h5>
-                <h5 class="text-muted smaller-text">
-                    Book Chapter <br></h5>
-                <p class="text-muted smaller-text">
-                    <strong>Isidro-Sánchez J</strong>, Akdemir D, Burke J.<br>
-                    The World Wheat Book: A History of Wheat Breeding, Vol. 3, Chapter 32, eds A. William, B. Alain, and V. G. Maarten (Paris: Lavoisier), 1001–1023. ISBN 10: 2743020911  ISBN 13: 9782743020910
-                </p>
-            </div>
-        </div>
-        <hr>
-
-                <div class="row text-left">
-                <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/book_oat.PNG" class="journal-pos" alt="Oat Book"></span>
-                </div>
-            <div class="col-md-10">
-                <h5><a href="https://link.springer.com/protocol/10.1007%2F978-1-4939-6682-0_14">
-                Genome wide association analysis using R
-                </a></h5>
-                <h5 class="text-muted smaller-text">
-                Book Chapter
-                </h5>
-                <p class="text-muted smaller-text">
-                    <strong>Isidro-Sánchez J</strong>, Akdemir D, Montilla-Bascón, G. <br>
-                <a href="https://link.springer.com/protocol/10.1007%2F978-1-4939-6682-0_14">
-                     https://link.springer.com/protocol/10.1007%2F978-1-4939-6682-0_14
-                </a>
-                    </p>
-            </div>
-        </div>
-        <hr>
-
-        <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/book_oat.PNG" class="journal-pos" alt="Oat Book"></span>
-                </div>
-            <div class="col-md-10">
-                <h5><a href="https://link.springer.com/protocol/10.1007%2F978-1-4939-6682-0_8">
-                Chromatographic Methods to Evaluate Nutritional Quality in Oat
-                </a></h5>
-                <h5 class="text-muted smaller-text">
-                Book Chapter
-                </h5>
-                <p class="text-muted smaller-text">
-                    Montilla-Bascón, Gracia, Corey D. Broeckling, O. Hoekenga, E. Prats, M. Sorrells and <strong>Isidro-Sánchez J.</strong><br>
-                    <a href="https://link.springer.com/protocol/10.1007%2F978-1-4939-6682-0_8">
-                     https://link.springer.com/protocol/10.1007%2F978-1-4939-6682-0_8
-                </a>
-                </p>
-            </div>
-        </div>
-        <br>
-
-
-
-        <h2 class="section-heading"><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>2015</strong></h2>
-        <br>
-                <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/TAG.PNG" class="journal-pos" alt="Theoretical and Applied Genetics"></span>
-                </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1007/s00122-014-2418-4">
-                    Training set optimization under population structure in genomic selection
-                </a></h5>
-                <p class="text-muted">
-                   <strong>Isidro y Sánchez, J.</strong>, Jannink JL, Akdemir D, Poland J, Heslot N, Sorrells ME.<br>
-                    <a href="https://doi.org/10.1007/s00122-014-2418-4">
-                     https://doi.org/10.1007/s00122-014-2418-4
-                </a></p>
-            </div>
-        </div>
-        <hr>
-
-        <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/gse.PNG" class="journal-pos" alt="Genetics Selection Evolution Journal"></span>
-                </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1186/s12711-015-0116-6">
-                Optimization of genomic selection training populations with a genetic algorithm
-                </a></h5>
-                <p class="text-muted">
-                   Akdemir, D., <strong>Isidro y Sánchez, J.</strong>, Jannink JL.
-                <br>
-                    <a href="https://doi.org/10.1186/s12711-015-0116-6">
-                    https://doi.org/10.1186/s12711-015-0116-6
-                 </a></p>
-            </div>
-        </div>
-        <br>
-
-
-
-        <h2 class="section-heading"><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>2012</strong></h2>
-        <br>
-                <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/planta.PNG" class="journal-pos" alt="Planta Journal"></span>
-                </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1007/s00425-012-1603-4">
-                    Brassinosteroid leaf unrolling QTL mapping in durum wheat
-                </a></h5>
-                <p class="text-muted">
-                   <strong>Isidro y Sánchez, J.</strong>, Knox R, Singh A.K, Clarke F.R, Krishna P, DePauw R.M, Clarke, J.M, Somers D
-                <br>
-                    <a href="https://doi.org/10.1007/s00425-012-1603-4">
-                     https://doi.org/10.1007/s00425-012-1603-4
-                </a></p>
-            </div>
-        </div>
-        <hr>
-
-        <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/planta.PNG" class="journal-pos" alt="Planta Journal"></span>
-                </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1007/s00425-012-1728-5">
-                    Quantitative genetic analysis and mapping of leaf angle in durum wheat
-                </a></h5>
-                <p class="text-muted">
-                <strong>Isidro y Sánchez, J.</strong>, Knox R, Singh A.K, Clarke F.R, DePauw R.M, Clarke, J.M, Somers
-D
-                <br>
-                    <a href="https://doi.org/10.1007/s00425-012-1728-5">
-                    https://doi.org/10.1007/s00425-012-1728-5
-                 </a></p>
-            </div>
-        </div>
-        <br>
-
-
-        <h2 class="section-heading"><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>2007 - 2011</strong></h2>
-        <br>
-
-        <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/annals_botany.PNG" class="journal-pos" alt="Annals of Botany Journal"></span>
-                </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1093/aob/mcr063">
-                    Changes duration of developmental phases of durum wheat caused by breeding in Spain and Italy during the 20ᵗʰ century and its impact on yield
-                </a></h5>
-                <p class="text-muted">
-                    <strong>Isidro y Sánchez, J.</strong>, Alvaro F, Royo C, Villegas D, Miralles D, Garcıa del Moral,L.
-                <br>
-                    <a href="https://doi.org/10.1093/aob/mcr063">
-                    https://doi.org/10.1093/aob/mcr063
-                 </a></p>
-            </div>
-        </div>
-        <hr>
-
-
-        <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/field_crop_research.PNG" class="journal-pos" alt="Field Crops Research Journal"></span>
-                </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1016/j.fcr.2007.11.003">
-                    Old and modern Italian and Spanish durum wheat varieties differ in spike components
-                </a></h5>
-                <p class="text-muted">
-                    Alvaro F, <strong>Isidro-Sánchez J</strong>, Villegas D, Garcia del Moral, L, Royo C
-                <br>
-                    <a href="https://doi.org/10.1016/j.fcr.2007.11.003">
-                    https://doi.org/10.1016/j.fcr.2007.11.003
-                 </a></p>
-            </div>
-        </div>
-        <hr>
-
-                <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/agronomy_journal.PNG" class="journal-pos" alt="Agronomy Journal"></span>
-                </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.2134/agronj2007.0075">
-                    Breeding Effects on Grain Filling, Biomass Partitioning, and Remobilization in Mediterranean Durum Wheat
-                </a></h5>
-                <p class="text-muted">
-                     Alvaro F, <strong>Isidro y Sánchez, J.</strong>, Villegas D, Garcia del Moral L, Royo C.
-                <br>
-                    <a href="https://doi.org/10.2134/agronj2007.0075">
-                     https://doi.org/10.2134/agronj2007.0075
-                 </a></p>
-            </div>
-        </div>
-        <hr>
-
-                <div class="row text-left">
-            <div class="col-md-2">
-                    <span><img src="assets/img/portfolio/journal/euphytica.PNG" class="journal-pos" alt="Euphytica Journal"></span>
-                </div>
-            <div class="col-md-10">
-                <h5><a href="https://doi.org/10.1007/s10681-006-9327-9">
-                    Genetic changes in durum wheat yield components and associated traits in Italian and Spanish varieties during the 20th century
-                </a></h5>
-                <p class="text-muted">
-                    <strong>Isidro y Sánchez, J.</strong>, Alvaro F, Royo C, Villegas D, Miralles D, Garcıa del Moral,L.
-                <br>
-                    <a href="https://doi.org/10.1007/s10681-006-9327-9">
-                    https://doi.org/10.1007/s10681-006-9327-9
-                 </a></p>
-            </div>
-        </div>
-        <br>
-        <br>
-        <br>
-
-
-
-
-
+            
+            <a href="https://scholar.google.com/citations?user=intwMKoAAAAJ&hl=en" class="google-scholar-link" target="_blank">
+                <i data-lucide="graduation-cap" style="width: 20px; height: 20px;"></i>
+                Check the Full Publication List on Google Scholar
+            </a>
         </div>
     </section>
 
     <!-- Team Section -->
-<section id="team" class="bg-sect-team">
-    <div class="container">
-        <h1 class="section-heading text-white"><br><strong>The Lab</strong></h1>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="team-member">
-                        <img loading="lazy" src="assets/img/portfolio/team/Julio.jpg" class="img-responsive img-circle current-member" alt="Julio Isidro y Sánchez" width="280">
-                        <h4 class="text-white">Julio Isidro y <br> Sánchez</h4>
-                        <p>Group Leader</p>
-           <a href="https://orcid.org/0000-0002-9044-3221" class="fa fa-graduation-cap mx-2" style="font-size:40px;color:white"></a>
-<a href="https://github.com/TheRocinante-lab" class="fa fa-github mx-2" style="font-size:38px;color:white"></a>
-                    </div>
-                </div>
+    <section id="team">
+        <div class="section-header">
+            <div class="section-tag">Our People</div>
+            <h2 class="section-title">Meet the Team</h2>
+        </div>
 
-
-                <div class="col-md-3">
-                    <div class="team-member">
-                        <img src="assets/img/portfolio/team/Juan.png" class="img-responsive img-circle current-member" alt="Juan Martin del Menor" width="270">
-                        <h4 class="text-white">Juan Martin del Menor </h4>
-                        <p>PhD student</p>
-                            <a href="https://www.linkedin.com/in/juan-martin-del-menor/" class="fa fa-linkedin" style="font-size:40px;color:white"></a>
-                    </div>
-                </div>
-
-
-             <div class="col-md-3">
-                    <div class="team-member">
-                        <img src="assets/img/portfolio/team/Alejandro.png" class="img-responsive img-circle current-member" alt="Alejandro Dominguez" width="270">
-                        <h4 class="text-white">Alejandro Dominguez </h4>
-                        <p>PhD student</p>
-                            <a href="https://www.linkedin.com/in/alejandro-domínguez-rondón-378014265/" class="fa fa-linkedin" style="font-size:40px;color:white"></a>
-                    </div>
-                </div>
-
-
-              <div class="col-md-3">
-                    <div class="team-member">
-                        <img src="assets/img/portfolio/team/Ines.png" class="img-responsive img-circle current-member" alt="Inés Vegas Lorenzo" width="270">
-                        <h4 class="text-white">Inés Vegas Lorenzo</h4>
-                        <p>Technician</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="team-member">
-                        <img src="assets/img/portfolio/team/Saif.png" class="img-responsive img-circle current-member" alt="Seifelden Metwally" width="270">
-                        <h4 class="text-white">Seifelden Metwally </h4>
-                        <p>PhD student</p>
-                            <a href="https://www.linkedin.com/in/metwallys/" class="fa fa-linkedin" style="font-size:40px;color:white"></a>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="team-member">
-                        <img src="assets/img/portfolio/team/naomi.png" class="img-responsive img-circle current-member" alt="Naomi López Angulo" width="270">
-                        <h4 class="text-white">Naomi López Angulo</h4>
-                        <p>Technician</p>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="team-member">
-                        <img src="assets/img/portfolio/team/Angela.png" class="img-responsive img-circle current-member" alt="Angela Cardozo" width="270">
-                        <h4 class="text-white">Angela Cardozo </h4>
-                        <p>Technician</p>
-                    </div>
-                </div>
-            </div>
-
-             <h3 class="section-heading text-white"><br><strong>Alumni</strong></h3>
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="team-member">
-                        <img src="assets/img/portfolio/team/javier.png" class="img-responsive img-circle current-member" alt="Javier Fernández González" width="220" height="220">
-                        <h4 class="text-white">Javier Fernández <br>González</h4>
-                        <p style="min-height:50px;">Researcher</p>
-                        <a href="https://www.linkedin.com/in/javier-fern%C3%A1ndez-gonz%C3%A1lez-22bb681bb/" class="fa fa-linkedin" style="font-size:40px;color:white"></a>
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <div class="team-member">
-                        <img src="assets/img/portfolio/team/julian.PNG" class="img-responsive img-circle current-member" alt="Julián García-Abadillo Velasco" width="220" height="220">
-                        <h4 class="text-white">Julián García-Abadillo Velasco </h4>
-                        <p style="min-height:50px;">Researcher University of Florida</p>
-                            <a href="https://www.linkedin.com/in/garcia-abadillo-velasco/" class="fa fa-linkedin" style="font-size:40px;color:white"></a>
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <div class="team-member">
-                        <img src="assets/img/portfolio/team/Mohsen.png" class="img-responsive img-circle current-member" alt="Mohsen Yoosefzadeh" width="220" height="220">
-                        <h4 class="text-white">Mohsen Yoosefzadeh </h4>
-                        <p style="min-height:50px;">Assistant professor at the University of Guelph</p>
-                             <a href="https://www.linkedin.com/in/mohsen-yoosefzadeh-n-82365bb2/?originalSubdomain=ca" class="fa fa-linkedin mx-2" style="font-size:40px;color:white"></a>
-                    <a href="https://graduatestudies.uoguelph.ca/people/mohsen-yoosefzadeh-najafabadi" class="fa fa-university mx-2" style="font-size:38px;color:white"></a>
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <div class="team-member">
-                        <img src="assets/img/portfolio/team/achille.png" class="img-responsive img-circle current-member" alt="Achille Nyouma" width="220" height="220">
-                        <h4 class="text-white">Achille Nyouma </h4>
-                        <p style="min-height:50px;">Assistant Professor: University of Yaoundé </p>
-                        <a href="https://www.linkedin.com/in/achille-nyouma-683aa112a/?trk=public_profile_browsemap&originalSubdomain=cm" class="fa fa-linkedin mx-2" style="font-size:40px;color:white"></a>
-                    <a href="https://scholar.google.com/citations?user=VTIPzYUAAAAJ&hl=fr" class="fa fa-university mx-2" style="font-size:38px;color:white"></a>
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <div class="team-member">
-                        <img src="assets/img/portfolio/team/humberto.png" class="img-responsive img-circle current-member" alt="Humberto Fanelli Carvalho" width="220" height="220">
-                        <h4 class="text-white">Humberto Fanelli Carvalho</h4>
-                        <p style="min-height:50px;">Senior Developmental breeder in Bayer</p>
-          <a href="https://es.linkedin.com/in/humbertofanellicarvalho" class="fa fa-linkedin mx-2" style="font-size:40px;color:white"></a>
-<a href="https://orcid.org/0000-0003-0745-7583" class="fa fa-graduation-cap mx-2" style="font-size:38px;color:white"></a>
-<a href="https://twitter.com/humbertofanelli" class="fa fa-twitter mx-2" style="font-size:40px;color:white"></a>
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <div class="team-member">
-                        <a href="https://www.linkedin.com/in/stacy-rousse-561506171/?originalSubdomain=fr"><img src="assets/img/portfolio/team/Stacy.png" class="img-responsive img-circle current-member" alt="Stacy Roose" width="220" height="220"></a>
-                        <h4 class="text-white">Stacy Roose</h4>
-                        <p style="min-height:50px;">PhD in INRA</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="team-member">
-                        <a href="https://bioinformatics.bethematchclinical.org/about-bioinformatics-research-team-members/"><img src="assets/img/portfolio/team/deniz.jpg" class="img-responsive img-circle current-member" alt="Deniz Akdemir" width="220" height="220"></a>
-                        <h4 class="text-white">Deniz Akdemir</h4>
-                        <p style="min-height:50px;">Clinical Data Scientist at Be The Match</p>
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <div class="team-member">
-                        <a href="https://umr-agap.cirad.fr/toutes-les-actualites/simon-rio-nouveau-recrute-dans-l-umr-agap-institut">
-                        <img src="assets/img/portfolio/team/simon.jpg" class="img-responsive img-circle current-member" alt="Simon Rio" width="220" height="220"></a>
-                        <h4 class="text-white">Simon Rio</h4>
-                        <p style="min-height:50px;">Researcher in polyploid genomics/genetics Cirad, Montpellier</p>
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <div class="team-member">
-                        <a href="https://www.linkedin.com/in/blecktita/">
-                        <img src="assets/img/portfolio/team/BleckTita.png" class="img-responsive img-circle current-member" alt="Bleck Tita" width="220" height="220"></a>
-                        <h4 class="text-white">Bleck Tita</h4>
-                        <p style="min-height:50px;">Data Scientist </p>
-                        <a href="https://www.linkedin.com/in/blecktita/" class="fa fa-linkedin mx-2" style="font-size:38px;color:white"></a>
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <div class="team-member">
-                        <a href="https://www.linkedin.com/in/pablo-atienza-l%C3%B3pez-a965911a0/?originalSubdomain=es">
-                        <img src="assets/img/portfolio/team/Pablo.png" class="img-responsive img-circle current-member" alt="Pablo Atienza Lopez" width="220" height="220"></a>
-                        <h4 class="text-white">Pablo Atienza Lopez</h4>
-                        <p style="min-height:50px;">Bioinformatics Specialist </p>
-                           <a href="https://www.linkedin.com/in/pablo-atienza-lopez/" class="fa fa-linkedin mx-2" style="font-size:38px;color:white"></a>
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <div class="team-member">
-                        <a href="https://www.linkedin.com/in/kane-d-arcy-cusack-ab0a771a7/">
-                            <img src="assets/img/portfolio/team/Kane.png" class="img-responsive img-circle current-member" alt="Kane D'Arcy Cusack" width="220" height="220">
+        <div class="team-groups">
+            <p class="team-label">Current Members</p>
+            <div class="team-grid">
+                <div class="team-card leader">
+                    <img src="assets/img/portfolio/team/Julio.jpg" alt="Julio Isidro y Sánchez" class="team-avatar">
+                    <h3 class="team-name">Julio Isidro y Sánchez</h3>
+                    <p class="team-role">Group Leader</p>
+                    <div class="team-links">
+                        <a href="https://orcid.org/0000-0002-9044-3221" target="_blank" title="ORCID">
+                            <i data-lucide="graduation-cap" style="width: 18px; height: 18px;"></i>
                         </a>
-                        <h4 class="text-white">Kane D'Arcy Cusack</h4>
-                        <p style="min-height:50px;">Agronomy Manager at Segra International Corp.</p>
-                        <a href="https://www.linkedin.com/in/kane-d-arcy-cusack-ab0a771a7/" class="fa fa-linkedin mx-2" style="font-size:38px;color:white"></a>
+                        <a href="https://github.com/TheRocinante-lab" target="_blank" title="GitHub">
+                            <i data-lucide="github" style="width: 18px; height: 18px;"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <img src="assets/img/portfolio/team/Juan.png" alt="Juan Martin del Menor" class="team-avatar">
+                    <h3 class="team-name">Juan Martin del Menor</h3>
+                    <p class="team-role">PhD Student</p>
+                    <div class="team-links">
+                        <a href="https://www.linkedin.com/in/juan-martin-del-menor/" target="_blank" title="LinkedIn">
+                            <i data-lucide="linkedin" style="width: 18px; height: 18px;"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <img src="assets/img/portfolio/team/Alejandro.png" alt="Alejandro Dominguez" class="team-avatar">
+                    <h3 class="team-name">Alejandro Dominguez</h3>
+                    <p class="team-role">PhD Student</p>
+                    <div class="team-links">
+                        <a href="https://www.linkedin.com/in/alejandro-domínguez-rondón-378014265/" target="_blank" title="LinkedIn">
+                            <i data-lucide="linkedin" style="width: 18px; height: 18px;"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <img src="assets/img/portfolio/team/Saif.png" alt="Seifelden Metwally" class="team-avatar">
+                    <h3 class="team-name">Seifelden Metwally</h3>
+                    <p class="team-role">PhD Student</p>
+                    <div class="team-links">
+                        <a href="https://www.linkedin.com/in/metwallys/" target="_blank" title="LinkedIn">
+                            <i data-lucide="linkedin" style="width: 18px; height: 18px;"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <img src="assets/img/portfolio/team/Ines.png" alt="Inés Vegas Lorenzo" class="team-avatar">
+                    <h3 class="team-name">Inés Vegas Lorenzo</h3>
+                    <p class="team-role">Technician</p>
+                </div>
+
+                <div class="team-card">
+                    <img src="assets/img/portfolio/team/naomi.png" alt="Naomi López Angulo" class="team-avatar">
+                    <h3 class="team-name">Naomi López Angulo</h3>
+                    <p class="team-role">Technician</p>
+                </div>
+
+                <div class="team-card">
+                    <img src="assets/img/portfolio/team/Angela.png" alt="Angela Cardozo" class="team-avatar">
+                    <h3 class="team-name">Angela Cardozo</h3>
+                    <p class="team-role">Technician</p>
+                </div>
+            </div>
+
+            <p class="team-label">Alumni</p>
+            <div class="alumni-grid">
+                <div class="alumni-card">
+                    <img src="assets/img/portfolio/team/javier.png" alt="Javier Fernández González" class="alumni-avatar">
+                    <h4 class="alumni-name">Javier Fernández González</h4>
+                    <p class="alumni-position">Researcher</p>
+                    <div class="alumni-links">
+                        <a href="https://www.linkedin.com/in/javier-fern%C3%A1ndez-gonz%C3%A1lez-22bb681bb/" target="_blank">
+                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="alumni-card">
+                    <img src="assets/img/portfolio/team/julian.PNG" alt="Julián García-Abadillo" class="alumni-avatar">
+                    <h4 class="alumni-name">Julián García-Abadillo</h4>
+                    <p class="alumni-position">University of Florida</p>
+                    <div class="alumni-links">
+                        <a href="https://www.linkedin.com/in/garcia-abadillo-velasco/" target="_blank">
+                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="alumni-card">
+                    <img src="assets/img/portfolio/team/Mohsen.png" alt="Mohsen Yoosefzadeh" class="alumni-avatar">
+                    <h4 class="alumni-name">Mohsen Yoosefzadeh</h4>
+                    <p class="alumni-position">University of Guelph</p>
+                    <div class="alumni-links">
+                        <a href="https://www.linkedin.com/in/mohsen-yoosefzadeh-n-82365bb2/" target="_blank">
+                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="alumni-card">
+                    <img src="assets/img/portfolio/team/achille.png" alt="Achille Nyouma" class="alumni-avatar">
+                    <h4 class="alumni-name">Achille Nyouma</h4>
+                    <p class="alumni-position">University of Yaoundé</p>
+                    <div class="alumni-links">
+                        <a href="https://www.linkedin.com/in/achille-nyouma-683aa112a/" target="_blank">
+                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="alumni-card">
+                    <img src="assets/img/portfolio/team/humberto.png" alt="Humberto Fanelli Carvalho" class="alumni-avatar">
+                    <h4 class="alumni-name">Humberto Fanelli</h4>
+                    <p class="alumni-position">Bayer</p>
+                    <div class="alumni-links">
+                        <a href="https://es.linkedin.com/in/humbertofanellicarvalho" target="_blank">
+                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="alumni-card">
+                    <img src="assets/img/portfolio/team/Stacy.png" alt="Stacy Roose" class="alumni-avatar">
+                    <h4 class="alumni-name">Stacy Roose</h4>
+                    <p class="alumni-position">PhD in INRA</p>
+                    <div class="alumni-links">
+                        <a href="https://www.linkedin.com/in/stacy-rousse-561506171/" target="_blank">
+                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="alumni-card">
+                    <img src="assets/img/portfolio/team/deniz.jpg" alt="Deniz Akdemir" class="alumni-avatar">
+                    <h4 class="alumni-name">Deniz Akdemir</h4>
+                    <p class="alumni-position">Be The Match</p>
+                </div>
+                <div class="alumni-card">
+                    <img src="assets/img/portfolio/team/simon.jpg" alt="Simon Rio" class="alumni-avatar">
+                    <h4 class="alumni-name">Simon Rio</h4>
+                    <p class="alumni-position">CIRAD, Montpellier</p>
+                </div>
+                <div class="alumni-card">
+                    <img src="assets/img/portfolio/team/BleckTita.png" alt="Bleck Tita" class="alumni-avatar">
+                    <h4 class="alumni-name">Bleck Tita</h4>
+                    <p class="alumni-position">Data Scientist</p>
+                    <div class="alumni-links">
+                        <a href="https://www.linkedin.com/in/blecktita/" target="_blank">
+                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="alumni-card">
+                    <img src="assets/img/portfolio/team/Pablo.png" alt="Pablo Atienza Lopez" class="alumni-avatar">
+                    <h4 class="alumni-name">Pablo Atienza Lopez</h4>
+                    <p class="alumni-position">Bioinformatics</p>
+                    <div class="alumni-links">
+                        <a href="https://www.linkedin.com/in/pablo-atienza-lopez/" target="_blank">
+                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="alumni-card">
+                    <img src="assets/img/portfolio/team/Kane.png" alt="Kane D'Arcy Cusack" class="alumni-avatar">
+                    <h4 class="alumni-name">Kane D'Arcy Cusack</h4>
+                    <p class="alumni-position">Agronomy Manager</p>
+                    <div class="alumni-links">
+                        <a href="https://www.linkedin.com/in/kane-d-arcy-cusack-ab0a771a7/" target="_blank">
+                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-    </div>
-</section>
+        </div>
+    </section>
 
+    <!-- Teaching Section -->
+    <section id="teaching">
+        <div class="section-header">
+            <div class="section-tag">Education</div>
+            <h2 class="section-title">Teaching & Training</h2>
+        </div>
 
+        <div class="teaching-list">
+            <div class="teaching-item">
+                <div class="teaching-year">Recurring</div>
+                <div class="teaching-content">
+                    <h3>Quantitative Genetics and Plant Breeding</h3>
+                    <p>Graduate-level courses on statistical methods in plant breeding, genomic selection theory, and practical applications in R.</p>
+                </div>
+            </div>
+            <div class="teaching-item">
+                <div class="teaching-year">Workshops</div>
+                <div class="teaching-content">
+                    <h3>Genomic Selection Training Workshops</h3>
+                    <p>Hands-on training in genomic prediction methods, GBLUP, and training population optimization using our software tools.</p>
+                </div>
+            </div>
+            <div class="teaching-item">
+                <div class="teaching-year">Supervision</div>
+                <div class="teaching-content">
+                    <h3>PhD & MSc Student Supervision</h3>
+                    <p>Mentoring graduate students in quantitative genetics, bioinformatics, and computational breeding.</p>
+                </div>
+            </div>
+        </div>
 
-<section id="teaching" class="bg-dark text-white">
-    <div class="container">
-        <h1><br><strong>Teaching</strong></h1>
-        <h4 class="container-sm"><br>Learning resources made by lab members will be soon here!<br><br></h4>
-    </div>
-</section>
-
-
-
-
-<section id="projects" class="bg-light-transparent">
-    <div class="container">
-        <h1><br><strong>Projects<br><br></strong></h1>
-
-        <h2>Current Projects<hr></h2>
-
-
-        <h3 style="color:#5F0018;padding-left:2%;">PeGaSus</h3>
-                <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;">Genomic Assisted breeding for SUStainable agriculture: A benchmark approach. (Proyectos de Generación de Conocmiento: PID2021-123718OB-I00)</h4>
-                    <p class="container-sm" style="padding-left:4%; text-align: justify">There have been many scientific reports evaluating models and accuracy of GAB in plant breeding programs. However, the information on how, when, and why to apply GAB tools in real plant breeding programs is scarce. The main reason for this lack of information is that most plant breeding programs are private, and also GAB applications are in relatively new tools. Here, we aim to apply knowledge driven genomic prediction tools from a empirical public breeding program that will help to deliver general guideline applications of this technology.</p>
-                    <br>
-                    <img src="assets/img/portfolio/projects/Pegasuslogo.jpg" alt="PeGaSus Project Logo" style="width:612px;height:400px;display: block;margin-left: auto;margin-right: auto;">
-                    <br><br>
-
-
-        <h3 style="color:#5F0018;padding-left:2%;">GeneBlend</h3>
-                <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;">Combining Genomic Approaches to Study Host-Pathogen Relationships in Wheat and Septoria
-Spanish Grant CNS2024-154812 (2025-2027) - €144K </h4>
-                    <p class="container-sm" style="padding-left:4%; text-align: justify"> Building on previously developed genomic tools, this project aims to revolutionize our understanding of wheat-Septoria tritici blotch interactions. We're validating predictive models through controlled greenhouse challenges of 200 wheat lines with 100 pathogen isolates, then extending to field conditions with fresh Spanish isolates. Through genome-wide association studies, we're pinpointing resistance loci and developing forecasting tools for pathogen aggressiveness. Our goal is rapid knowledge transfer to breeders and farmers through workshops, training sessions, and publications.
-Impact: Enabling breeders to develop durable disease resistance by understanding the genetic architecture of both host and pathogen.
-</p>
-                    <br>
-                    <img src="assets/img/portfolio/projects/Consolidacion.png" alt="GeneBlend Project" style="width:612px;height:400px;display: block;margin-left: auto;margin-right: auto;">
-                    <br><br>
-
-
-        <h3 style="color:#5F0018;padding-left:2%;">Breed-E-Omics</h3>
-                <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;"> Genomic Approach for Sustainable Spelt Agriculture (2025-2028). European Grant DADR-2024-029390. (96K). </h4>
-                    <p class="container-sm" style="padding-left:4%; text-align: justify"> This project addresses the growing demand for sustainable, high-value spelt wheat. Through comprehensive stakeholder engagement with farmers and agri-food industry, we've identified three critical needs: low-input high-yield varieties for farmers, nutritious organic grains for food processors, and promotion of soil health and biodiversity. We're conducting varietal assessments, genotype-by-environment studies,
-                    and genome-wide association analyses to develop resilient spelt strains that deliver economic, environmental, and social benefits.
-</p>
-                    <br>
-                    <img src="assets/img/portfolio/projects/Breed.png" alt="Breed-E-Omics Project" style="width:612px;height:400px;display: block;margin-left: auto;margin-right: auto;">
-                    <br><br>
-
-
-        <h3 style="color:#5F0018;padding-left:2%;">OliveMat</h3>
-                <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;"> Application of Genomic assisted breeding on Olive tree breeding (2025-2029). </h4>
-                    <p class="container-sm" style="padding-left:4%; text-align: justify"> In colaboration with University of Cordoba we are aiming to implemente genomic tools to improve genetic
-                    gain on traditional olive tree breeding. A fundamental challenge in breeding is balancing genetic gain against diversity loss. How do we achieve maximum improvement while preserving variation for future progress? Our OGM research leverages stochastic simulations and real-world implementations to support breeders in selecting superior crosses. This approach accelerates development of resilient, high-yielding crops while maintaining long-term genetic diversity—essential for sustained breeding progress.
-Paradigm shift: Moving from selecting individual plants to optimizing entire mating strategies for multi-generational impact.
-</p>
-                    <br>
-                    <img src="assets/img/portfolio/projects/Olive.png" alt="OliveMat Project" style="width:612px;height:400px;display: block;margin-left: auto;margin-right: auto;">
-                    <br><br>
-
-
-        <h3 style="color:#5F0018;padding-left:2%;">CDTI-Blueberry</h3>
-                <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;"> Climate-Resilient Blueberry Varieties through Advanced Genomic Selection. Collaboration with Horticulture Company (2023-2026) </h4>
-                    <p class="container-sm" style="padding-left:4%; text-align: justify"> This innovative partnership applies cutting-edge genomic selection to fast-track blueberry cultivar development for water stress and warm climates. Over three breeding cycles, we're phenotyping 200-400 seedlings annually for key traits (phenology, vigor, fruit quality) while conducting high-throughput genotyping. Our iteratively refined predictive models enable early identification of superior genotypes, drastically reducing field trial requirements and accelerating breeding cycles.
-Innovation: Demonstrating genomic selection's power beyond traditional field crops—expanding to high-value horticultural species.
-</p>
-                    <br>
-                    <img src="assets/img/portfolio/projects/CDTI.png" alt="CDTI Blueberry Project" style="width:612px;height:400px;display: block;margin-left: auto;margin-right: auto;">
-                    <br><br>
-
-
-
-
-            <h3 style="color:#5F0018;padding-left:2%;">Machine learning approaches applied to genomic assisted breeding</h3>
-                <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;">Programa Propio de I+D+I 20201 de la Universidad Politécnica de Madrid. <br>
-                    Convocatoria de ayudas para contratos predoctorales. </h4>
-                    <p class="container-sm" style="padding-left:4%;text-align: justify">Wheat (the second most important crop worldwide) yields are not currently increasing at comparable rates to those achieved in previous decades. Exploitation of the full range of available genetic resources (pre-breeding) could help develop new varies that will be needed in the future. The emergent technologies based on Artificial Intelligence and Machine learning are interesting tools to handle the huge volumes of genotypic and phenotypic data that are generated from agronomic and biological experiments. The aim of this PhD project is to develop statistical and programming tools to exploit and decode the hidden patterns underlying data and apply this knowledge on real breeding problems in both academical and industrial fields.</p>
-                    <br>
-                    <img src="assets/img/portfolio/projects/logo_phd.png" alt="PhD Project Logo" style="width:550px;height:auto;display: block;margin-left: auto;margin-right: auto;">
-
-                    <br><br>
-
-                  <h3 style="color:#5F0018;padding-left:2%;"> Genomic assisted breeding applied to Syngenta sunflower breeding program. </h3>
-                <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;">Programa UPM-Syngenta. <br>
-                    Convocatorias FPU </h4>
-                    <p class="container-sm" style="padding-left:4%;text-align: justify">This project aims to provide a benchmark guideline on genomic assisted breeding for Syngenta sunflowerbreeding program by building tools and models that augment current practices capitalizing on advances in genomics, phenomics, imaging technologies, and machine learning.</p>
-                    <br>
-                    <img src="assets/img/portfolio/projects/Sunflower.jpg" alt="Sunflower Breeding Project" style="width:550px;height:auto;display: block;margin-left: auto;margin-right: auto;">
-
-                    <br><br>
-
-
-
-
-<br><br>
-
-        <h2>Previous Projects<hr></h2>
-
-
-
-<h3 style="color:#5F0018;padding-left:2%;">European Grants</h3>
-
- <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;">INNOVAR: Next Generation Variety Testing For Improved Cropping On European Farmland (H2020) (2020-2025) </h4>
-        <p class="container-sm" style="padding-left:4%;text-align: justify">Granted: 350 K. PI. Julio Isidro-Sánchez</p>
-
-    <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;">HealthyOats: Ireland Wales 2014-2020 Operation </h4>
-        <p class="container-sm" style="padding-left:4%;text-align: justify">Granted: 2 million. Coordinator. Julio Isidro-Sánchez</p>
-
-    <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;">WheatSustain: Knowledge-driven genomic predictions for sustainable disease resistance in wheat (Suscrop)</h4>
-        <p class="container-sm" style="padding-left:4%;text-align: justify">Granted: 173K. PI. Julio Isidro-Sánchez</p>
-
-    <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;font-size:11">
-        Identification and selection of traits that maximize biomass production as well as
-        enhance the efficiency of biomass conversion by novel processes are critical for the
-        viability of biorefineries (2009-2011)</h4>
-        <p class="container-sm" style="padding-left:4%;">
-         AGRNEX2008N0475. Postdoctoral Project.</p>
-
-    <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;font-size:11">
-        IDuWUE: Improving durum wheat for water use efficiency and yield stability through physiological and molecular approaches (2002-2006)</h4>
-        <p class="container-sm" style="padding-left:4%;">
-        ICFPN502A3PR03 (ICA3NCTN2002N10085), 963K. PhD. Project.</p>
-
-<h3 style="color:#5F0018;padding-left:2%;">Irish Grants</h3>
-    <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;">Oats for the future: Deciphering potential of host resistance and RNAi to minimise mycotoxin contamination under present and future climate scenarios</h4>
-        <p class="container-sm" style="padding-left:4%;text-align: justify">Granted: 89K. PI. Julio Isidro-Sánchez </p>
-    <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;font-size:11">
-        Developing multi-use barley to improve the organic Irish market (2019-2022)</h4>
-        <p class="container-sm" style="padding-left:4%;">
-         Granted-96K. PI. Julio Isidro-Sánchez.</p>
-    <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;font-size:11">
-        PICS: Physiology Infrastructure for Crop Stress (2016)</h4>
-        <p class="container-sm" style="padding-left:4%;">
-        295K. PI. Julio Isidro-Sánchez.</p>
-        <br>
-
-<h3 style="color:#5F0018;padding-left:2%;">Canadian Grants</h3>
-    <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;font-size:11">
-        CTAG: Canadian Triticum Applied Genomics (2015-2019)</h4>
-        <p class="container-sm" style="padding-left:4%;">
-         Scientific advisor of WPs.</p>
-    <h4 class="container-sm" style="color:#BC4A3c;padding-left:2.5%;font-size:11">
-        Improving Wheat Productivity under Conditions of Abiotic Stress (2012-2017)</h4>
-        <p class="container-sm" style="padding-left:4%;">
-        A proposed
-        project as part of the National Research Council Wheat Flagship Program and the Canadian Wheat
-        Improvement Consortium. 14 million. Postdoctoral Project.</p>
-        <br>
-
-            <h3 style="color:#5F0018;padding-left:2%;">Spanish Grants</h3>
-                        <h4 class="container-sm" style="color:#BC4A3c;padding-left:3.5%;font-size:11">
-                    WheatRes. Identificación de nuevas fuentes de resistencia horizontal a septoria y roya en trigo duro (2021-2024) </h4>
-                    <p class="container-sm" style="padding-left:4%;">
-                   PLEC2021-007930. 160K. PI on this project.</p>
-                <h4 class="container-sm" style="color:#BC4A3c;padding-left:3.5%;font-size:11">
-                    Aproximación multidisciplinary al incremento de la eficacia en la mejora del trigo
-                    duro: Integración de tácnicas ecofisiológicas y moleculares (2003-2006)</h4>
-                    <p class="container-sm" style="padding-left:4%;">
-                     AGL2002-04285-C03-02. 65K. Member of the Research team of this project.</p>
-                <h4 class="container-sm" style="color:#BC4A3c;padding-left:3.5%;font-size:11">
-                    Nuevas vias para mejorar la adaptacion del trigo duro, Triticum turgidum L.Var.Durum
-                    a ambientes mediterraneos (2006-2009)</h4>
-                    <p class="container-sm" style="padding-left:4%;">
-                    AGL2006-09226-C02-02- 02/AGR. 45K. Member of the Research team of this project.</p>
-                <h4 class="container-sm" style="color:#BC4A3c;padding-left:3.5%;font-size:11">
-                    Fisiología del tritórdeo en condiciones mediterráneas: enfoque multidisciplinary
-                    para una colaboración transmediterránea azahar (2005-2008)</h4>
-                    <p class="container-sm" style="padding-left:4%;">
-                    AGL2005-07257- C04-04. 28K. Member of the Research team of this project.</p>
-                   <br>
-
-
-           <br><br><br>
-    </div>
-</section>
-
-<section id="funding">
-    <div class="container">
-        <h1><br><strong>Funding</strong></h1>
-        <h4><br>We are very grateful to receive funding for our research from:<br></h4>
-        <ul>
-            
-            <li><h4>Agencia Estatal de Investigación (AEI)</h4></li>
-            <li><h4>Centro para el Desarrollo Tecnológico Industrial; CDTI</h4></li>
-            <li><h4>Syngenta</h4></li>
-            <li><h4>Spanish Ministry of Science and Innovation [PID2019-104518RB-100], (AEI/FEDER, UE)</h4></li>
-            <li><h4>Spanish Ministry of Science and Innovation [PID2021-123718OB-I00]</h4></li>
-            <li><h4>European Union&rsquo;s Horizon 2020 research and innovation program under grant agreement No. 818144</h4></li>
-            <li><h4>Severo Ochoa Program for Centres of Excellence in R&amp;D.</h4></li>
-            <li><h4>Ministerio de Educaci&oacute;n y Formaci&oacute;n Profesional of Spain</h4></li>
-            <li><h4>Universidad Polit&eacute;cnica de Madrid (Programa Propio de I+D+I 2021)</h4></li>
-        </ul>
-    </div>
-    <br><br>
-</section>
-
-
-<section id="contact">
-    <div class="container">
-        <h1><br><strong>Contact<br></strong></h1>
-        <div class="container">
-        <br>
-        <h4><a href="https://github.com/TheRocinante-lab" class="contact-links">github.com/TheRocinante-lab/</a></h4>
-        <h4><a href="http://www.cbgp.upm.es/index.php/es/informacion-cientifica/csbgp/julio-isidro-sanchez" class="contact-links">
-            cbgp.upm.es/julio-isidro-sanchez/</a></h4>
-    </div>
-    </div>
-    <br>
-</section>
-
-
-
-<footer class="bg-dark py-5">
-    <div class="container px-4 px-lg-5">
-
-        <div class="small text-center text-muted mb-3">
-             <a href="https://visitorbadge.io/status?path=therocinante-lab.github.io" target="_blank">
-                <img src="https://api.visitorbadge.io/api/visitors?path=therocinante-lab.github.io&label=VISITORS&labelColor=%23555555&countColor=%230d6efd&style=flat&initial=1500" alt="Visitor Count" />
+        <p class="teaching-resources-label">Teaching Resources</p>
+        <div class="teaching-resources">
+            <a href="assets/img/portfolio/Teaching_material/Presentations/" class="teaching-folder">
+                <i data-lucide="presentation" style="width: 28px; height: 28px;"></i>
+                <span>Presentations</span>
+                <small>Slides & PPT files</small>
+            </a>
+            <a href="assets/img/portfolio/Teaching_material/Quantitative Genetics/" class="teaching-folder">
+                <i data-lucide="book-open" style="width: 28px; height: 28px;"></i>
+                <span>Quantitative Genetics</span>
+                <small>Course materials</small>
+            </a>
+            <a href="assets/img/portfolio/Teaching_material/WorkBooks/" class="teaching-folder">
+                <i data-lucide="file-text" style="width: 28px; height: 28px;"></i>
+                <span>WorkBooks</span>
+                <small>Exercises & PDFs</small>
             </a>
         </div>
+    </section>
 
-        <div class="small text-center text-muted">
-            Crop Genomics and Breeding Methods lab <br> 2022
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="section-header">
+            <div class="section-tag">Funded Research</div>
+            <h2 class="section-title">Research Projects</h2>
         </div>
 
-    </div>
-</footer>
+        <div class="projects-category">
+            <h3 class="projects-category-title">European & International Grants (2015–Present)</h3>
+            <div class="project-item">
+                <h4 class="project-title">Breed-E-Omics: Genomic Approach for Sustainable Spelt Agriculture</h4>
+                <p class="project-meta">DADR-2024-029390 • 2025–2028 • PI</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">InnoVar: Next Generation Variety Testing for Improved Cropping</h4>
+                <p class="project-meta">H2020 Grant No. 818144 • 2019–2024 • Deputy WP2 Leader</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">HealthyOats: Innovation in Oat Product Development</h4>
+                <p class="project-meta">INTERREG Ireland-Wales • 2020–2023 • Project Coordinator</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">WheatSustain: Knowledge-driven Genomic Predictions for Sustainable Disease Resistance</h4>
+                <p class="project-meta">SusCrop ERA-NET • 2019–2022 • PI & WP1 Lead</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">Effect of Soil Water Content on Seedling Emergence in Small-grain Cereals</h4>
+                <p class="project-meta">European Plant Phenotyping Network (EPPN) • 2018–2020 • PI</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">Developing Multi-use Barley to Improve the Organic Irish Market</h4>
+                <p class="project-meta">Irish Research Council • 2019–2022 • PI</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">CONSUS: Crop Optimization through Sensing, Understanding & Visualization</h4>
+                <p class="project-meta">SFI Ireland • 2017–2022 • Funded Investigator</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">Oats for the Future: Deciphering Host Resistance and RNAi to Minimize Mycotoxin Contamination</h4>
+                <p class="project-meta">SFI/BBSRC • 2017–2022 • Co-PI</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">PICS: Physiology Infrastructure for Crop Stress</h4>
+                <p class="project-meta">SFI Ireland • 2016 • PI</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">CTAG: Canadian Triticum Applied Genomics</h4>
+                <p class="project-meta">Canadian Grant • 2015–2019 • Scientific Advisor</p>
+            </div>
+        </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
-<script src="js/scripts.js"></script>
-</body>
-</html>
+        <div class="projects-category">
+            <h3 class="projects-category-title">Spanish Grants (2015–Present)</h3>
+            <div class="project-item">
+                <h4 class="project-title">Combining Genomic Approaches to Study Host-Pathogen Relationships in Wheat and Septoria</h4>
+                <p class="project-meta">Consolidation CNS2024-154812 • 2025–2027 • PI</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">Genomic-Assisted Breeding for Sustainable Agriculture: A Reference Approach</h4>
+                <p class="project-meta">PID2021-123718OB-I00 • 2022–2025 • PI</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">Machine Learning Approaches Applied to Genomic-Assisted Breeding</h4>
+                <p class="project-meta">UPM-PhD Plan Propio • 2022–2026 • PI</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">Genomic-Assisted Breeding Applied to Sunflower Improvement (Syngenta)</h4>
+                <p class="project-meta">Industrial Doctorate • 2022 • PI</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">WheatRes: Identification of New Sources of Horizontal Resistance to Septoria and Rust in Durum Wheat</h4>
+                <p class="project-meta">PLEC2021-007930 • 2021–2024 • PI</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">Breeding Tools to Harness Yield Productivity by Applying Genomic Selection</h4>
+                <p class="project-meta">R&D Madrid • 2021–2023 • PI</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">Oat PanGenome Consortium</h4>
+                <p class="project-meta">International Consortium • 2020–Present • Member</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">Svevo Platinum Genome Consortium</h4>
+                <p class="project-meta">International Consortium • 2020–Present • Member</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">TRENDING_Wheat: Improving Accuracy and Efficiency of Selection for Complex Traits</h4>
+                <p class="project-meta">PID2019-109089RB-C32 • 2019–2023 • GS Implementation</p>
+            </div>
+        </div>
+
+        <div class="projects-category">
+            <h3 class="projects-category-title">Previous Projects</h3>
+            <div class="project-item">
+                <h4 class="project-title">Improving Wheat Productivity under Conditions of Abiotic Stress</h4>
+                <p class="project-meta">NRC Wheat Flagship, Canada • 2012–2017 • Postdoctoral Project</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">Identification and Selection of Traits for Biomass Production and Conversion Efficiency</h4>
+                <p class="project-meta">European Grant AGRNEX2008N0475 • 2009–2011 • Postdoctoral Project</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">IDuWUE: Improving Durum Wheat for Water-Use Efficiency and Yield Stability</h4>
+                <p class="project-meta">European Grant ICA3NCTN2002N10085 • 2002–2006 • Team Member</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">New Approaches for Improving Durum Wheat Adaptation to Mediterranean Environments</h4>
+                <p class="project-meta">Spanish Grant AGL2006-09226 • 2006–2009 • Team Member</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">Tritordeum Physiology in Mediterranean Conditions</h4>
+                <p class="project-meta">Spanish Grant AGL2005-07257 • 2005–2008 • Team Member</p>
+            </div>
+            <div class="project-item">
+                <h4 class="project-title">Multidisciplinary Approach to Durum Wheat Improvement: Integration of Ecophysiological and Molecular Techniques</h4>
+                <p class="project-meta">Spanish Grant AGL2002-04285 • 2003–2008 • PhD Project</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Funding Section -->
+    <section id="funding">
+        <div class="section-header" style="margin: 0 auto 2rem;">
+            <div class="section-tag" style="justify-content: center;">Acknowledgments</div>
+            <h2 class="section-title">Funding Sources</h2>
+        </div>
+        <p class="funding-intro">We are grateful to receive support from leading research funding organizations.</p>
+        
+        <div class="funding-grid">
+            <span class="funding-item">Agencia Estatal de Investigación (AEI)</span>
+            <span class="funding-item">CDTI</span>
+            <span class="funding-item">Syngenta</span>
+            <span class="funding-item">Spanish Ministry of Science and Innovation</span>
+            <span class="funding-item">European Union Horizon 2020</span>
+            <span class="funding-item">Severo Ochoa Program</span>
+            <span class="funding-item">Universidad Politécnica de Madrid</span>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-header" style="margin: 0 auto 2rem;">
+            <div class="section-tag" style="justify-content: center;">Get in Touch</div>
+            <h2 class="section-title">Contact Us</h2>
+        </div>
+        
+        <div class="contact-content">
+            <p style="color: var(--color-text-muted); margin-bottom: 2rem;">Interested in collaboration or joining the lab?</p>
+            <div class="contact-links">
+                <a href="/cdn-cgi/l/email-protection#c7adaeb4aea3b5a8e9b0a8b5ac87a0aaa6aeabe9a4a8aa" class="contact-link" target="_blank">
+                    <i data-lucide="mail" style="width: 32px; height: 32px;"></i>
+                    <span>Email</span>
+                </a>
+                <a href="https://github.com/TheRocinante-lab" class="contact-link" target="_blank">
+                    <i data-lucide="github" style="width: 32px; height: 32px;"></i>
+                    <span>GitHub</span>
+                </a>
+                <a href="https://www.cbgp.upm.es/index.php/es/informacion-cientifica/genomic-assisted-breeding" class="contact-link" target="_blank">
+                    <i data-lucide="building" style="width: 32px; height: 32px;"></i>
+                    <span>CBGP Profile</span>
+                </a>
+                <a href="https://www.linkedin.com/in/rocinante-lab-b96351395/" class="contact-link" target="_blank">
+                    <i data-lucide="linkedin" style="width: 32px; height: 32px;"></i>
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 The Rocinante Lab — Crop Genomics and Breeding Methods</p>
+        <div class="visitor-badge">
+            <a href="https://visitorbadge.io/status?path=therocinante-lab.github.io" target="_blank">
+                <img src="https://api.visitorbadge.io/api/visitors?path=therocinante-lab.github.io&label=VISITORS&labelColor=%23555555&countColor=%230d6efd&style=flat&initial=1000" alt="Visitor Count" />
+            </a>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Navigation scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    document.getElementById('navLinks').classList.remove('active');
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for scroll animations
+        document.querySelectorAll('.software-card, .team-card, .alumni-card, .publication-item, .project-item, .crop-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';

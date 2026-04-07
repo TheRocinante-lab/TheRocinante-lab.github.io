@@ -1,2256 +1,2496 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The Rocinante Lab: Crop Genomics and Breeding Methods. Researching genomic prediction, selection, and machine learning in agriculture.">
-    <meta name="author" content="Julio Isidro Sánchez">
-    <title>The Rocinante Lab | Crop Genomics & Breeding Methods</title>
-    
-    <link rel="icon" type="image/x-icon" href="assets/rocin_new_favicon.ico" />
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <style>
-        :root {
-            --color-bg: #ffffff;
-            --color-bg-light: #f8faf8;
-            --color-bg-card: #ffffff;
-            --color-bg-dark: #1a2e22;
-            --color-accent: #2d6a4f;
-            --color-accent-light: #40916c;
-            --color-accent-gold: #b5830a;
-            --color-accent-rust: #c65d3b;
-            --color-accent-purple: #7b5ea7;
-            --color-accent-olive: #6b8e23;
-            --color-accent-berry: #8b0a50;
-            --color-text: #1a2e22;
-            --color-text-muted: #5a7265;
-            --color-border: rgba(45, 106, 79, 0.15);
-            --color-border-strong: rgba(45, 106, 79, 0.25);
-            --font-display: 'Cormorant Garamond', Georgia, serif;
-            --font-body: 'Outfit', system-ui, sans-serif;
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            --shadow-sm: 0 2px 8px rgba(26, 46, 34, 0.06);
-            --shadow-md: 0 4px 20px rgba(26, 46, 34, 0.08);
-            --shadow-lg: 0 10px 40px rgba(26, 46, 34, 0.12);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font-body);
-            background: var(--color-bg);
-            color: var(--color-text);
-            line-height: 1.7;
-            font-weight: 300;
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1.5rem 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: transparent;
-            transition: var(--transition);
-        }
-
-        nav.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 3rem;
-            border-bottom: 1px solid var(--color-border);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--color-text);
-            text-decoration: none;
-            letter-spacing: -0.02em;
-        }
-
-        .logo-img {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-        }
-
-        .logo span {
-            color: var(--color-accent);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--color-text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 400;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--color-accent);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover {
-            color: var(--color-accent);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--color-text);
-            cursor: pointer;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 8rem 3rem 4rem;
-            overflow: hidden;
-            background: linear-gradient(180deg, var(--color-bg-light) 0%, var(--color-bg) 100%);
-        }
-
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            background: 
-                radial-gradient(ellipse at 30% 20%, rgba(45, 106, 79, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 80%, rgba(181, 131, 10, 0.04) 0%, transparent 40%),
-                radial-gradient(ellipse at 90% 10%, rgba(198, 93, 59, 0.03) 0%, transparent 30%);
-        }
-
-        .hero-dna {
-            position: absolute;
-            right: -10%;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 800px;
-            height: 800px;
-            opacity: 0.06;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 200'%3E%3Cpath d='M20 0 Q50 25 80 0 Q50 25 20 50 Q50 75 80 50 Q50 75 20 100 Q50 125 80 100 Q50 125 20 150 Q50 175 80 150 Q50 175 20 200' fill='none' stroke='%232d6a4f' stroke-width='0.5'/%3E%3Cpath d='M80 0 Q50 25 20 0 Q50 25 80 50 Q50 75 20 50 Q50 75 80 100 Q50 125 20 100 Q50 125 80 150 Q50 175 20 150 Q50 175 80 200' fill='none' stroke='%232d6a4f' stroke-width='0.5'/%3E%3C/svg%3E") repeat-y;
-            animation: float 20s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(-50%) translateX(0); }
-            50% { transform: translateY(-50%) translateX(-20px); }
-        }
-
-        .hero-content {
-            max-width: 1000px;
-            position: relative;
-            z-index: 1;
-            text-align: center;
-        }
-
-        .hero-badge {
-            display: none;
-        }
-
-        .hero h1 {
-            font-family: var(--font-display);
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 700;
-            line-height: 1.15;
-            letter-spacing: -0.02em;
-            margin-bottom: 1.5rem;
-            color: var(--color-text);
-            animation: fadeInUp 0.8s ease-out 0.1s both;
-        }
-
-        .hero h1 em {
-            font-style: italic;
-            color: var(--color-accent);
-        }
-
-        .hero-subtitle {
-            font-size: 1.35rem;
-            color: var(--color-text-muted);
-            max-width: 800px;
-            margin: 0 auto 2.5rem;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-            line-height: 1.6;
-        }
-
-        .hero-btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: var(--color-accent);
-            color: white;
-            text-decoration: none;
-            border-radius: 100px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            transition: var(--transition);
-            animation: fadeInUp 0.8s ease-out 0.3s both;
-            box-shadow: 0 4px 15px rgba(45, 106, 79, 0.3);
-        }
-
-        .hero-btn:hover {
-            background: var(--color-accent-light);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(45, 106, 79, 0.4);
-        }
-
-        /* Crops Section */
-        .crops-section {
-            margin-top: 4rem;
-            animation: fadeInUp 0.8s ease-out 0.4s both;
-        }
-
-        .crops-label {
-            font-size: 0.85rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--color-text-muted);
-            margin-bottom: 1.5rem;
-        }
-
-        .crops-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 1.25rem;
-        }
-
-        .crop-card {
-            text-align: center;
-            cursor: default;
-        }
-
-        .crop-image-wrapper {
-            width: 100%;
-            aspect-ratio: 1;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 0.75rem;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-        }
-
-        .crop-card:hover .crop-image-wrapper {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .crop-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .crop-card:hover .crop-image {
-            transform: scale(1.05);
-        }
-
-        .crop-name {
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--color-text);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .crop-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .crop-card.wheat .crop-dot { background: var(--color-accent-rust); }
-        .crop-card.maize .crop-dot { background: transparent; }
-        .crop-card.sunflower .crop-dot { background: var(--color-accent-gold); }
-        .crop-card.olives .crop-dot { background: transparent; }
-        .crop-card.grapes .crop-dot { background: var(--color-accent-gold); }
-        .crop-card.berries .crop-dot { background: transparent; }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Section Styles */
-        section {
-            padding: 8rem 3rem;
-            position: relative;
-        }
-
-        .section-header {
-            max-width: 800px;
-            margin-bottom: 4rem;
-        }
-
-        .section-tag {
-            font-size: 0.75rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--color-accent);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-weight: 500;
-        }
-
-        .section-tag::before {
-            content: '';
-            width: 30px;
-            height: 2px;
-            background: var(--color-accent);
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 400;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-            color: var(--color-text);
-        }
-
-        /* About Section */
-        #about {
-            background: var(--color-bg-light);
-            padding: 6rem 3rem;
-        }
-
-        .about-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 4rem;
-            align-items: start;
-        }
-
-        .about-left {
-            position: sticky;
-            top: 100px;
-        }
-
-        .about-title {
-            font-family: var(--font-display);
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.15;
-            color: var(--color-text);
-            margin-bottom: 3rem;
-            font-style: italic;
-        }
-
-        .about-block {
-            margin-bottom: 2.5rem;
-        }
-
-        .about-block-title {
-            font-family: var(--font-body);
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--color-accent);
-            margin-bottom: 1rem;
-        }
-
-        .about-block p {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: var(--color-text-muted);
-        }
-
-        .about-block strong {
-            color: var(--color-text);
-            font-weight: 600;
-        }
-
-        .about-right h3 {
-            font-family: var(--font-body);
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--color-text);
-            margin-bottom: 1.5rem;
-        }
-
-        .research-cards {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .research-card {
-            background: white;
-            padding: 1.25rem;
-            border-radius: 12px;
-            border-left: 3px solid var(--color-accent);
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-        }
-
-        .research-card:hover {
-            box-shadow: var(--shadow-md);
-            transform: translateY(-3px);
-        }
-
-        .research-card-icon {
-            display: none;
-        }
-
-        .research-card h4 {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--color-text);
-            margin-bottom: 0.4rem;
-            line-height: 1.3;
-        }
-
-        .research-card p {
-            font-size: 0.85rem;
-            color: var(--color-text-muted);
-            line-height: 1.5;
-        }
-
-        @media (max-width: 900px) {
-            .about-container {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .about-left {
-                position: static;
-            }
-
-            .about-title {
-                font-size: 2.5rem;
-            }
-
-            .research-cards {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 500px) {
-            .research-cards {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Software Section */
-        #software {
-            background: var(--color-bg-light);
-        }
-
-        .software-grid {
-            display: grid;
-            gap: 1.5rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .software-card {
-            background: var(--color-bg-card);
-            border: 1px solid var(--color-border);
-            border-radius: 16px;
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 2rem;
-            align-items: start;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .software-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--color-accent);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .software-card:hover {
-            border-color: var(--color-accent);
-            transform: translateX(10px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .software-card:hover::before {
-            opacity: 1;
-        }
-
-        .software-year {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            font-weight: 600;
-            color: var(--color-accent);
-            line-height: 1;
-        }
-
-        .software-info h3 {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: var(--color-text);
-        }
-
-        .software-info h3 span {
-            color: var(--color-accent-gold);
-        }
-
-        .software-authors {
-            font-size: 0.85rem;
-            color: var(--color-text-muted);
-            margin-bottom: 1rem;
-        }
-
-        .software-desc {
-            color: var(--color-text-muted);
-            font-size: 0.95rem;
-            line-height: 1.8;
-        }
-
-        .software-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .software-link {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(45, 106, 79, 0.08);
-            border: 1px solid var(--color-border);
-            border-radius: 8px;
-            color: var(--color-text);
-            text-decoration: none;
-            font-size: 0.8rem;
-            transition: var(--transition);
-        }
-
-        .software-link:hover {
-            background: var(--color-accent);
-            color: white;
-            border-color: var(--color-accent);
-        }
-
-        /* Publications Section */
-        #publications {
-            background: var(--color-bg);
-        }
-
-        .publications-year-group {
-            margin-bottom: 3rem;
-        }
-
-        .publications-year {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            font-weight: 400;
-            color: var(--color-accent);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--color-border);
-        }
-
-        .publication-item {
-            display: flex;
-            gap: 1.25rem;
-            padding: 1.25rem 0;
-            border-bottom: 1px solid var(--color-border);
-            transition: var(--transition);
-            align-items: flex-start;
-        }
-
-        .publication-item:hover {
-            padding-left: 0.5rem;
-            background: rgba(45, 106, 79, 0.02);
-        }
-
-        .pub-image {
-            flex-shrink: 0;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .pub-image img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            border-radius: 4px;
-        }
-
-        .pub-content {
-            flex: 1;
-        }
-
-        .pub-content a {
-            font-size: 1.05rem;
-            font-weight: 500;
-            color: var(--color-text);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 0.4rem;
-            line-height: 1.4;
-            transition: var(--transition);
-        }
-
-        .pub-content a:hover {
-            color: var(--color-accent);
-        }
-
-        .pub-content span {
-            font-size: 0.9rem;
-            color: var(--color-text-muted);
-            line-height: 1.5;
-        }
-
-        .pub-content em {
-            color: var(--color-accent-gold);
-            font-style: italic;
-        }
-
-        .google-scholar-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
-            padding: 1rem 2rem;
-            background: var(--color-accent);
-            color: white;
-            text-decoration: none;
-            border-radius: 100px;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .google-scholar-link:hover {
-            background: var(--color-accent-light);
-            transform: translateY(-2px);
-        }
-
-        /* Team Section */
-        #team {
-            background: var(--color-bg-dark);
-            color: white;
-        }
-
-        #team .section-tag {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        #team .section-tag::before {
-            background: rgba(255, 255, 255, 0.4);
-        }
-
-        #team .section-title {
-            color: white;
-        }
-
-        .team-groups {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .team-label {
-            font-size: 0.75rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 2rem;
-            margin-top: 4rem;
-        }
-
-        .team-label:first-of-type {
-            margin-top: 0;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-
-        .team-card {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            transition: var(--transition);
-        }
-
-        .team-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--color-accent-light);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .team-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0 auto 1.5rem;
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .team-card.leader .team-avatar {
-            width: 140px;
-            height: 140px;
-            border: 4px solid var(--color-accent-gold);
-        }
-
-        .team-name {
-            font-family: var(--font-display);
-            font-size: 1.15rem;
-            font-weight: 500;
-            margin-bottom: 0.25rem;
-            color: white;
-        }
-
-        .team-role {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 1rem;
-        }
-
-        .team-links {
-            display: flex;
-            justify-content: center;
-            gap: 0.75rem;
-        }
-
-        .team-links a {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.7);
-            transition: var(--transition);
-        }
-
-        .team-links a:hover {
-            background: var(--color-accent);
-            border-color: var(--color-accent);
-            color: white;
-        }
-
-        .alumni-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .alumni-card {
-            text-align: center;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            transition: var(--transition);
-        }
-
-        .alumni-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: var(--color-accent-light);
-        }
-
-        .alumni-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0 auto 1rem;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .alumni-name {
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 0.25rem;
-            color: white;
-        }
-
-        .alumni-position {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .alumni-links {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 0.75rem;
-        }
-
-        .alumni-links a {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.6);
-            transition: var(--transition);
-        }
-
-        .alumni-links a:hover {
-            background: var(--color-accent);
-            color: white;
-        }
-
-        /* Teaching Section */
-        #teaching {
-            background: var(--color-bg);
-        }
-
-        .teaching-list {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .teaching-item {
-            display: grid;
-            grid-template-columns: 150px 1fr;
-            gap: 3rem;
-            padding: 2rem 0;
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .teaching-year {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            color: var(--color-accent);
-        }
-
-        .teaching-content h3 {
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: var(--color-text);
-        }
-
-        .teaching-content p {
-            font-size: 0.9rem;
-            color: var(--color-text-muted);
-        }
-
-        .teaching-resources-label {
-            font-size: 0.85rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--color-text-muted);
-            margin-top: 3rem;
-            margin-bottom: 1.5rem;
-            max-width: 1000px;
-        }
-
-        .teaching-resources {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            max-width: 1000px;
-        }
-
-        .teaching-folder {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 2rem 1.5rem;
-            background: var(--color-bg-light);
-            border: 1px solid var(--color-border);
-            border-radius: 16px;
-            text-decoration: none;
-            transition: var(--transition);
-            text-align: center;
-        }
-
-        .teaching-folder:hover {
-            border-color: var(--color-accent);
-            background: white;
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .teaching-folder-img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-
-        .teaching-folder i {
-            color: var(--color-accent);
-        }
-
-        .teaching-folder span {
-            font-weight: 600;
-            color: var(--color-text);
-            font-size: 1rem;
-        }
-
-        .teaching-folder small {
-            font-size: 0.8rem;
-            color: var(--color-text-muted);
-        }
-
-        @media (max-width: 768px) {
-            .teaching-resources {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Projects Section */
-        #projects {
-            background: var(--color-bg-light);
-        }
-
-        .projects-category {
-            margin-bottom: 4rem;
-        }
-
-        .projects-category-title {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 500;
-            color: var(--color-accent-gold);
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .project-item {
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            background: var(--color-bg-card);
-            border: 1px solid var(--color-border);
-            border-radius: 12px;
-            transition: var(--transition);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .project-item:hover {
-            border-color: var(--color-accent);
-            box-shadow: var(--shadow-md);
-        }
-
-        .project-title {
-            font-size: 1rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: var(--color-text);
-        }
-
-        .project-meta {
-            font-size: 0.85rem;
-            color: var(--color-text-muted);
-        }
-
-        .project-meta .amount {
-            color: var(--color-accent);
-            font-weight: 500;
-        }
-
-        /* Funding Section */
-        #funding {
-            background: var(--color-bg);
-            text-align: center;
-        }
-
-        .funding-intro {
-            font-size: 1.1rem;
-            color: var(--color-text-muted);
-            max-width: 600px;
-            margin: 0 auto 3rem;
-        }
-
-        .funding-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .funding-item {
-            padding: 1rem 1.5rem;
-            background: var(--color-bg-light);
-            border: 1px solid var(--color-border);
-            border-radius: 100px;
-            font-size: 0.9rem;
-            color: var(--color-text-muted);
-            transition: var(--transition);
-        }
-
-        .funding-item:hover {
-            border-color: var(--color-accent);
-            color: var(--color-accent);
-            background: rgba(45, 106, 79, 0.05);
-        }
-
-        /* Contact Section */
-        #contact {
-            background: var(--color-bg-light);
-            text-align: center;
-        }
-
-        .contact-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .contact-link {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            padding: 2rem;
-            background: var(--color-bg-card);
-            border: 1px solid var(--color-border);
-            border-radius: 20px;
-            text-decoration: none;
-            color: var(--color-text);
-            transition: var(--transition);
-            min-width: 150px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .contact-link:hover {
-            border-color: var(--color-accent);
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .contact-link svg {
-            color: var(--color-accent);
-            flex-shrink: 0;
-            display: block;
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-        }
-
-        .contact-icon-fallback {
-            width: 50px;
-            height: 50px;
-            background: var(--color-accent);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .contact-link i {
-            width: 40px;
-            height: 40px;
-            color: var(--color-accent);
-        }
-
-        .contact-link span {
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--color-bg-dark);
-            padding: 3rem;
-            text-align: center;
-        }
-
-        footer p {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 1.5rem;
-        }
-
-        .visitor-badge {
-            margin-top: 1rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            nav {
-                padding: 1rem 1.5rem;
-            }
-
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(255, 255, 255, 0.98);
-                flex-direction: column;
-                padding: 2rem;
-                gap: 1.5rem;
-                box-shadow: var(--shadow-md);
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            section {
-                padding: 5rem 1.5rem;
-            }
-
-            .hero {
-                padding: 6rem 1.5rem 3rem;
-            }
-
-            .crops-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .software-card {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .software-year {
-                font-size: 1.5rem;
-            }
-
-            .teaching-item {
-                grid-template-columns: 1fr;
-                gap: 0.5rem;
-            }
-
-            .contact-links {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .crops-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-
-            .crop-name {
-                font-size: 0.85rem;
-            }
-
-            .team-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .alumni-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Rocinante Lab — Crop Genomics & Breeding Methods. PI: Julio Isidro y Sánchez. UPM / CBGP, Madrid. Genomic prediction, AI/ML for breeding, open-source tools.">
+  <meta name="author" content="Julio Isidro y Sánchez">
+  <title>The Rocinante Lab | Crop Genomics & Breeding Methods</title>
+
+  <link rel="icon" type="image/x-icon" href="assets/rocin_new_favicon.ico">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide icons (lightweight SVG icon set) -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    /* ===================================================
+       CSS CUSTOM PROPERTIES
+       Change brand colors here to retheme the whole site
+    =================================================== */
+    :root {
+      /* Brand palette */
+      --c-green-dark:   #1e4d38;
+      --c-green:        #2d6a4f;
+      --c-green-mid:    #40916c;
+      --c-green-light:  #d8f3e5;
+      --c-gold:         #b08010;
+      --c-gold-light:   #fdf3d6;
+      --c-rust:         #c0542a;
+
+      /* Neutrals */
+      --c-bg:           #ffffff;
+      --c-bg-off:       #f7faf8;
+      --c-bg-dark:      #152b21;
+      --c-text:         #152b21;
+      --c-text-2:       #4a6858;
+      --c-text-inv:     rgba(255,255,255,0.92);
+      --c-border:       rgba(45,106,79,0.14);
+      --c-border-mid:   rgba(45,106,79,0.25);
+
+      /* Typography */
+      --f-display: 'Cormorant Garamond', Georgia, serif;
+      --f-body:    'Inter', system-ui, sans-serif;
+
+      /* Spacing rhythm */
+      --section-pad: 7rem 2rem;
+      --container:   1240px;
+
+      /* Shadows */
+      --shadow-xs: 0 1px 4px rgba(21,43,33,0.07);
+      --shadow-sm: 0 2px 10px rgba(21,43,33,0.08);
+      --shadow-md: 0 6px 24px rgba(21,43,33,0.10);
+      --shadow-lg: 0 16px 48px rgba(21,43,33,0.13);
+
+      /* Transitions */
+      --ease: all 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    /* ===================================================
+       RESET & BASE
+    =================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--f-body);
+      color: var(--c-text);
+      background: var(--c-bg);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; }
+
+    .container {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ===================================================
+       NAVIGATION
+    =================================================== */
+    #navbar {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 100;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: var(--ease);
+    }
+
+    #navbar.scrolled {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(16px);
+      padding: 0.85rem 2rem;
+      border-bottom: 1px solid var(--c-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      text-decoration: none;
+      font-family: var(--f-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--c-text);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo img { width: 36px; height: 36px; object-fit: contain; }
+    .nav-logo em { color: var(--c-green); font-style: normal; }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2.25rem;
+    }
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--c-text-2);
+      text-decoration: none;
+      transition: var(--ease);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 2px;
+      background: var(--c-green);
+      transition: var(--ease);
+    }
+    .nav-links a:hover { color: var(--c-green); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* Mobile menu button */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--c-text);
+    }
+
+    /* ===================================================
+       HERO
+    =================================================== */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9rem 2rem 5rem;
+      background: linear-gradient(160deg, var(--c-bg-off) 0%, var(--c-bg) 60%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle decorative blob */
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -15%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(ellipse, rgba(45,106,79,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: 5%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(ellipse, rgba(176,128,16,0.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Institution badge */
+    .hero-affiliation {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      background: var(--c-green-light);
+      border: 1px solid rgba(45,106,79,0.2);
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--c-green);
+      margin-bottom: 2rem;
+      animation: fadeUp 0.7s ease-out both;
+    }
+
+    .hero-inner h1 {
+      font-family: var(--f-display);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: var(--c-text);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.7s ease-out 0.1s both;
+    }
+    .hero-inner h1 em {
+      font-style: italic;
+      color: var(--c-green);
+    }
+
+    /* PI byline — critical for credibility */
+    .hero-pi {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--c-text-2);
+      margin-bottom: 1rem;
+      animation: fadeUp 0.7s ease-out 0.15s both;
+    }
+    .hero-pi a {
+      color: var(--c-green);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(45,106,79,0.3);
+    }
+    .hero-pi a:hover { border-color: var(--c-green); }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--c-text-2);
+      line-height: 1.7;
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+      animation: fadeUp 0.7s ease-out 0.2s both;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 4rem;
+      animation: fadeUp 0.7s ease-out 0.28s both;
+    }
+
+    /* Primary CTA button */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      background: var(--c-green);
+      color: white;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: var(--ease);
+      box-shadow: 0 4px 16px rgba(45,106,79,0.28);
+    }
+    .btn-primary:hover {
+      background: var(--c-green-mid);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(45,106,79,0.35);
+    }
+
+    /* Secondary CTA (ghost) */
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      background: transparent;
+      color: var(--c-green);
+      border: 1.5px solid var(--c-border-mid);
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: var(--ease);
+    }
+    .btn-ghost:hover {
+      background: var(--c-green-light);
+      border-color: var(--c-green);
+    }
+
+    /* Crops strip */
+    .hero-crops {
+      animation: fadeUp 0.7s ease-out 0.35s both;
+    }
+    .crops-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--c-text-2);
+      margin-bottom: 1.25rem;
+    }
+    .crops-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1rem;
+    }
+    .crop-card {
+      text-align: center;
+    }
+    .crop-img-wrap {
+      aspect-ratio: 1;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 0.6rem;
+      box-shadow: var(--shadow-xs);
+      transition: var(--ease);
+    }
+    .crop-card:hover .crop-img-wrap {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-sm);
+    }
+    .crop-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--ease);
+    }
+    .crop-card:hover .crop-img-wrap img { transform: scale(1.05); }
+    .crop-name {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--c-text-2);
+    }
+
+    /* ===================================================
+       IMPACT STRIP (stats bar)
+    =================================================== */
+    #impact {
+      background: var(--c-green);
+      padding: 2.5rem 2rem;
+    }
+    .impact-grid {
+      max-width: var(--container);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+    .impact-stat .number {
+      font-family: var(--f-display);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1;
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+    .impact-stat .label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+    .impact-divider {
+      width: 1px;
+      background: rgba(255,255,255,0.18);
+      align-self: stretch;
+      display: none; /* shown via grid gap */
+    }
+
+    /* ===================================================
+       SHARED SECTION STRUCTURE
+    =================================================== */
+    section { padding: var(--section-pad); }
+    .section-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-green);
+      margin-bottom: 0.85rem;
+    }
+    .section-eyebrow::before {
+      content: '';
+      width: 28px;
+      height: 2px;
+      background: var(--c-green);
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-family: var(--f-display);
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--c-text);
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--c-text-2);
+      max-width: 600px;
+      line-height: 1.75;
+    }
+    .section-header { margin-bottom: 3.5rem; }
+
+    /* ===================================================
+       ABOUT / RESEARCH THEMES
+    =================================================== */
+    #about {
+      background: var(--c-bg-off);
+    }
+    .about-grid {
+      max-width: var(--container);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .about-sticky {
+      position: sticky;
+      top: 100px;
+    }
+    .about-mission {
+      font-size: 1.05rem;
+      color: var(--c-text-2);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+    .about-mission strong { color: var(--c-text); }
+
+    /* Research theme cards */
+    .themes-heading {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-text-2);
+      margin-bottom: 1.25rem;
+    }
+    .themes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    .theme-card {
+      background: white;
+      border: 1px solid var(--c-border);
+      border-radius: 14px;
+      padding: 1.35rem 1.25rem;
+      transition: var(--ease);
+      box-shadow: var(--shadow-xs);
+    }
+    .theme-card:hover {
+      border-color: var(--c-green-mid);
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-3px);
+    }
+    .theme-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--c-green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-green);
+      margin-bottom: 0.85rem;
+    }
+    .theme-card h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--c-text);
+      margin-bottom: 0.35rem;
+      line-height: 1.3;
+    }
+    .theme-card p {
+      font-size: 0.82rem;
+      color: var(--c-text-2);
+      line-height: 1.55;
+    }
+
+    /* ===================================================
+       OPEN POSITIONS BANNER
+    =================================================== */
+    .positions-banner {
+      background: var(--c-gold-light);
+      border: 1px solid rgba(176,128,16,0.25);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .positions-banner .pos-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--c-gold);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      flex-shrink: 0;
+    }
+    .positions-banner h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--c-text);
+      margin-bottom: 0.2rem;
+    }
+    .positions-banner p {
+      font-size: 0.83rem;
+      color: var(--c-text-2);
+    }
+    .positions-banner a {
+      color: var(--c-gold);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(176,128,16,0.4);
+    }
+
+    /* ===================================================
+       SOFTWARE
+    =================================================== */
+    #software {
+      background: var(--c-bg);
+    }
+    .software-header-row {
+      max-width: var(--container);
+      margin: 0 auto 3.5rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .software-grid {
+      max-width: var(--container);
+      margin: 0 auto;
+      display: grid;
+      gap: 1.25rem;
+    }
+    .sw-card {
+      background: var(--c-bg-off);
+      border: 1px solid var(--c-border);
+      border-radius: 16px;
+      padding: 2rem 2rem 2rem 2.25rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1.5rem 3rem;
+      align-items: start;
+      position: relative;
+      overflow: hidden;
+      transition: var(--ease);
+      box-shadow: var(--shadow-xs);
+    }
+    /* Colored left bar that shows on hover */
+    .sw-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0;
+      width: 4px; height: 100%;
+      background: var(--c-green);
+      transform: scaleY(0);
+      transition: var(--ease);
+    }
+    .sw-card:hover { border-color: var(--c-border-mid); box-shadow: var(--shadow-md); }
+    .sw-card:hover::before { transform: scaleY(1); }
+
+    .sw-name {
+      font-family: var(--f-display);
+      font-size: 1.55rem;
+      font-weight: 600;
+      color: var(--c-text);
+      margin-bottom: 0.25rem;
+    }
+    .sw-name em {
+      font-style: normal;
+      color: var(--c-green);
+    }
+    .sw-tagline {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--c-text-2);
+      margin-bottom: 0.75rem;
+    }
+    .sw-desc {
+      font-size: 0.9rem;
+      color: var(--c-text-2);
+      line-height: 1.7;
+      max-width: 680px;
+    }
+    .sw-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .sw-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .sw-badge.r    { background: #dbeafe; color: #1d4ed8; }
+    .sw-badge.cran { background: var(--c-green-light); color: var(--c-green); }
+    .sw-badge.year { background: #f1f5f9; color: #475569; }
+    .sw-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex-shrink: 0;
+      min-width: 90px;
+    }
+    .sw-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      text-decoration: none;
+      background: white;
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      transition: var(--ease);
+      white-space: nowrap;
+    }
+    .sw-link:hover {
+      background: var(--c-green);
+      color: white;
+      border-color: var(--c-green);
+    }
+
+    /* ===================================================
+       PUBLICATIONS
+    =================================================== */
+    #publications {
+      background: var(--c-bg-off);
+    }
+    .pub-header-row {
+      max-width: var(--container);
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* Year-filter tabs */
+    .pub-filters {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .pub-filter {
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      border: 1px solid var(--c-border);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--c-text-2);
+      background: white;
+      cursor: pointer;
+      transition: var(--ease);
+    }
+    .pub-filter.active,
+    .pub-filter:hover {
+      background: var(--c-green);
+      color: white;
+      border-color: var(--c-green);
+    }
+
+    .pub-list { max-width: var(--container); margin: 0 auto; }
+
+    .pub-year-group { margin-bottom: 2.5rem; }
+    .pub-year-label {
+      font-family: var(--f-display);
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--c-green);
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--c-border);
+      margin-bottom: 0.5rem;
+    }
+
+    .pub-item {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 1.25rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--c-border);
+      align-items: start;
+      transition: var(--ease);
+    }
+    .pub-item:hover { padding-left: 0.4rem; }
+
+    .pub-journal-logo {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+    .pub-title {
+      display: block;
+      font-size: 0.97rem;
+      font-weight: 500;
+      color: var(--c-text);
+      text-decoration: none;
+      line-height: 1.45;
+      margin-bottom: 0.3rem;
+      transition: var(--ease);
+    }
+    .pub-title:hover { color: var(--c-green); }
+    .pub-authors {
+      font-size: 0.85rem;
+      color: var(--c-text-2);
+    }
+    .pub-authors em {
+      font-style: italic;
+      color: var(--c-gold);
+    }
+
+    .scholar-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2.5rem;
+      padding: 0.85rem 2rem;
+      background: var(--c-green);
+      color: white;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--ease);
+    }
+    .scholar-cta:hover {
+      background: var(--c-green-mid);
+      transform: translateY(-2px);
+    }
+
+    /* ===================================================
+       TEAM
+    =================================================== */
+    #team {
+      background: var(--c-bg-dark);
+      color: var(--c-text-inv);
+    }
+    #team .section-eyebrow { color: rgba(255,255,255,0.55); }
+    #team .section-eyebrow::before { background: rgba(255,255,255,0.35); }
+    #team .section-title { color: white; }
+
+    .team-wrap { max-width: var(--container); margin: 0 auto; }
+
+    /* PI featured card */
+    .pi-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2.5rem;
+      align-items: start;
+      margin-bottom: 4rem;
+    }
+    .pi-avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--c-gold);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+      flex-shrink: 0;
+    }
+    .pi-info h3 {
+      font-family: var(--f-display);
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.2rem;
+    }
+    .pi-info .pi-role {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      margin-bottom: 1rem;
+    }
+    .pi-info p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: 1.25rem;
+    }
+    .pi-links {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+    .pi-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.95rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: var(--ease);
+    }
+    .pi-link:hover {
+      background: var(--c-green);
+      border-color: var(--c-green);
+      color: white;
+    }
+
+    .team-group-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 1.5rem;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .member-card {
+      text-align: center;
+      padding: 1.75rem 1.25rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 16px;
+      transition: var(--ease);
+    }
+    .member-card:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: var(--c-green-mid);
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+    }
+    .member-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 1.1rem;
+      border: 2px solid rgba(255,255,255,0.12);
+    }
+    .member-name {
+      font-family: var(--f-display);
+      font-size: 1rem;
+      font-weight: 500;
+      color: white;
+      margin-bottom: 0.2rem;
+    }
+    .member-role {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 0.85rem;
+    }
+    .member-links {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .member-links a {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.6);
+      transition: var(--ease);
+    }
+    .member-links a:hover {
+      background: var(--c-green);
+      border-color: var(--c-green);
+      color: white;
+    }
+
+    /* Alumni grid (smaller cards) */
+    .alumni-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+      gap: 1rem;
+    }
+    .alumni-card {
+      text-align: center;
+      padding: 1.25rem 0.85rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      transition: var(--ease);
+    }
+    .alumni-card:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.15);
+    }
+    .alumni-avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 0.75rem;
+      border: 2px solid rgba(255,255,255,0.1);
+    }
+    .alumni-name {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 0.15rem;
+    }
+    .alumni-where {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 0.6rem;
+    }
+    .alumni-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.55);
+      transition: var(--ease);
+    }
+    .alumni-link:hover { background: var(--c-green); color: white; }
+
+    /* ===================================================
+       TEACHING
+    =================================================== */
+    #teaching {
+      background: var(--c-bg);
+    }
+    .teaching-wrap { max-width: var(--container); margin: 0 auto; }
+    .teaching-items { margin-bottom: 3.5rem; }
+    .teaching-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 2.5rem;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--c-border);
+      align-items: start;
+    }
+    .t-type {
+      font-family: var(--f-display);
+      font-size: 1.35rem;
+      color: var(--c-green);
+      padding-top: 0.15rem;
+    }
+    .t-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--c-text);
+      margin-bottom: 0.35rem;
+    }
+    .t-desc {
+      font-size: 0.88rem;
+      color: var(--c-text-2);
+      line-height: 1.6;
+    }
+
+    .resources-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-text-2);
+      margin-bottom: 1.25rem;
+    }
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .resource-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 2rem 1.5rem;
+      background: var(--c-bg-off);
+      border: 1px solid var(--c-border);
+      border-radius: 16px;
+      text-decoration: none;
+      transition: var(--ease);
+      text-align: center;
+    }
+    .resource-card:hover {
+      border-color: var(--c-green);
+      background: white;
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .resource-card img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .resource-card .r-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--c-text);
+    }
+    .resource-card .r-sub {
+      font-size: 0.78rem;
+      color: var(--c-text-2);
+    }
+
+    /* ===================================================
+       PROJECTS
+    =================================================== */
+    #projects {
+      background: var(--c-bg-off);
+    }
+    .projects-wrap { max-width: var(--container); margin: 0 auto; }
+    .project-category { margin-bottom: 3.5rem; }
+    .project-cat-title {
+      font-family: var(--f-display);
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--c-gold);
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--c-border);
+      margin-bottom: 1.25rem;
+    }
+    .project-item {
+      display: grid;
+      grid-template-columns: 4px 1fr;
+      gap: 0 1.25rem;
+      padding: 1.15rem 0 1.15rem 0;
+      border-bottom: 1px solid var(--c-border);
+      align-items: start;
+      transition: var(--ease);
+    }
+    .project-item:hover { background: rgba(45,106,79,0.025); }
+
+    /* Active projects get a green accent line */
+    .project-item .proj-bar {
+      width: 4px;
+      border-radius: 2px;
+      background: var(--c-border);
+      align-self: stretch;
+      min-height: 40px;
+    }
+    .project-item.active .proj-bar { background: var(--c-green); }
+
+    .proj-body {}
+    .proj-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--c-text);
+      margin-bottom: 0.3rem;
+      line-height: 1.4;
+    }
+    .proj-meta {
+      font-size: 0.8rem;
+      color: var(--c-text-2);
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .proj-pi {
+      color: var(--c-green);
+      font-weight: 600;
+    }
+
+    /* ===================================================
+       FUNDING
+    =================================================== */
+    #funding {
+      background: var(--c-bg);
+      text-align: center;
+    }
+    .funding-wrap { max-width: var(--container); margin: 0 auto; }
+    .funding-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 2.5rem;
+    }
+    .funding-pill {
+      padding: 0.6rem 1.35rem;
+      background: var(--c-bg-off);
+      border: 1px solid var(--c-border);
+      border-radius: 100px;
+      font-size: 0.85rem;
+      color: var(--c-text-2);
+      transition: var(--ease);
+    }
+    .funding-pill:hover {
+      border-color: var(--c-green);
+      color: var(--c-green);
+      background: var(--c-green-light);
+    }
+
+    /* ===================================================
+       CONTACT
+    =================================================== */
+    #contact {
+      background: var(--c-bg-off);
+    }
+    .contact-wrap {
+      max-width: var(--container);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .contact-text p {
+      font-size: 1rem;
+      color: var(--c-text-2);
+      line-height: 1.75;
+      margin-bottom: 1.25rem;
+    }
+    .contact-address {
+      margin-top: 1.5rem;
+      font-size: 0.88rem;
+      color: var(--c-text-2);
+      line-height: 1.8;
+    }
+    .contact-address strong { color: var(--c-text); }
+
+    .contact-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .contact-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 1.75rem 1.25rem;
+      background: white;
+      border: 1px solid var(--c-border);
+      border-radius: 16px;
+      text-decoration: none;
+      transition: var(--ease);
+      text-align: center;
+      box-shadow: var(--shadow-xs);
+    }
+    .contact-card:hover {
+      border-color: var(--c-green);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .contact-card .cc-icon {
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: var(--c-green-light);
+      color: var(--c-green);
+    }
+    .contact-card span {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--c-text);
+    }
+
+    /* ===================================================
+       FOOTER
+    =================================================== */
+    footer {
+      background: var(--c-bg-dark);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--f-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      margin-bottom: 0.85rem;
+    }
+    .footer-logo em { color: var(--c-green-mid); font-style: normal; }
+    footer p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+    }
+    .visitor-badge { margin-top: 1rem; display: flex; justify-content: center; }
+
+    /* ===================================================
+       ANIMATIONS
+    =================================================== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll-triggered fade (applied via JS) */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ===================================================
+       RESPONSIVE
+    =================================================== */
+    @media (max-width: 1024px) {
+      :root { --section-pad: 5.5rem 1.5rem; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-sticky { position: static; }
+
+      .contact-wrap { grid-template-columns: 1fr; gap: 3rem; }
+
+      .impact-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+
+      .pi-card { grid-template-columns: 1fr; text-align: center; }
+      .pi-avatar { margin: 0 auto; }
+      .pi-links { justify-content: center; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0; right: 0;
+        background: rgba(255,255,255,0.98);
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1.25rem;
+        box-shadow: var(--shadow-md);
+        border-top: 1px solid var(--c-border);
+      }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: flex; }
+
+      .crops-grid { grid-template-columns: repeat(3, 1fr); }
+      .hero-ctas { flex-direction: column; align-items: center; }
+
+      .themes-grid { grid-template-columns: 1fr; }
+      .resources-grid { grid-template-columns: 1fr; }
+      .contact-links { grid-template-columns: 1fr; }
+
+      .sw-card { grid-template-columns: 1fr; }
+      .sw-links { flex-direction: row; flex-wrap: wrap; }
+
+      .teaching-row { grid-template-columns: 1fr; gap: 0.5rem; }
+
+      .software-header-row { flex-direction: column; align-items: flex-start; }
+      .pub-header-row { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .crops-grid { grid-template-columns: repeat(2, 1fr); }
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .alumni-grid { grid-template-columns: repeat(2, 1fr); }
+      .impact-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav id="navbar">
-        <a href="#" class="logo">
-            <img src="assets/img/portfolio/TheRocinanteLab.png" alt="The Rocinante Lab Logo" class="logo-img">
-            The<span>Rocinante</span>Lab
+
+  <!-- =====================================================
+       NAVIGATION
+  ===================================================== -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">
+      <img src="assets/img/portfolio/TheRocinanteLab.png" alt="The Rocinante Lab">
+      The<em>Rocinante</em>Lab
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">Research</a></li>
+      <li><a href="#software">Software</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#teaching">Teaching</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <i data-lucide="menu" style="width:22px;height:22px;"></i>
+    </button>
+  </nav>
+
+  <!-- =====================================================
+       HERO
+  ===================================================== -->
+  <header id="hero">
+    <div class="hero-inner">
+      <!-- Institution badge — tells visitors immediately WHERE this lab is -->
+      <div class="hero-affiliation">
+        <i data-lucide="map-pin" style="width:12px;height:12px;"></i>
+        CBGP · Universidad Politécnica de Madrid
+      </div>
+
+      <h1>Crop Genomics &amp;<br><em>Breeding Methods</em></h1>
+
+      <!-- PI byline — critical for grant reviewers and prospective students -->
+      <p class="hero-pi">
+        Led by <a href="#team">Julio Isidro y Sánchez</a>, Associate Professor &amp; Group Leader
+      </p>
+
+      <p class="hero-subtitle">
+        Integrating quantitative genomics, phenomics, and AI to build prediction models and
+        decision tools that accelerate crop improvement across diverse environments.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#about" class="btn-primary">
+          <i data-lucide="flask-conical" style="width:15px;height:15px;"></i>
+          Our Research
         </a>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#research">Research</a></li>
-            <li><a href="#software">Software</a></li>
-            <li><a href="#publications">Publications</a></li>
-            <li><a href="#team">Team</a></li>
-            <li><a href="#teaching">Teaching</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <button class="mobile-menu-btn" onclick="toggleMenu()">
-            <i data-lucide="menu" style="width: 24px; height: 24px;"></i>
-        </button>
-    </nav>
+        <a href="#contact" class="btn-ghost">
+          <i data-lucide="mail" style="width:15px;height:15px;"></i>
+          Join the Lab
+        </a>
+      </div>
 
-    <!-- Hero Section -->
-    <header class="hero" id="research">
-        <div class="hero-bg"></div>
-        <div class="hero-dna"></div>
-        <div class="hero-content">
-            <div class="hero-badge">
-                <i data-lucide="dna" style="width: 14px; height: 14px;"></i>
-                Crop Genomics & Breeding Methods
+      <!-- Crops strip -->
+      <div class="hero-crops">
+        <p class="crops-label">Crops we work with</p>
+        <div class="crops-grid">
+          <div class="crop-card">
+            <div class="crop-img-wrap">
+              <img src="assets/img/portfolio/crops/wheat.png" alt="Small Grains">
             </div>
-            <h1>Crop Genomics & Breeding<br>Methods</h1>
-            <p class="hero-subtitle">
-                Integrating molecular genomics, phenomics, and AI to develop innovative strategies for superior crop varieties and sustainable agriculture.
-            </p>
-            <a href="#about" class="hero-btn">Explore Our Work</a>
-            
-      <!-- Crops Section with Images -->
-            <div class="crops-section">
-                <p class="crops-label">Crops We Work With</p>
-                <div class="crops-grid">
-                    <div class="crop-card wheat">
-                        <div class="crop-image-wrapper">
-                            <img src="assets/img/portfolio/crops/wheat.png" alt="Small Grains" class="crop-image">
-                        </div>
-                        <p class="crop-name"><span class="crop-dot"></span>Small Grains</p>
-                    </div>
-                    <div class="crop-card maize">
-                        <div class="crop-image-wrapper">
-                            <img src="assets/img/portfolio/crops/maize.png" alt="Maize" class="crop-image">
-                        </div>
-                        <p class="crop-name">Maize</p>
-                    </div>
-                    <div class="crop-card sunflower">
-                        <div class="crop-image-wrapper">
-                            <img src="assets/img/portfolio/crops/sunflower.png" alt="Sunflower" class="crop-image">
-                        </div>
-                        <p class="crop-name"><span class="crop-dot"></span>Sunflower</p>
-                    </div>
-                    <div class="crop-card olives">
-                        <div class="crop-image-wrapper">
-                            <img src="assets/img/portfolio/crops/olives.png" alt="Olives" class="crop-image">
-                        </div>
-                        <p class="crop-name">Olives</p>
-                    </div>
-                    <div class="crop-card grapes">
-                        <div class="crop-image-wrapper">
-                            <img src="assets/img/portfolio/crops/grapes.png" alt="Table Grapes" class="crop-image">
-                        </div>
-                        <p class="crop-name"><span class="crop-dot"></span>Table Grapes</p>
-                    </div>
-                    <div class="crop-card berries">
-                        <div class="crop-image-wrapper">
-                            <img src="assets/img/portfolio/crops/berries.png" alt="Berries" class="crop-image">
-                        </div>
-                        <p class="crop-name">Berries</p>
-                    </div>
-                </div>
+            <p class="crop-name">Small Grains</p>
+          </div>
+          <div class="crop-card">
+            <div class="crop-img-wrap">
+              <img src="assets/img/portfolio/crops/maize.png" alt="Maize">
             </div>
+            <p class="crop-name">Maize</p>
+          </div>
+          <div class="crop-card">
+            <div class="crop-img-wrap">
+              <img src="assets/img/portfolio/crops/sunflower.png" alt="Sunflower">
+            </div>
+            <p class="crop-name">Sunflower</p>
+          </div>
+          <div class="crop-card">
+            <div class="crop-img-wrap">
+              <img src="assets/img/portfolio/crops/olives.png" alt="Olives">
+            </div>
+            <p class="crop-name">Olives</p>
+          </div>
+          <div class="crop-card">
+            <div class="crop-img-wrap">
+              <img src="assets/img/portfolio/crops/grapes.png" alt="Table Grapes">
+            </div>
+            <p class="crop-name">Table Grapes</p>
+          </div>
+          <div class="crop-card">
+            <div class="crop-img-wrap">
+              <img src="assets/img/portfolio/crops/berries.png" alt="Berries">
+            </div>
+            <p class="crop-name">Berries</p>
+          </div>
         </div>
-    </header>
+      </div>
+    </div>
+  </header>
 
-    <!-- About Section -->
-    <section id="about">
-        <div class="about-container">
-            <div class="about-left">
-                <h2 class="about-title">Bridging Genomics and Field Breeding</h2>
-                
-                <div class="about-block">
-                    <h3 class="about-block-title">Mission</h3>
-                    <p>The Rocinante Lab develops and applies quantitative genomics to accelerate crop improvement. We integrate genomics, phenomics, statistics, and field experimentation to deliver robust models and decision tools that increase genetic gain, improve resilience, and support breeding programs across diverse environments.</p>
-                </div>
-                
-                <div class="about-block">
-                    <h3 class="about-block-title">Vision</h3>
-                    <p>We envision breeding pipelines where <strong>data-driven prediction and optimized mating</strong> translate biological understanding into measurable, sustainable progress—enabling the rapid development of high-performing crop varieties while safeguarding genetic diversity for long-term improvement.</p>
-                </div>
-            </div>
-            
-            <div class="about-right">
-                <h3>What we do</h3>
-                <div class="research-cards">
-                    <div class="research-card">
-                        <h4>Genomic prediction & selection</h4>
-                        <p>Models and experimental designs that maximize predictive accuracy for complex traits.</p>
-                    </div>
-                    
-                    <div class="research-card">
-                        <h4>Association mapping</h4>
-                        <p>Identifying loci, haplotypes, and genomic regions that explain trait variation.</p>
-                    </div>
-                    
-                    <div class="research-card">
-                        <h4>AI/ML for breeding</h4>
-                        <p>Improving selection, mate allocation, and resource allocation under real program constraints.</p>
-                    </div>
-                    
-                    <div class="research-card">
-                        <h4>G×E and stability</h4>
-                        <p>Quantitative methods to model performance across environments and target adaptation.</p>
-                    </div>
-                    
-                    <div class="research-card">
-                        <h4>Open-source software</h4>
-                        <p>Reproducible tools that make advanced methods usable in practical breeding workflows.</p>
-                    </div>
-                    
-                    <div class="research-card">
-                        <h4>Training & education</h4>
-                        <p>International courses and workshops advancing genomic selection knowledge worldwide.</p>
-                    </div>
-                </div>
-            </div>
+  <!-- =====================================================
+       IMPACT STRIP
+       Edit these numbers to keep them current
+  ===================================================== -->
+  <div id="impact">
+    <div class="impact-grid">
+      <div class="impact-stat">
+        <span class="number">45+</span>
+        <span class="label">Publications</span>
+      </div>
+      <div class="impact-stat">
+        <span class="number">6</span>
+        <span class="label">Open-source tools</span>
+      </div>
+      <div class="impact-stat">
+        <span class="number">15+</span>
+        <span class="label">Research grants</span>
+      </div>
+      <div class="impact-stat">
+        <span class="number">20+</span>
+        <span class="label">Countries reached</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       ABOUT / RESEARCH THEMES
+  ===================================================== -->
+  <section id="about">
+    <div class="about-grid">
+      <!-- Left: mission + positions banner -->
+      <div class="about-sticky">
+        <div class="section-eyebrow">About the Lab</div>
+        <h2 class="section-title">Bridging Genomics and Field Breeding</h2>
+
+        <p class="about-mission">
+          The Rocinante Lab develops and applies <strong>quantitative genomics</strong> to accelerate
+          crop improvement. We integrate genomics, phenomics, statistics, and field experimentation
+          to deliver robust prediction models and decision tools that increase genetic gain, improve
+          resilience, and support breeding programs across diverse environments.
+        </p>
+        <p class="about-mission">
+          We envision breeding pipelines where <strong>data-driven prediction and optimized mating</strong>
+          translate biological understanding into measurable, sustainable progress — enabling the rapid
+          development of high-performing crop varieties while safeguarding genetic diversity.
+        </p>
+
+        <!-- Open positions notice — visible to prospective PhDs/postdocs -->
+        <div class="positions-banner">
+          <div class="pos-icon">
+            <i data-lucide="user-plus" style="width:18px;height:18px;"></i>
+          </div>
+          <div>
+            <h4>Open Positions</h4>
+            <p>We welcome applications from motivated PhD students and postdocs.
+              <a href="#contact">Get in touch</a> to discuss opportunities.</p>
+          </div>
         </div>
-    </section>
+      </div>
 
-    <!-- Software Section -->
-    <section id="software">
-        <div class="section-header">
-            <div class="section-tag">Open Source</div>
-            <h2 class="section-title">Software Tools for Genomic Selection</h2>
+      <!-- Right: research themes -->
+      <div>
+        <p class="themes-heading">What we do</p>
+        <div class="themes-grid">
+          <div class="theme-card fade-in">
+            <div class="theme-icon">
+              <i data-lucide="dna" style="width:18px;height:18px;"></i>
+            </div>
+            <h4>Genomic Prediction &amp; Selection</h4>
+            <p>Models and experimental designs that maximize predictive accuracy for complex quantitative traits.</p>
+          </div>
+          <div class="theme-card fade-in">
+            <div class="theme-icon">
+              <i data-lucide="map" style="width:18px;height:18px;"></i>
+            </div>
+            <h4>Association Mapping</h4>
+            <p>Identifying loci, haplotypes, and genomic regions that explain trait variation across populations.</p>
+          </div>
+          <div class="theme-card fade-in">
+            <div class="theme-icon">
+              <i data-lucide="brain-circuit" style="width:18px;height:18px;"></i>
+            </div>
+            <h4>AI / ML for Breeding</h4>
+            <p>Improving selection, mate allocation, and resource allocation under real breeding program constraints.</p>
+          </div>
+          <div class="theme-card fade-in">
+            <div class="theme-icon">
+              <i data-lucide="globe" style="width:18px;height:18px;"></i>
+            </div>
+            <h4>G×E &amp; Stability</h4>
+            <p>Quantitative methods to model performance across environments and target optimal adaptation.</p>
+          </div>
+          <div class="theme-card fade-in">
+            <div class="theme-icon">
+              <i data-lucide="code-2" style="width:18px;height:18px;"></i>
+            </div>
+            <h4>Open-source Software</h4>
+            <p>Reproducible R tools that make advanced statistical methods usable in practical breeding workflows.</p>
+          </div>
+          <div class="theme-card fade-in">
+            <div class="theme-icon">
+              <i data-lucide="graduation-cap" style="width:18px;height:18px;"></i>
+            </div>
+            <h4>Training &amp; Education</h4>
+            <p>International courses and workshops advancing genomic selection knowledge worldwide.</p>
+          </div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="software-grid">
-            <div class="software-card">
-                <div class="software-year">2025</div>
-                <div class="software-info">
-                    <h3><span>MateR:</span> Genomic Mating Package</h3>
-                    <p class="software-authors">Javier Fernández González, Seif Maetwally, Julio Isidro Sánchez</p>
-                    <p class="software-desc">Optimize mating plans using genomic information to maximize genetic gain, within-family variance, and genetic diversity. Supports polyploids, multi-trait optimization, additive and dominance effects, directional dominance, and testers.</p>
-                </div>
-                <div class="software-links">
-                    <a href="https://github.com/TheRocinante-lab/MateR" class="software-link" target="_blank">
-                        <i data-lucide="github" style="width: 14px; height: 14px;"></i>
-                        GitHub
-                    </a>
-                    <a href="https://doi.org/10.1093/genetics/iyag013" class="software-link" target="_blank">
-                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
-                        Paper
-                    </a>
-                </div>
-            </div>
+  <!-- =====================================================
+       SOFTWARE
+  ===================================================== -->
+  <section id="software">
+    <div class="software-header-row">
+      <div>
+        <div class="section-eyebrow">Open Source</div>
+        <h2 class="section-title">Software Tools</h2>
+        <p class="section-desc">R packages for genomic selection, mating optimization, and training set design.</p>
+      </div>
+      <a href="https://github.com/TheRocinante-lab" class="btn-ghost" target="_blank">
+        <i data-lucide="github" style="width:15px;height:15px;"></i>
+        GitHub Org
+      </a>
+    </div>
 
-            <div class="software-card">
-                <div class="software-year">2024</div>
-                <div class="software-info">
-                    <h3><span>GEmetrics:</span> Genotype-by-Environment Metrics</h3>
-                    <p class="software-authors">Simon Rio, Humberto Fanelli, Julio Isidro Sánchez</p>
-                    <p class="software-desc">Calculate BLUP of genotype-by-environment metrics including ecovalence, environmental variance, Finlay and Wilkinson regression, and Lin and Binns superiority measure.</p>
-                </div>
-                <div class="software-links">
-                    <a href="https://cran.r-project.org/web/packages/GEmetrics/index.html" class="software-link" target="_blank">
-                        <i data-lucide="package" style="width: 14px; height: 14px;"></i>
-                        CRAN
-                    </a>
-                    <a href="https://github.com/TheRocinante-lab/GEmetrics" class="software-link" target="_blank">
-                        <i data-lucide="github" style="width: 14px; height: 14px;"></i>
-                        GitHub
-                    </a>
-                </div>
-            </div>
-
-            <div class="software-card">
-                <div class="software-year">2021</div>
-                <div class="software-info">
-                    <h3><span>TrainSel:</span> Training Population Selection</h3>
-                    <p class="software-authors">Deniz Akdemir, Julio Isidro y Sánchez</p>
-                    <p class="software-desc">R package for optimization tasks in training set selection using metaheuristics like simulated annealing and genetic algorithms to find the best subset within the whole training set.</p>
-                </div>
-                <div class="software-links">
-                    <a href="https://github.com/TheRocinante-lab/TrainSel" class="software-link" target="_blank">
-                        <i data-lucide="github" style="width: 14px; height: 14px;"></i>
-                        GitHub
-                    </a>
-                    <a href="https://doi.org/10.3389/fgene.2021.655287" class="software-link" target="_blank">
-                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
-                        Paper
-                    </a>
-                </div>
-            </div>
-
-            <div class="software-card">
-                <div class="software-year">2020</div>
-                <div class="software-info">
-                    <h3><span>CovCombR:</span> Combine Covariance Matrices</h3>
-                    <p class="software-authors">Deniz Akdemir, Mohamed Somo, Julio Isidro Sánchez</p>
-                    <p class="software-desc">Combine partial covariance matrices using a Wishart-EM algorithm for independent trials, multi-view relationship data from genomic experiments, and Gaussian graphs.</p>
-                </div>
-                <div class="software-links">
-                    <a href="https://github.com/cran/CovCombR" class="software-link" target="_blank">
-                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
-                        Docs
-                    </a>
-                    <a href="https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2020.00947/full" class="software-link" target="_blank">
-                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
-                        Paper
-                    </a>
-                </div>
-            </div>
-
-            <div class="software-card">
-                <div class="software-year">2016</div>
-                <div class="software-info">
-                    <h3><span>GenomicMating:</span> Efficient Breeding</h3>
-                    <p class="software-authors">Deniz Akdemir, Julio Isidro Sánchez, Hanna Haikka, Itaraju Baracuhy Brum</p>
-                    <p class="software-desc">Implements the mate selection approach for efficient breeding by genomic mating, as published in Frontiers in Genetics.</p>
-                </div>
-                <div class="software-links">
-                    <a href="https://cran.r-project.org/src/contrib/Archive/GenomicMating/" class="software-link" target="_blank">
-                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
-                        Docs
-                    </a>
-                    <a href="https://doi.org/10.3389/fgene.2016.00210" class="software-link" target="_blank">
-                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
-                        Paper
-                    </a>
-                </div>
-            </div>
-
-            <div class="software-card">
-                <div class="software-year">2015</div>
-                <div class="software-info">
-                    <h3><span>STPGA:</span> Selection by Genetic Algorithm</h3>
-                    <p class="software-authors">Deniz Akdemir</p>
-                    <p class="software-desc">Selection of Training Populations by Genetic Algorithm. Combines predictive analytics and experimental design to optimize results in high dimensional prediction problems.</p>
-                </div>
-                <div class="software-links">
-                    <a href="https://cran.r-project.org/web/packages/STPGA/STPGA.pdf" class="software-link" target="_blank">
-                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
-                        Docs
-                    </a>
-                    <a href="https://link.springer.com/article/10.1186/s12711-015-0116-6" class="software-link" target="_blank">
-                        <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
-                        Paper
-                    </a>
-                </div>
-            </div>
+    <div class="software-grid">
+      <!-- MateR -->
+      <div class="sw-card fade-in">
+        <div>
+          <h3 class="sw-name"><em>MateR</em> — Genomic Mating Package</h3>
+          <p class="sw-tagline">Javier Fernández González · Seif Maetwally · Julio Isidro Sánchez</p>
+          <p class="sw-desc">Optimize mating plans using genomic information to maximize genetic gain, within-family variance,
+            and genetic diversity. Supports polyploids, multi-trait optimization, additive and dominance effects,
+            directional dominance, and testers.</p>
+          <div class="sw-meta">
+            <span class="sw-badge r">R</span>
+            <span class="sw-badge year">2025</span>
+          </div>
         </div>
-    </section>
-
-    <!-- Publications Section -->
-    <section id="publications">
-        <div class="section-header">
-            <div class="section-tag">Research Output</div>
-            <h2 class="section-title">Selected Publications</h2>
+        <div class="sw-links">
+          <a href="https://github.com/TheRocinante-lab/MateR" class="sw-link" target="_blank">
+            <i data-lucide="github" style="width:13px;height:13px;"></i> GitHub
+          </a>
+          <a href="https://doi.org/10.1093/genetics/iyag013" class="sw-link" target="_blank">
+            <i data-lucide="file-text" style="width:13px;height:13px;"></i> Paper
+          </a>
         </div>
+      </div>
 
-        <div class="publications-year-group">
-            <h3 class="publications-year">2026</h3>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/genetics.png" alt="Genetics">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.1093/genetics/iyag013" target="_blank">MateR: a novel genomic mating framework</a>
-                    <span>Javier Fernández-González, Seifelden M Metwally, Julio Isidro Sánchez. <em>Genetics</em>.</span>
-                </div>
-            </div>
+      <!-- GEmetrics -->
+      <div class="sw-card fade-in">
+        <div>
+          <h3 class="sw-name"><em>GEmetrics</em> — Genotype×Environment Metrics</h3>
+          <p class="sw-tagline">Simon Rio · Humberto Fanelli · Julio Isidro Sánchez</p>
+          <p class="sw-desc">Calculate BLUP of genotype-by-environment metrics: ecovalence, environmental variance,
+            Finlay–Wilkinson regression, and Lin &amp; Binns superiority measure.</p>
+          <div class="sw-meta">
+            <span class="sw-badge r">R</span>
+            <span class="sw-badge cran">CRAN</span>
+            <span class="sw-badge year">2024</span>
+          </div>
         </div>
-
-        <div class="publications-year-group">
-            <h3 class="publications-year">2025</h3>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/BMC.png" alt="BMC Genomics">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.1186/s12864-025-12174-9" target="_blank">Integrating host–pathogen interaction genomics to boost wheat defense against septoria tritici blotch</a>
-                    <span>Alejandro Domínguez-Rondón et al. <em>BMC Genomics</em>.</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/plant_genome.PNG" alt="The Plant Genome">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.1002/tpg2.70124" target="_blank">Mapping novel yellow and leaf rust loci and predicting resistance in cross derived Canadian durum wheat</a>
-                    <span>Menor de Gaspar, J. et al. <em>The Plant Genome</em>.</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/TAG.PNG" alt="TAG">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.1007/s00122-025-04861-8" target="_blank">Maximizing the accuracy of genetic variance estimation</a>
-                    <span>Fernández-González, J., Isidro y Sánchez, J. <em>Theoretical and Applied Genetics</em>.</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/plos_one.png" alt="PLOS ONE">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.1371/journal.pone.0312122" target="_blank">Phenotypic plasticity of bread wheat contributes to yield reliability under heat and drought stress</a>
-                    <span>Jatinder Singh Sangha et al. <em>PLOS ONE</em>.</span>
-                </div>
-            </div>
+        <div class="sw-links">
+          <a href="https://cran.r-project.org/web/packages/GEmetrics/index.html" class="sw-link" target="_blank">
+            <i data-lucide="package" style="width:13px;height:13px;"></i> CRAN
+          </a>
+          <a href="https://github.com/TheRocinante-lab/GEmetrics" class="sw-link" target="_blank">
+            <i data-lucide="github" style="width:13px;height:13px;"></i> GitHub
+          </a>
         </div>
+      </div>
 
-        <div class="publications-year-group">
-            <h3 class="publications-year">2024</h3>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/Plant-Methods.png" alt="Plant Methods">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.1186/s13007-024-01318-9" target="_blank">Optimizing fully-efficient two-stage models for genomic selection using open-source software</a>
-                    <span>Fernández-González, J., Isidro y Sánchez, J. <em>Plant Methods</em>.</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/Plant-Methods.png" alt="Plant Methods">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.1186/s13007-024-01151-0" target="_blank">Maximizing Efficiency in Sunflower Breeding through Historical Data Optimization</a>
-                    <span>Fernández-Gónzalez Javier et al. <em>Plant Methods</em>.</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/Nature_logo.png" alt="Nature">
-                </div>
-                <div class="pub-content">
-                    <a href="https://www.biorxiv.org/content/10.1101/2024.10.23.619697v1" target="_blank">A pangenome and pantranscriptome of hexaploid oat</a>
-                    <span>Avni R et al. <em>Nature</em>.</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/Nature_com.png" alt="Nature Communications">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.21203/rs.3.rs-5726397/v1" target="_blank">Global genomic population structure of wild and cultivated oat reveals signatures of chromosome rearrangements</a>
-                    <span>Bekele, WA et al. <em>Nature Communications</em>.</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/Horticulture.png" alt="Horticulture Research">
-                </div>
-                <div class="pub-content">
-                    <a href="https://academic.oup.com/hr/article/11/2/uhad283/7505757" target="_blank">Dissecting the Complex Genetic Basis of Pre and Post-harvest Traits in Vitis vinifera L. using GWAS</a>
-                    <span>García-Abadillo, J. et al. <em>Horticulture Research</em>.</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/agriculture.png" alt="Agriculture">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.3390/agriculture14020215" target="_blank">Assessing Genotype-by-Environment Interaction in Desi Chickpea via Bayesian Additive Main Effects</a>
-                    <span>Din, A. et al. <em>Agriculture</em>.</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/MolecularPlant.png" alt="Molecular Plant">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.1016/j.molp.2024.03.007" target="_blank">Genomic Selection in Plant Breeding: Key Factors Shaping Two Decades of Progress</a>
-                    <span>Admas Alemu Abebe et al. <em>Molecular Plant</em>.</span>
-                </div>
-            </div>
+      <!-- TrainSel -->
+      <div class="sw-card fade-in">
+        <div>
+          <h3 class="sw-name"><em>TrainSel</em> — Training Population Selection</h3>
+          <p class="sw-tagline">Deniz Akdemir · Julio Isidro y Sánchez</p>
+          <p class="sw-desc">Optimization of training set selection via metaheuristics (simulated annealing, genetic algorithms)
+            to find the best subset that maximizes predictive ability in high-dimensional problems.</p>
+          <div class="sw-meta">
+            <span class="sw-badge r">R</span>
+            <span class="sw-badge year">2021</span>
+          </div>
         </div>
-
-        <div class="publications-year-group">
-            <h3 class="publications-year">2023</h3>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/axioms-logo.png" alt="Axioms">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.3390/axioms12020161" target="_blank">Expectation Maximization Algorithm for Combining a Sample of Partially Overlapping Covariance Matrices</a>
-                    <span>Akdemir Deniz, Somo M, Isidro y Sánchez J. <em>Axioms</em>.</span>
-                </div>
-            </div>
+        <div class="sw-links">
+          <a href="https://github.com/TheRocinante-lab/TrainSel" class="sw-link" target="_blank">
+            <i data-lucide="github" style="width:13px;height:13px;"></i> GitHub
+          </a>
+          <a href="https://doi.org/10.3389/fgene.2021.655287" class="sw-link" target="_blank">
+            <i data-lucide="file-text" style="width:13px;height:13px;"></i> Paper
+          </a>
         </div>
+      </div>
 
-        <div class="publications-year-group">
-            <h3 class="publications-year">2022</h3>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/GS_book.png" alt="Book">
-                </div>
-                <div class="pub-content">
-                    <a href="https://www.taylorfrancis.com/chapters/edit/10.1201/9781003214991-2" target="_blank">Hands on Training Optimization in Genomic Selection</a>
-                    <span>Julio Isidro Sánchez, Simon Rio, Deniz Akdemir. <em>Genomic Selection Book</em>.</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/TAG.PNG" alt="TAG">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.1007/s00122-023-04265-6" target="_blank">A comparison of methods for training population optimization in genomic selection</a>
-                    <span>Javier Fernández-González, Deniz Akdemir, Isidro y Sánchez J. <em>Theoretical and Applied Genetics</em>.</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/TAG.PNG" alt="TAG">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.1007/s00122-022-04202-z" target="_blank">GWAS and genomic prediction of resistance to stripe rust in Central European winter wheat</a>
-                    <span>Fahimeh Shahinnia et al, Isidro y Sánchez J. <em>Theoretical and Applied Genetics</em>.</span>
-                </div>
-            </div>
+      <!-- CovCombR -->
+      <div class="sw-card fade-in">
+        <div>
+          <h3 class="sw-name"><em>CovCombR</em> — Combine Covariance Matrices</h3>
+          <p class="sw-tagline">Deniz Akdemir · Mohamed Somo · Julio Isidro Sánchez</p>
+          <p class="sw-desc">Combines partial covariance matrices using a Wishart-EM algorithm for independent trials,
+            multi-view relationship data from genomic experiments, and Gaussian graphs.</p>
+          <div class="sw-meta">
+            <span class="sw-badge r">R</span>
+            <span class="sw-badge year">2020</span>
+          </div>
         </div>
-
-        <div class="publications-year-group">
-            <h3 class="publications-year">2021</h3>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/TAG.PNG" alt="TAG">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.1007/s00122-021-03972-2" target="_blank">Assessment of genomic prediction reliability and optimization of experimental designs in multi-environment trials</a>
-                    <span>Rio S, Akdemir D, Carvalho T, Isidro y Sánchez J. <em>Theoretical and Applied Genetics</em>.</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/frontiers_plant_science.png" alt="Frontiers">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.3389/fpls.2021.715910" target="_blank">Training set optimization for sparse phenotyping in genomic selection</a>
-                    <span>Isidro y Sánchez J, Deniz Akdemir. <em>Frontiers in Plant Science</em>.</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/TAG.PNG" alt="TAG">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.1007/s00122-021-03916-w" target="_blank">Genomic prediction and training set optimization in a structured Mediterranean oat population</a>
-                    <span>Rio S et al, Isidro y Sánchez J. <em>Theoretical and Applied Genetics</em>.</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/frontiers_plant_science.png" alt="Frontiers">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.3389/fgene.2021.655287" target="_blank">TrainSel: an R package for selection of training populations</a>
-                    <span>Akdemir D, Rio S, Isidro y Sánchez J. <em>Frontiers in Genetics</em>.</span>
-                </div>
-            </div>
+        <div class="sw-links">
+          <a href="https://github.com/cran/CovCombR" class="sw-link" target="_blank">
+            <i data-lucide="github" style="width:13px;height:13px;"></i> Docs
+          </a>
+          <a href="https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2020.00947/full" class="sw-link" target="_blank">
+            <i data-lucide="file-text" style="width:13px;height:13px;"></i> Paper
+          </a>
         </div>
+      </div>
 
-        <div class="publications-year-group">
-            <h3 class="publications-year">2020</h3>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/plant_genome.PNG" alt="The Plant Genome">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.1002/tpg2.20023" target="_blank">Genome‐wide association mapping of Fusarium langsethiae infection in oat</a>
-                    <span>Isidro y Sánchez J et al. <em>The Plant Genome</em>.</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/frontiers_plant_science.png" alt="Frontiers">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.3389/fpls.2020.00947" target="_blank">Combining Partially Overlapping MultiOmics Data in Databases Using Relationship Matrices</a>
-                    <span>Akdemir D, Knox R, Isidro-Sánchez J. <em>Frontiers in Plant Science</em>.</span>
-                </div>
-            </div>
+      <!-- GenomicMating -->
+      <div class="sw-card fade-in">
+        <div>
+          <h3 class="sw-name"><em>GenomicMating</em> — Efficient Breeding</h3>
+          <p class="sw-tagline">Deniz Akdemir · Julio Isidro Sánchez · Hanna Haikka · Itaraju Baracuhy Brum</p>
+          <p class="sw-desc">Implements the mate selection approach for efficient breeding by genomic mating,
+            as published in Frontiers in Genetics (2016).</p>
+          <div class="sw-meta">
+            <span class="sw-badge r">R</span>
+            <span class="sw-badge year">2016</span>
+          </div>
         </div>
+        <div class="sw-links">
+          <a href="https://cran.r-project.org/src/contrib/Archive/GenomicMating/" class="sw-link" target="_blank">
+            <i data-lucide="file-text" style="width:13px;height:13px;"></i> Docs
+          </a>
+          <a href="https://doi.org/10.3389/fgene.2016.00210" class="sw-link" target="_blank">
+            <i data-lucide="file-text" style="width:13px;height:13px;"></i> Paper
+          </a>
+        </div>
+      </div>
 
-        <div class="publications-year-group">
-            <h3 class="publications-year">Earlier</h3>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/frontiers_genetics.png" alt="Frontiers">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.3389/fgene.2016.00210" target="_blank">Efficient Breeding by Genomic Mating</a>
-                    <span>Akdemir D, Isidro y Sánchez J. <em>Frontiers in Genetics</em> (2016).</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/TAG.PNG" alt="TAG">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.1007/s00122-014-2418-4" target="_blank">Training set optimization under population structure in genomic selection</a>
-                    <span>Isidro y Sánchez J et al. <em>Theoretical and Applied Genetics</em> (2015).</span>
-                </div>
-            </div>
-            <div class="publication-item">
-                <div class="pub-image">
-                    <img src="assets/img/portfolio/journal/annals_botany.PNG" alt="Annals of Botany">
-                </div>
-                <div class="pub-content">
-                    <a href="https://doi.org/10.1093/aob/mcr063" target="_blank">Changes duration of developmental phases of durum wheat caused by breeding in Spain and Italy</a>
-                    <span>Isidro y Sánchez J et al. <em>Annals of Botany</em> (2011).</span>
-                </div>
-            </div>
-            
-            <a href="https://scholar.google.com/citations?user=intwMKoAAAAJ&hl=en" class="google-scholar-link" target="_blank">
-                <i data-lucide="graduation-cap" style="width: 20px; height: 20px;"></i>
-                Check the Full Publication List on Google Scholar
+      <!-- STPGA -->
+      <div class="sw-card fade-in">
+        <div>
+          <h3 class="sw-name"><em>STPGA</em> — Selection by Genetic Algorithm</h3>
+          <p class="sw-tagline">Deniz Akdemir</p>
+          <p class="sw-desc">Selection of Training Populations by Genetic Algorithm. Combines predictive analytics and
+            experimental design to optimize results in high-dimensional prediction problems.</p>
+          <div class="sw-meta">
+            <span class="sw-badge r">R</span>
+            <span class="sw-badge cran">CRAN</span>
+            <span class="sw-badge year">2015</span>
+          </div>
+        </div>
+        <div class="sw-links">
+          <a href="https://cran.r-project.org/web/packages/STPGA/STPGA.pdf" class="sw-link" target="_blank">
+            <i data-lucide="file-text" style="width:13px;height:13px;"></i> Docs
+          </a>
+          <a href="https://link.springer.com/article/10.1186/s12711-015-0116-6" class="sw-link" target="_blank">
+            <i data-lucide="file-text" style="width:13px;height:13px;"></i> Paper
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       PUBLICATIONS
+       Year-filter tabs controlled by JS below
+  ===================================================== -->
+  <section id="publications">
+    <div class="pub-header-row">
+      <div>
+        <div class="section-eyebrow">Research Output</div>
+        <h2 class="section-title">Selected Publications</h2>
+      </div>
+      <!-- Filter tabs — JS shows/hides year groups -->
+      <div class="pub-filters" role="group" aria-label="Filter by year">
+        <button class="pub-filter active" data-year="all">All</button>
+        <button class="pub-filter" data-year="2026">2026</button>
+        <button class="pub-filter" data-year="2025">2025</button>
+        <button class="pub-filter" data-year="2024">2024</button>
+        <button class="pub-filter" data-year="earlier">Earlier</button>
+      </div>
+    </div>
+
+    <div class="pub-list">
+
+      <div class="pub-year-group" data-year="2026">
+        <h3 class="pub-year-label">2026</h3>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/genetics.png" alt="Genetics" class="pub-journal-logo">
+          <div>
+            <a href="https://doi.org/10.1093/genetics/iyag013" class="pub-title" target="_blank">
+              MateR: a novel genomic mating framework
             </a>
+            <p class="pub-authors">Javier Fernández-González, Seifelden M Metwally, Julio Isidro Sánchez. <em>Genetics</em>.</p>
+          </div>
         </div>
-    </section>
-
-    <!-- Team Section -->
-    <section id="team">
-        <div class="section-header">
-            <div class="section-tag">Our People</div>
-            <h2 class="section-title">Meet the Team</h2>
-        </div>
-
-        <div class="team-groups">
-            <p class="team-label">Current Members</p>
-            <div class="team-grid">
-                <div class="team-card leader">
-                    <img src="assets/img/portfolio/team/Julio.jpg" alt="Julio Isidro y Sánchez" class="team-avatar">
-                    <h3 class="team-name">Julio Isidro y Sánchez</h3>
-                    <p class="team-role">Group Leader</p>
-                    <div class="team-links">
-                        <a href="https://orcid.org/0000-0002-9044-3221" target="_blank" title="ORCID">
-                            <i data-lucide="graduation-cap" style="width: 18px; height: 18px;"></i>
-                        </a>
-                        <a href="https://github.com/TheRocinante-lab" target="_blank" title="GitHub">
-                            <i data-lucide="github" style="width: 18px; height: 18px;"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="team-card">
-                    <img src="assets/img/portfolio/team/Juan.png" alt="Juan Martin del Menor" class="team-avatar">
-                    <h3 class="team-name">Juan Martin del Menor</h3>
-                    <p class="team-role">PhD Student</p>
-                    <div class="team-links">
-                        <a href="https://www.linkedin.com/in/juan-martin-del-menor/" target="_blank" title="LinkedIn">
-                            <i data-lucide="linkedin" style="width: 18px; height: 18px;"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="team-card">
-                    <img src="assets/img/portfolio/team/Alejandro.png" alt="Alejandro Dominguez" class="team-avatar">
-                    <h3 class="team-name">Alejandro Dominguez</h3>
-                    <p class="team-role">PhD Student</p>
-                    <div class="team-links">
-                        <a href="https://www.linkedin.com/in/alejandro-domínguez-rondón-378014265/" target="_blank" title="LinkedIn">
-                            <i data-lucide="linkedin" style="width: 18px; height: 18px;"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="team-card">
-                    <img src="assets/img/portfolio/team/Saif.png" alt="Seifelden Metwally" class="team-avatar">
-                    <h3 class="team-name">Seifelden Metwally</h3>
-                    <p class="team-role">PhD Student</p>
-                    <div class="team-links">
-                        <a href="https://www.linkedin.com/in/metwallys/" target="_blank" title="LinkedIn">
-                            <i data-lucide="linkedin" style="width: 18px; height: 18px;"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="team-card">
-                    <img src="assets/img/portfolio/team/Ines.png" alt="Inés Vegas Lorenzo" class="team-avatar">
-                    <h3 class="team-name">Inés Vegas Lorenzo</h3>
-                    <p class="team-role">Technician</p>
-                </div>
-
-                <div class="team-card">
-                    <img src="assets/img/portfolio/team/naomi.png" alt="Naomi López Angulo" class="team-avatar">
-                    <h3 class="team-name">Naomi López Angulo</h3>
-                    <p class="team-role">Technician</p>
-                </div>
-
-                <div class="team-card">
-                    <img src="assets/img/portfolio/team/Angela.png" alt="Angela Cardozo" class="team-avatar">
-                    <h3 class="team-name">Angela Cardozo</h3>
-                    <p class="team-role">Technician</p>
-                </div>
-            </div>
-
-            <p class="team-label">Alumni</p>
-            <div class="alumni-grid">
-                <div class="alumni-card">
-                    <img src="assets/img/portfolio/team/javier.png" alt="Javier Fernández González" class="alumni-avatar">
-                    <h4 class="alumni-name">Javier Fernández González</h4>
-                    <p class="alumni-position">Researcher</p>
-                    <div class="alumni-links">
-                        <a href="https://www.linkedin.com/in/javier-fern%C3%A1ndez-gonz%C3%A1lez-22bb681bb/" target="_blank">
-                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="alumni-card">
-                    <img src="assets/img/portfolio/team/julian.PNG" alt="Julián García-Abadillo" class="alumni-avatar">
-                    <h4 class="alumni-name">Julián García-Abadillo</h4>
-                    <p class="alumni-position">University of Florida</p>
-                    <div class="alumni-links">
-                        <a href="https://www.linkedin.com/in/garcia-abadillo-velasco/" target="_blank">
-                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="alumni-card">
-                    <img src="assets/img/portfolio/team/Mohsen.png" alt="Mohsen Yoosefzadeh" class="alumni-avatar">
-                    <h4 class="alumni-name">Mohsen Yoosefzadeh</h4>
-                    <p class="alumni-position">University of Guelph</p>
-                    <div class="alumni-links">
-                        <a href="https://www.linkedin.com/in/mohsen-yoosefzadeh-n-82365bb2/" target="_blank">
-                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="alumni-card">
-                    <img src="assets/img/portfolio/team/achille.png" alt="Achille Nyouma" class="alumni-avatar">
-                    <h4 class="alumni-name">Achille Nyouma</h4>
-                    <p class="alumni-position">University of Yaoundé</p>
-                    <div class="alumni-links">
-                        <a href="https://www.linkedin.com/in/achille-nyouma-683aa112a/" target="_blank">
-                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="alumni-card">
-                    <img src="assets/img/portfolio/team/humberto.png" alt="Humberto Fanelli Carvalho" class="alumni-avatar">
-                    <h4 class="alumni-name">Humberto Fanelli</h4>
-                    <p class="alumni-position">Bayer</p>
-                    <div class="alumni-links">
-                        <a href="https://es.linkedin.com/in/humbertofanellicarvalho" target="_blank">
-                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="alumni-card">
-                    <img src="assets/img/portfolio/team/Stacy.png" alt="Stacy Roose" class="alumni-avatar">
-                    <h4 class="alumni-name">Stacy Roose</h4>
-                    <p class="alumni-position">PhD in INRA</p>
-                    <div class="alumni-links">
-                        <a href="https://www.linkedin.com/in/stacy-rousse-561506171/" target="_blank">
-                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="alumni-card">
-                    <img src="assets/img/portfolio/team/deniz.jpg" alt="Deniz Akdemir" class="alumni-avatar">
-                    <h4 class="alumni-name">Deniz Akdemir</h4>
-                    <p class="alumni-position">Be The Match</p>
-                </div>
-                <div class="alumni-card">
-                    <img src="assets/img/portfolio/team/simon.jpg" alt="Simon Rio" class="alumni-avatar">
-                    <h4 class="alumni-name">Simon Rio</h4>
-                    <p class="alumni-position">CIRAD, Montpellier</p>
-                </div>
-                <div class="alumni-card">
-                    <img src="assets/img/portfolio/team/BleckTita.png" alt="Bleck Tita" class="alumni-avatar">
-                    <h4 class="alumni-name">Bleck Tita</h4>
-                    <p class="alumni-position">Data Scientist</p>
-                    <div class="alumni-links">
-                        <a href="https://www.linkedin.com/in/blecktita/" target="_blank">
-                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="alumni-card">
-                    <img src="assets/img/portfolio/team/Pablo.png" alt="Pablo Atienza Lopez" class="alumni-avatar">
-                    <h4 class="alumni-name">Pablo Atienza Lopez</h4>
-                    <p class="alumni-position">Bioinformatics</p>
-                    <div class="alumni-links">
-                        <a href="https://www.linkedin.com/in/pablo-atienza-lopez/" target="_blank">
-                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="alumni-card">
-                    <img src="assets/img/portfolio/team/Kane.png" alt="Kane D'Arcy Cusack" class="alumni-avatar">
-                    <h4 class="alumni-name">Kane D'Arcy Cusack</h4>
-                    <p class="alumni-position">Agronomy Manager</p>
-                    <div class="alumni-links">
-                        <a href="https://www.linkedin.com/in/kane-d-arcy-cusack-ab0a771a7/" target="_blank">
-                            <i data-lucide="linkedin" style="width: 14px; height: 14px;"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Teaching Section -->
-    <section id="teaching">
-        <div class="section-header">
-            <div class="section-tag">Education</div>
-            <h2 class="section-title">Teaching & Training</h2>
-        </div>
-
-        <div class="teaching-list">
-            <div class="teaching-item">
-                <div class="teaching-year">Recurring</div>
-                <div class="teaching-content">
-                    <h3>Quantitative Genetics and Plant Breeding</h3>
-                    <p>Graduate-level courses on statistical methods in plant breeding, genomic selection theory, and practical applications in R.</p>
-                </div>
-            </div>
-            <div class="teaching-item">
-                <div class="teaching-year">Workshops</div>
-                <div class="teaching-content">
-                    <h3>Genomic Selection Training Workshops</h3>
-                    <p>Hands-on training in genomic prediction methods, GBLUP, and training population optimization using our software tools.</p>
-                </div>
-            </div>
-            <div class="teaching-item">
-                <div class="teaching-year">Supervision</div>
-                <div class="teaching-content">
-                    <h3>PhD & MSc Student Supervision</h3>
-                    <p>Mentoring graduate students in quantitative genetics, bioinformatics, and computational breeding.</p>
-                </div>
-            </div>
-        </div>
-
-        <p class="teaching-resources-label">Teaching Resources</p>
-        <div class="teaching-resources">
-            <a href="assets/img/portfolio/Teaching_material/Presentations/" class="teaching-folder">
-                <img src="assets/img/portfolio/Pics/presentations.png" alt="Presentations" class="teaching-folder-img">
-                <span>Presentations</span>
-                <small>Slides & PPT files</small>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/plant_genome.png" alt="The Plant Genome" class="pub-journal-logo">
+          <div>
+            <a href="https://acsess.onlinelibrary.wiley.com/doi/epdf/10.1002/tpg2.70237" class="pub-title" target="_blank">
+              Phenotypic and genetic resistance to Septoria blotch disease in European wheat varieties
             </a>
-            <a href="assets/img/portfolio/Teaching_material/Quantitative Genetics/" class="teaching-folder">
-                <img src="assets/img/portfolio/Pics/QGenetics.png" alt="Quantitative Genetics" class="teaching-folder-img">
-                <span>Quantitative Genetics</span>
-                <small>Course materials</small>
+            <p class="pub-authors">Conor Copeland, Julio Isidro y Sánchez, Humberto Fanelli, Fiona M. Doohan. <em>The Plant Genome</em>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-year-group" data-year="2025">
+        <h3 class="pub-year-label">2025</h3>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/BMC.png" alt="BMC Genomics" class="pub-journal-logo">
+          <div>
+            <a href="https://doi.org/10.1186/s12864-025-12174-9" class="pub-title" target="_blank">
+              Integrating host–pathogen interaction genomics to boost wheat defense against septoria tritici blotch
             </a>
-            <a href="assets/img/portfolio/Teaching_material/WorkBooks/" class="teaching-folder">
-                <img src="assets/img/portfolio/Pics/workbook.png" alt="WorkBooks" class="teaching-folder-img">
-                <span>WorkBooks</span>
-                <small>Exercises & PDFs</small>
+            <p class="pub-authors">Alejandro Domínguez-Rondón et al. <em>BMC Genomics</em>.</p>
+          </div>
+        </div>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/Nature_logo.png" alt="Nature" class="pub-journal-logo">
+          <div>
+            <a href="https://www.nature.com/articles/s41586-025-09676-7" class="pub-title" target="_blank">
+              A pangenome and pantranscriptome of hexaploid oat
             </a>
+            <p class="pub-authors">Avni R et al. <em>Nature</em>.</p>
+          </div>
         </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects">
-        <div class="section-header">
-            <div class="section-tag">Funded Research</div>
-            <h2 class="section-title">Research Projects</h2>
-        </div>
-
-        <div class="projects-category">
-            <h3 class="projects-category-title">European & International Grants (2015–Present)</h3>
-            <div class="project-item">
-                <h4 class="project-title">Breed-E-Omics: Genomic Approach for Sustainable Spelt Agriculture</h4>
-                <p class="project-meta">DADR-2024-029390 • 2025–2028 • PI</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">InnoVar: Next Generation Variety Testing for Improved Cropping</h4>
-                <p class="project-meta">H2020 Grant No. 818144 • 2019–2024 • Deputy WP2 Leader</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">HealthyOats: Innovation in Oat Product Development</h4>
-                <p class="project-meta">INTERREG Ireland-Wales • 2020–2023 • Project Coordinator</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">WheatSustain: Knowledge-driven Genomic Predictions for Sustainable Disease Resistance</h4>
-                <p class="project-meta">SusCrop ERA-NET • 2019–2022 • PI & WP1 Lead</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">Effect of Soil Water Content on Seedling Emergence in Small-grain Cereals</h4>
-                <p class="project-meta">European Plant Phenotyping Network (EPPN) • 2018–2020 • PI</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">Developing Multi-use Barley to Improve the Organic Irish Market</h4>
-                <p class="project-meta">Irish Research Council • 2019–2022 • PI</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">CONSUS: Crop Optimization through Sensing, Understanding & Visualization</h4>
-                <p class="project-meta">SFI Ireland • 2017–2022 • Funded Investigator</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">Oats for the Future: Deciphering Host Resistance and RNAi to Minimize Mycotoxin Contamination</h4>
-                <p class="project-meta">SFI/BBSRC • 2017–2022 • Co-PI</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">PICS: Physiology Infrastructure for Crop Stress</h4>
-                <p class="project-meta">SFI Ireland • 2016 • PI</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">CTAG: Canadian Triticum Applied Genomics</h4>
-                <p class="project-meta">Canadian Grant • 2015–2019 • Scientific Advisor</p>
-            </div>
-        </div>
-
-        <div class="projects-category">
-            <h3 class="projects-category-title">Spanish Grants (2015–Present)</h3>
-            <div class="project-item">
-                <h4 class="project-title">Combining Genomic Approaches to Study Host-Pathogen Relationships in Wheat and Septoria</h4>
-                <p class="project-meta">Consolidation CNS2024-154812 • 2025–2027 • PI</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">Genomic-Assisted Breeding for Sustainable Agriculture: A Reference Approach</h4>
-                <p class="project-meta">PID2021-123718OB-I00 • 2022–2025 • PI</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">Machine Learning Approaches Applied to Genomic-Assisted Breeding</h4>
-                <p class="project-meta">UPM-PhD Plan Propio • 2022–2026 • PI</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">Genomic-Assisted Breeding Applied to Sunflower Improvement (Syngenta)</h4>
-                <p class="project-meta">Industrial Doctorate • 2022 • PI</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">WheatRes: Identification of New Sources of Horizontal Resistance to Septoria and Rust in Durum Wheat</h4>
-                <p class="project-meta">PLEC2021-007930 • 2021–2024 • PI</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">Breeding Tools to Harness Yield Productivity by Applying Genomic Selection</h4>
-                <p class="project-meta">R&D Madrid • 2021–2023 • PI</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">Oat PanGenome Consortium</h4>
-                <p class="project-meta">International Consortium • 2020–Present • Member</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">Svevo Platinum Genome Consortium</h4>
-                <p class="project-meta">International Consortium • 2020–Present • Member</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">TRENDING_Wheat: Improving Accuracy and Efficiency of Selection for Complex Traits</h4>
-                <p class="project-meta">PID2019-109089RB-C32 • 2019–2023 • GS Implementation</p>
-            </div>
-        </div>
-
-        <div class="projects-category">
-            <h3 class="projects-category-title">Previous Projects</h3>
-            <div class="project-item">
-                <h4 class="project-title">Improving Wheat Productivity under Conditions of Abiotic Stress</h4>
-                <p class="project-meta">NRC Wheat Flagship, Canada • 2012–2017 • Postdoctoral Project</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">Identification and Selection of Traits for Biomass Production and Conversion Efficiency</h4>
-                <p class="project-meta">European Grant AGRNEX2008N0475 • 2009–2011 • Postdoctoral Project</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">IDuWUE: Improving Durum Wheat for Water-Use Efficiency and Yield Stability</h4>
-                <p class="project-meta">European Grant ICA3NCTN2002N10085 • 2002–2006 • Team Member</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">New Approaches for Improving Durum Wheat Adaptation to Mediterranean Environments</h4>
-                <p class="project-meta">Spanish Grant AGL2006-09226 • 2006–2009 • Team Member</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">Tritordeum Physiology in Mediterranean Conditions</h4>
-                <p class="project-meta">Spanish Grant AGL2005-07257 • 2005–2008 • Team Member</p>
-            </div>
-            <div class="project-item">
-                <h4 class="project-title">Multidisciplinary Approach to Durum Wheat Improvement: Integration of Ecophysiological and Molecular Techniques</h4>
-                <p class="project-meta">Spanish Grant AGL2002-04285 • 2003–2008 • PhD Project</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Funding Section -->
-    <section id="funding">
-        <div class="section-header" style="margin: 0 auto 2rem;">
-            <div class="section-tag" style="justify-content: center;">Acknowledgments</div>
-            <h2 class="section-title">Funding Sources</h2>
-        </div>
-        <p class="funding-intro">We are grateful to receive support from leading research funding organizations.</p>
-        
-        <div class="funding-grid">
-            <span class="funding-item">Agencia Estatal de Investigación (AEI)</span>
-            <span class="funding-item">CDTI</span>
-            <span class="funding-item">Syngenta</span>
-            <span class="funding-item">Spanish Ministry of Science and Innovation</span>
-            <span class="funding-item">European Union Horizon 2020</span>
-            <span class="funding-item">Severo Ochoa Program</span>
-            <span class="funding-item">Universidad Politécnica de Madrid</span>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="section-header" style="margin: 0 auto 2rem;">
-            <div class="section-tag" style="justify-content: center;">Get in Touch</div>
-            <h2 class="section-title">Contact Us</h2>
-        </div>
-        
-        <div class="contact-content">
-            <p style="color: var(--color-text-muted); margin-bottom: 2rem;">Interested in collaboration or joining the lab?</p>
-            <div class="contact-links">
-                <a href="mailto:jisidro.work@gmail.com" class="contact-link">
-                    <img src="assets/img/portfolio/Pics/email-icon.png" alt="Email" class="contact-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <div class="contact-icon-fallback" style="display:none; width:40px; height:40px; background:#2d6a4f; border-radius:8px; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">@</div>
-                    <span>Email</span>
-                </a>
-                <a href="https://github.com/TheRocinante-lab" class="contact-link" target="_blank">
-                    <img src="assets/img/portfolio/Pics/github-icon.png" alt="GitHub" class="contact-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <div class="contact-icon-fallback" style="display:none; width:40px; height:40px; background:#2d6a4f; border-radius:8px; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">GH</div>
-                    <span>GitHub</span>
-                </a>
-                <a href="https://www.cbgp.upm.es/index.php/es/informacion-cientifica/genomic-assisted-breeding" class="contact-link" target="_blank">
-                    <img src="assets/img/portfolio/Pics/cbgp-icon.png" alt="CBGP" class="contact-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <div class="contact-icon-fallback" style="display:none; width:40px; height:40px; background:#2d6a4f; border-radius:8px; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">CB</div>
-                    <span>CBGP Profile</span>
-                </a>
-                <a href="https://www.linkedin.com/in/rocinante-lab-b96351395/" class="contact-link" target="_blank">
-                    <img src="assets/img/portfolio/Pics/linkedin-icon.png" alt="LinkedIn" class="contact-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <div class="contact-icon-fallback" style="display:none; width:40px; height:40px; background:#2d6a4f; border-radius:8px; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">in</div>
-                    <span>LinkedIn</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>© 2025 The Rocinante Lab — Crop Genomics and Breeding Methods</p>
-        <div class="visitor-badge">
-            <a href="https://visitorbadge.io/status?path=therocinante-lab.github.io" target="_blank">
-                <img src="https://api.visitorbadge.io/api/visitors?path=therocinante-lab.github.io&label=VISITORS&labelColor=%23555555&countColor=%230d6efd&style=flat&initial=1000" alt="Visitor Count" />
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/plant_genome.PNG" alt="The Plant Genome" class="pub-journal-logo">
+          <div>
+            <a href="https://doi.org/10.1002/tpg2.70124" class="pub-title" target="_blank">
+              Mapping novel yellow and leaf rust loci and predicting resistance in cross derived Canadian durum wheat
             </a>
+            <p class="pub-authors">Menor de Gaspar, J. et al. <em>The Plant Genome</em>.</p>
+          </div>
         </div>
-    </footer>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/TAG.PNG" alt="TAG" class="pub-journal-logo">
+          <div>
+            <a href="https://doi.org/10.1007/s00122-025-04861-8" class="pub-title" target="_blank">
+              Maximizing the accuracy of genetic variance estimation
+            </a>
+            <p class="pub-authors">Fernández-González, J., Isidro y Sánchez, J. <em>Theoretical and Applied Genetics</em>.</p>
+          </div>
+        </div>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/plos_one.png" alt="PLOS ONE" class="pub-journal-logo">
+          <div>
+            <a href="https://doi.org/10.1371/journal.pone.0312122" class="pub-title" target="_blank">
+              Phenotypic plasticity of bread wheat contributes to yield reliability under heat and drought stress
+            </a>
+            <p class="pub-authors">Jatinder Singh Sangha et al. <em>PLOS ONE</em>.</p>
+          </div>
+        </div>
+      </div>
 
-    <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
+      <div class="pub-year-group" data-year="2024">
+        <h3 class="pub-year-label">2024</h3>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/Plant-Methods.png" alt="Plant Methods" class="pub-journal-logo">
+          <div>
+            <a href="https://doi.org/10.1186/s13007-024-01318-9" class="pub-title" target="_blank">
+              Optimizing fully-efficient two-stage models for genomic selection using open-source software
+            </a>
+            <p class="pub-authors">Fernández-González, J., Isidro y Sánchez, J. <em>Plant Methods</em>.</p>
+          </div>
+        </div>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/Plant-Methods.png" alt="Plant Methods" class="pub-journal-logo">
+          <div>
+            <a href="https://doi.org/10.1186/s13007-024-01151-0" class="pub-title" target="_blank">
+              Maximizing Efficiency in Sunflower Breeding through Historical Data Optimization
+            </a>
+            <p class="pub-authors">Fernández-Gónzalez Javier et al. <em>Plant Methods</em>.</p>
+          </div>
+        </div>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/Nature_com.png" alt="Nature Communications" class="pub-journal-logo">
+          <div>
+            <a href="https://doi.org/10.21203/rs.3.rs-5726397/v1" class="pub-title" target="_blank">
+              Global genomic population structure of wild and cultivated oat reveals signatures of chromosome rearrangements
+            </a>
+            <p class="pub-authors">Bekele, WA et al. <em>Nature Communications</em>.</p>
+          </div>
+        </div>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/Horticulture.png" alt="Horticulture Research" class="pub-journal-logo">
+          <div>
+            <a href="https://academic.oup.com/hr/article/11/2/uhad283/7505757" class="pub-title" target="_blank">
+              Dissecting the Complex Genetic Basis of Pre and Post-harvest Traits in Vitis vinifera L. using GWAS
+            </a>
+            <p class="pub-authors">García-Abadillo, J. et al. <em>Horticulture Research</em>.</p>
+          </div>
+        </div>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/MolecularPlant.png" alt="Molecular Plant" class="pub-journal-logo">
+          <div>
+            <a href="https://doi.org/10.1016/j.molp.2024.03.007" class="pub-title" target="_blank">
+              Genomic Selection in Plant Breeding: Key Factors Shaping Two Decades of Progress
+            </a>
+            <p class="pub-authors">Admas Alemu Abebe et al. <em>Molecular Plant</em>.</p>
+          </div>
+        </div>
+      </div>
 
-        // Navigation scroll effect
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+      <div class="pub-year-group" data-year="earlier">
+        <h3 class="pub-year-label">2023–2020</h3>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/axioms-logo.png" alt="Axioms" class="pub-journal-logo">
+          <div>
+            <a href="https://doi.org/10.3390/axioms12020161" class="pub-title" target="_blank">
+              Expectation Maximization Algorithm for Combining a Sample of Partially Overlapping Covariance Matrices
+            </a>
+            <p class="pub-authors">Akdemir D, Somo M, Isidro y Sánchez J. <em>Axioms</em> (2023).</p>
+          </div>
+        </div>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/TAG.PNG" alt="TAG" class="pub-journal-logo">
+          <div>
+            <a href="https://doi.org/10.1007/s00122-023-04265-6" class="pub-title" target="_blank">
+              A comparison of methods for training population optimization in genomic selection
+            </a>
+            <p class="pub-authors">Javier Fernández-González, Deniz Akdemir, Isidro y Sánchez J. <em>TAG</em> (2022).</p>
+          </div>
+        </div>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/TAG.PNG" alt="TAG" class="pub-journal-logo">
+          <div>
+            <a href="https://doi.org/10.1007/s00122-021-03972-2" class="pub-title" target="_blank">
+              Assessment of genomic prediction reliability and optimization of experimental designs in multi-environment trials
+            </a>
+            <p class="pub-authors">Rio S, Akdemir D, Carvalho T, Isidro y Sánchez J. <em>TAG</em> (2021).</p>
+          </div>
+        </div>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/frontiers_genetics.png" alt="Frontiers" class="pub-journal-logo">
+          <div>
+            <a href="https://doi.org/10.3389/fgene.2016.00210" class="pub-title" target="_blank">
+              Efficient Breeding by Genomic Mating
+            </a>
+            <p class="pub-authors">Akdemir D, Isidro y Sánchez J. <em>Frontiers in Genetics</em> (2016).</p>
+          </div>
+        </div>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/TAG.PNG" alt="TAG" class="pub-journal-logo">
+          <div>
+            <a href="https://doi.org/10.1007/s00122-014-2418-4" class="pub-title" target="_blank">
+              Training set optimization under population structure in genomic selection
+            </a>
+            <p class="pub-authors">Isidro y Sánchez J et al. <em>TAG</em> (2015).</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="https://scholar.google.com/citations?user=intwMKoAAAAJ&hl=en" class="scholar-cta" target="_blank">
+        <i data-lucide="graduation-cap" style="width:18px;height:18px;"></i>
+        Full Publication List on Google Scholar
+      </a>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       TEAM
+  ===================================================== -->
+  <section id="team">
+    <div class="team-wrap">
+      <div class="section-header">
+        <div class="section-eyebrow">Our People</div>
+        <h2 class="section-title">Meet the Team</h2>
+      </div>
+
+      <!-- PI featured card (wider, with bio) -->
+      <div class="pi-card">
+        <img src="assets/img/portfolio/team/Julio.jpg" alt="Julio Isidro y Sánchez" class="pi-avatar">
+        <div class="pi-info">
+          <h3>Julio Isidro y Sánchez</h3>
+          <p class="pi-role">Group Leader · Associate Professor</p>
+          <p>Associate Professor at Universidad Politécnica de Madrid (UPM) and Group Leader at CBGP.
+            His research focuses on quantitative genetics, genomic selection, and the development of
+            computational tools for crop improvement. He has led projects funded by the EU Horizon 2020,
+            and AEI  and with industry partners across Europe, North America and Asia.</p>
+          <div class="pi-links">
+            <a href="https://orcid.org/0000-0002-9044-3221" class="pi-link" target="_blank">
+              <i data-lucide="link" style="width:12px;height:12px;"></i> ORCID
+            </a>
+            <a href="https://scholar.google.com/citations?user=intwMKoAAAAJ&hl=en" class="pi-link" target="_blank">
+              <i data-lucide="graduation-cap" style="width:12px;height:12px;"></i> Google Scholar
+            </a>
+            <a href="https://github.com/TheRocinante-lab" class="pi-link" target="_blank">
+              <i data-lucide="github" style="width:12px;height:12px;"></i> GitHub
+            </a>
+            <a href="https://www.cbgp.upm.es/index.php/es/informacion-cientifica/genomic-assisted-breeding" class="pi-link" target="_blank">
+              <i data-lucide="building-2" style="width:12px;height:12px;"></i> CBGP Profile
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Current members grid -->
+      <p class="team-group-label">Current Members</p>
+      <div class="team-grid">
+        <div class="member-card fade-in">
+          <img src="assets/img/portfolio/team/Juan.png" alt="Juan Martin del Menor" class="member-avatar">
+          <p class="member-name">Juan Martin del Menor</p>
+          <p class="member-role">PhD Student</p>
+          <div class="member-links">
+            <a href="https://www.linkedin.com/in/juan-martin-del-menor/" target="_blank" aria-label="LinkedIn">
+              <i data-lucide="linkedin" style="width:14px;height:14px;"></i>
+            </a>
+          </div>
+        </div>
+        <div class="member-card fade-in">
+          <img src="assets/img/portfolio/team/Alejandro.png" alt="Alejandro Dominguez" class="member-avatar">
+          <p class="member-name">Alejandro Dominguez</p>
+          <p class="member-role">PhD Student</p>
+          <div class="member-links">
+            <a href="https://www.linkedin.com/in/alejandro-domínguez-rondón-378014265/" target="_blank" aria-label="LinkedIn">
+              <i data-lucide="linkedin" style="width:14px;height:14px;"></i>
+            </a>
+          </div>
+        </div>
+        <div class="member-card fade-in">
+          <img src="assets/img/portfolio/team/Saif.png" alt="Seifelden Metwally" class="member-avatar">
+          <p class="member-name">Seifelden Metwally</p>
+          <p class="member-role">PhD Student</p>
+          <div class="member-links">
+            <a href="https://www.linkedin.com/in/metwallys/" target="_blank" aria-label="LinkedIn">
+              <i data-lucide="linkedin" style="width:14px;height:14px;"></i>
+            </a>
+          </div>
+        </div>
+        <div class="member-card fade-in">
+          <img src="assets/img/portfolio/team/Juanma.png" alt="Juan Manuel Gallego Rabadan" class="member-avatar">
+          <p class="member-name">Juan Manuel Gallego Rabadan</p>
+          <p class="member-role">Master Student</p>
+        </div>
+        <div class="member-card fade-in">
+          <img src="assets/img/portfolio/team/Ines.png" alt="Inés Vegas Lorenzo" class="member-avatar">
+          <p class="member-name">Inés Vegas Lorenzo</p>
+          <p class="member-role">Technician</p>
+        </div>
+        <div class="member-card fade-in">
+          <img src="assets/img/portfolio/team/naomi.png" alt="Naomi López Angulo" class="member-avatar">
+          <p class="member-name">Naomi López Angulo</p>
+          <p class="member-role">Technician</p>
+        </div>
+        <div class="member-card fade-in">
+          <img src="assets/img/portfolio/team/Angela.png" alt="Angela Cardozo" class="member-avatar">
+          <p class="member-name">Angela Cardozo</p>
+          <p class="member-role">Technician</p>
+        </div>
+      </div>
+
+      <!-- Alumni -->
+      <p class="team-group-label" style="margin-top:3rem;">Alumni</p>
+      <div class="alumni-grid">
+        <div class="alumni-card fade-in">
+          <img src="assets/img/portfolio/team/javier.png" alt="Javier Fernández González" class="alumni-avatar">
+          <p class="alumni-name">Javier Fernández González</p>
+          <p class="alumni-where">Researcher</p>
+          <a href="https://www.linkedin.com/in/javier-fern%C3%A1ndez-gonz%C3%A1lez-22bb681bb/" class="alumni-link" target="_blank">
+            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+          </a>
+        </div>
+        <div class="alumni-card fade-in">
+          <img src="assets/img/portfolio/team/julian.PNG" alt="Julián García-Abadillo" class="alumni-avatar">
+          <p class="alumni-name">Julián García-Abadillo</p>
+          <p class="alumni-where">University of Florida</p>
+          <a href="https://www.linkedin.com/in/garcia-abadillo-velasco/" class="alumni-link" target="_blank">
+            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+          </a>
+        </div>
+        <div class="alumni-card fade-in">
+          <img src="assets/img/portfolio/team/Mohsen.png" alt="Mohsen Yoosefzadeh" class="alumni-avatar">
+          <p class="alumni-name">Mohsen Yoosefzadeh</p>
+          <p class="alumni-where">University of Guelph</p>
+          <a href="https://www.linkedin.com/in/mohsen-yoosefzadeh-n-82365bb2/" class="alumni-link" target="_blank">
+            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+          </a>
+        </div>
+        <div class="alumni-card fade-in">
+          <img src="assets/img/portfolio/team/achille.png" alt="Achille Nyouma" class="alumni-avatar">
+          <p class="alumni-name">Achille Nyouma</p>
+          <p class="alumni-where">University of Yaoundé</p>
+          <a href="https://www.linkedin.com/in/achille-nyouma-683aa112a/" class="alumni-link" target="_blank">
+            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+          </a>
+        </div>
+        <div class="alumni-card fade-in">
+          <img src="assets/img/portfolio/team/humberto.png" alt="Humberto Fanelli" class="alumni-avatar">
+          <p class="alumni-name">Humberto Fanelli</p>
+          <p class="alumni-where">Bayer</p>
+          <a href="https://es.linkedin.com/in/humbertofanellicarvalho" class="alumni-link" target="_blank">
+            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+          </a>
+        </div>
+        <div class="alumni-card fade-in">
+          <img src="assets/img/portfolio/team/Stacy.png" alt="Stacy Rousse" class="alumni-avatar">
+          <p class="alumni-name">Stacy Rousse</p>
+          <p class="alumni-where">PhD at INRA</p>
+          <a href="https://www.linkedin.com/in/stacy-rousse-561506171/" class="alumni-link" target="_blank">
+            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+          </a>
+        </div>
+        <div class="alumni-card fade-in">
+          <img src="assets/img/portfolio/team/deniz.jpg" alt="Deniz Akdemir" class="alumni-avatar">
+          <p class="alumni-name">Deniz Akdemir</p>
+          <p class="alumni-where">Be The Match</p>
+        </div>
+        <div class="alumni-card fade-in">
+          <img src="assets/img/portfolio/team/simon.jpg" alt="Simon Rio" class="alumni-avatar">
+          <p class="alumni-name">Simon Rio</p>
+          <p class="alumni-where">CIRAD, Montpellier</p>
+        </div>
+        <div class="alumni-card fade-in">
+          <img src="assets/img/portfolio/team/BleckTita.png" alt="Bleck Tita" class="alumni-avatar">
+          <p class="alumni-name">Bleck Tita</p>
+          <p class="alumni-where">Data Scientist</p>
+          <a href="https://www.linkedin.com/in/blecktita/" class="alumni-link" target="_blank">
+            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+          </a>
+        </div>
+        <div class="alumni-card fade-in">
+          <img src="assets/img/portfolio/team/Pablo.png" alt="Pablo Atienza Lopez" class="alumni-avatar">
+          <p class="alumni-name">Pablo Atienza Lopez</p>
+          <p class="alumni-where">Bioinformatics</p>
+          <a href="https://www.linkedin.com/in/pablo-atienza-lopez/" class="alumni-link" target="_blank">
+            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+          </a>
+        </div>
+        <div class="alumni-card fade-in">
+          <img src="assets/img/portfolio/team/Kane.png" alt="Kane D'Arcy Cusack" class="alumni-avatar">
+          <p class="alumni-name">Kane D'Arcy Cusack</p>
+          <p class="alumni-where">Agronomy Manager</p>
+          <a href="https://www.linkedin.com/in/kane-d-arcy-cusack-ab0a771a7/" class="alumni-link" target="_blank">
+            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       TEACHING
+  ===================================================== -->
+  <section id="teaching">
+    <div class="teaching-wrap">
+      <div class="section-header">
+        <div class="section-eyebrow">Education</div>
+        <h2 class="section-title">Teaching &amp; Training</h2>
+        <p class="section-desc">Advancing genomic selection knowledge through formal courses, international workshops, and open resources.</p>
+      </div>
+
+      <div class="teaching-items">
+        <div class="teaching-row fade-in">
+          <div class="t-type">Courses</div>
+          <div>
+            <p class="t-title">Quantitative Genetics and Plant Breeding</p>
+            <p class="t-desc">Graduate-level course on statistical methods in plant breeding, genomic selection theory, and practical applications in R. UPM, recurring.</p>
+          </div>
+        </div>
+        <div class="teaching-row fade-in">
+          <div class="t-type">Workshops</div>
+          <div>
+            <p class="t-title">Genomic Selection Training Workshops</p>
+            <p class="t-desc">Hands-on training in genomic prediction methods, GBLUP, and training population optimization using our open-source tools. Delivered internationally.</p>
+          </div>
+        </div>
+        <div class="teaching-row fade-in">
+          <div class="t-type">Supervision</div>
+          <div>
+            <p class="t-title">PhD &amp; MSc Student Supervision</p>
+            <p class="t-desc">Mentoring graduate students in quantitative genetics, bioinformatics, and computational breeding at UPM and international partner institutions.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="resources-label">Teaching Resources</p>
+      <div class="resources-grid">
+        <a href="assets/img/portfolio/Teaching_material/Presentations/" class="resource-card fade-in">
+          <img src="assets/img/portfolio/Pics/presentations.png" alt="Presentations">
+          <span class="r-title">Presentations</span>
+          <span class="r-sub">Slides &amp; PPT files</span>
+        </a>
+        <a href="assets/img/portfolio/Teaching_material/Quantitative Genetics/" class="resource-card fade-in">
+          <img src="assets/img/portfolio/Pics/QGenetics.png" alt="Quantitative Genetics">
+          <span class="r-title">Quantitative Genetics</span>
+          <span class="r-sub">Course materials</span>
+        </a>
+        <a href="assets/img/portfolio/Teaching_material/WorkBooks/" class="resource-card fade-in">
+          <img src="assets/img/portfolio/Pics/workbook.png" alt="WorkBooks">
+          <span class="r-title">WorkBooks</span>
+          <span class="r-sub">Exercises &amp; PDFs</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       PROJECTS
+       active class = currently running grant
+  ===================================================== -->
+  <section id="projects">
+    <div class="projects-wrap">
+      <div class="section-header">
+        <div class="section-eyebrow">Funded Research</div>
+        <h2 class="section-title">Research Projects</h2>
+        <p class="section-desc">
+          <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.82rem;color:var(--c-green);font-weight:600;">
+            <span style="width:12px;height:12px;background:var(--c-green);border-radius:2px;display:inline-block;"></span>
+            Green bar = active project
+          </span>
+        </p>
+      </div>
+
+      <div class="project-category">
+        <h3 class="project-cat-title">European &amp; International Grants (2015–Present)</h3>
+
+        <div class="project-item active fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">Breed-E-Omics: Genomic Approach for Sustainable Spelt Agriculture</p>
+            <div class="proj-meta">
+              <span>DADR-2024-029390</span>
+              <span>2025–2028</span>
+              <span class="proj-pi">PI</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-item fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">InnoVar: Next Generation Variety Testing for Improved Cropping</p>
+            <div class="proj-meta">
+              <span>H2020 Grant No. 818144</span>
+              <span>2019–2024</span>
+              <span class="proj-pi">Deputy WP2 Leader</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-item fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">HealthyOats: Innovation in Oat Product Development</p>
+            <div class="proj-meta">
+              <span>INTERREG Ireland–Wales</span>
+              <span>2020–2023</span>
+              <span class="proj-pi">Project Coordinator</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-item fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">WheatSustain: Knowledge-driven Genomic Predictions for Sustainable Disease Resistance</p>
+            <div class="proj-meta">
+              <span>SusCrop ERA-NET</span>
+              <span>2019–2022</span>
+              <span class="proj-pi">PI &amp; WP1 Lead</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-item fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">Effect of Soil Water Content on Seedling Emergence in Small-grain Cereals</p>
+            <div class="proj-meta">
+              <span>EPPN</span>
+              <span>2018–2020</span>
+              <span class="proj-pi">PI</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-item fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">Developing Multi-use Barley to Improve the Organic Irish Market</p>
+            <div class="proj-meta">
+              <span>Irish Research Council</span>
+              <span>2019–2022</span>
+              <span class="proj-pi">PI</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-item fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">CONSUS: Crop Optimization through Sensing, Understanding &amp; Visualization</p>
+            <div class="proj-meta">
+              <span>SFI Ireland</span>
+              <span>2017–2022</span>
+              <span class="proj-pi">Funded Investigator</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-item fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">Oats for the Future: Host Resistance and RNAi to Minimize Mycotoxin Contamination</p>
+            <div class="proj-meta">
+              <span>SFI/BBSRC</span>
+              <span>2017–2022</span>
+              <span class="proj-pi">Co-PI</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-item fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">CTAG: Canadian Triticum Applied Genomics</p>
+            <div class="proj-meta">
+              <span>Canadian Grant</span>
+              <span>2015–2019</span>
+              <span class="proj-pi">Scientific Advisor</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-category">
+        <h3 class="project-cat-title">Spanish Grants (2015–Present)</h3>
+
+        <div class="project-item active fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">Combining Genomic Approaches to Study Host-Pathogen Relationships in Wheat and Septoria</p>
+            <div class="proj-meta">
+              <span>CNS2024-154812</span>
+              <span>2025–2027</span>
+              <span class="proj-pi">PI</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-item active fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">Genomic-Assisted Breeding for Sustainable Agriculture: A Reference Approach</p>
+            <div class="proj-meta">
+              <span>PID2021-123718OB-I00</span>
+              <span>2022–2025</span>
+              <span class="proj-pi">PI</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-item active fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">Machine Learning Approaches Applied to Genomic-Assisted Breeding</p>
+            <div class="proj-meta">
+              <span>UPM-PhD Plan Propio</span>
+              <span>2022–2026</span>
+              <span class="proj-pi">PI</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-item fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">Genomic-Assisted Breeding Applied to Sunflower Improvement (Syngenta)</p>
+            <div class="proj-meta">
+              <span>Industrial Doctorate</span>
+              <span>2022</span>
+              <span class="proj-pi">PI</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-item fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">WheatRes: Identification of New Sources of Horizontal Resistance to Septoria and Rust</p>
+            <div class="proj-meta">
+              <span>PLEC2021-007930</span>
+              <span>2021–2024</span>
+              <span class="proj-pi">PI</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-item fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">Breeding Tools to Harness Yield Productivity by Applying Genomic Selection</p>
+            <div class="proj-meta">
+              <span>R&amp;D Madrid</span>
+              <span>2021–2023</span>
+              <span class="proj-pi">PI</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-item fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">Oat PanGenome Consortium</p>
+            <div class="proj-meta">
+              <span>International Consortium</span>
+              <span>2020–Present</span>
+              <span class="proj-pi">Member</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-item fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">Svevo Platinum Genome Consortium</p>
+            <div class="proj-meta">
+              <span>International Consortium</span>
+              <span>2020–Present</span>
+              <span class="proj-pi">Member</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-item fade-in">
+          <div class="proj-bar"></div>
+          <div class="proj-body">
+            <p class="proj-title">TRENDING_Wheat: Improving Accuracy and Efficiency of Selection for Complex Traits</p>
+            <div class="proj-meta">
+              <span>PID2019-109089RB-C32</span>
+              <span>2019–2023</span>
+              <span class="proj-pi">GS Implementation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       FUNDING
+  ===================================================== -->
+  <section id="funding">
+    <div class="funding-wrap">
+      <div class="section-header" style="text-align:center;">
+        <div class="section-eyebrow" style="justify-content:center;">Acknowledgments</div>
+        <h2 class="section-title">Funding Sources</h2>
+        <p class="section-desc" style="margin:0 auto;">
+          We are grateful for support from leading research funding organizations.
+        </p>
+      </div>
+      <div class="funding-grid">
+        <span class="funding-pill">Agencia Estatal de Investigación (AEI)</span>
+        <span class="funding-pill">CDTI</span>
+        <span class="funding-pill">Syngenta</span>
+        <span class="funding-pill">Spanish Ministry of Science and Innovation</span>
+        <span class="funding-pill">European Union Horizon 2020</span>
+        <span class="funding-pill">Severo Ochoa Program</span>
+        <span class="funding-pill">Universidad Politécnica de Madrid</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       CONTACT
+  ===================================================== -->
+  <section id="contact">
+    <div class="contact-wrap">
+      <div class="contact-text">
+        <div class="section-eyebrow">Get in Touch</div>
+        <h2 class="section-title">Contact Us</h2>
+        <p>Interested in scientific collaboration, industry partnerships, or joining the lab as a PhD student or postdoc? We welcome enquiries.</p>
+        <p>For prospective graduate students: please review our open projects and include a brief research statement with your enquiry.</p>
+        <address class="contact-address">
+          <strong>The Rocinante Lab</strong><br>
+          Centre for Plant Biotechnology and Genomics (CBGP)<br>
+          Universidad Politécnica de Madrid<br>
+          Campus Montegancedo, Pozuelo de Alarcón<br>
+          28223 Madrid, Spain
+        </address>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:jisidro.work@gmail.com" class="contact-card">
+          <div class="cc-icon">
+            <i data-lucide="mail" style="width:22px;height:22px;"></i>
+          </div>
+          <span>Email</span>
+        </a>
+        <a href="https://github.com/TheRocinante-lab" class="contact-card" target="_blank">
+          <div class="cc-icon">
+            <i data-lucide="github" style="width:22px;height:22px;"></i>
+          </div>
+          <span>GitHub</span>
+        </a>
+        <a href="https://www.cbgp.upm.es/index.php/es/informacion-cientifica/genomic-assisted-breeding" class="contact-card" target="_blank">
+          <div class="cc-icon">
+            <i data-lucide="building-2" style="width:22px;height:22px;"></i>
+          </div>
+          <span>CBGP Profile</span>
+        </a>
+        <a href="https://www.linkedin.com/in/rocinante-lab-b96351395/" class="contact-card" target="_blank">
+          <div class="cc-icon">
+            <i data-lucide="linkedin" style="width:22px;height:22px;"></i>
+          </div>
+          <span>LinkedIn</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       FOOTER
+  ===================================================== -->
+  <footer>
+    <a href="#" class="footer-logo">
+      The<em>Rocinante</em>Lab
+    </a>
+    <p>© 2025 The Rocinante Lab — Crop Genomics &amp; Breeding Methods · CBGP · UPM · Madrid</p>
+    <div class="visitor-badge">
+      <a href="https://visitorbadge.io/status?path=therocinante-lab.github.io" target="_blank">
+        <img src="https://api.visitorbadge.io/api/visitors?path=therocinante-lab.github.io&label=VISITORS&labelColor=%23555555&countColor=%230d6efd&style=flat&initial=1000" alt="Visitor Count">
+      </a>
+    </div>
+  </footer>
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ===================================================== -->
+  <script>
+    // Initialize Lucide SVG icons
+    lucide.createIcons();
+
+    // ---- Navbar scroll effect ----
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ---- Mobile menu toggle ----
+    document.getElementById('navToggle').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+    // Close menu when a nav link is clicked
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+
+    // ---- Publication year filter ----
+    const filterBtns = document.querySelectorAll('.pub-filter');
+    const pubGroups  = document.querySelectorAll('.pub-year-group');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Update active button
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const year = btn.dataset.year;
+        pubGroups.forEach(group => {
+          if (year === 'all' || group.dataset.year === year) {
+            group.style.display = '';
+          } else {
+            group.style.display = 'none';
+          }
         });
+      });
+    });
 
-        // Mobile menu toggle
-        function toggleMenu() {
-            document.getElementById('navLinks').classList.toggle('active');
+    // ---- Scroll-triggered fade-in animation ----
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target); // animate once
         }
+      });
+    }, { threshold: 0.08 });
 
-        // Smooth scroll for nav links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    // Close mobile menu if open
-                    document.getElementById('navLinks').classList.remove('active');
-                }
-            });
-        });
-
-        // Intersection Observer for animations
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements for scroll animations
-        document.querySelectorAll('.software-card, .team-card, .alumni-card, .publication-item, .project-item, .crop-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
+    fadeEls.forEach(el => io.observe(el));
+  </script>
+</body>
+</html>

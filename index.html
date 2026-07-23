@@ -975,6 +975,16 @@
       transition: var(--ease);
     }
     .alumni-link:hover { background: var(--c-green); color: white; }
+    /* Brand icons via inline SVG sprite (Lucide dropped its brand icons) */
+    .brand-ico { display: inline-block; vertical-align: middle; flex-shrink: 0; }
+    /* LinkedIn logo badge (Lucide dropped its brand icons) */
+    .li-badge {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+    }
 
     /* ===================================================
        TEACHING
@@ -1320,6 +1330,12 @@
 </head>
 <body>
 
+  <!-- Brand-icon sprite (Lucide dropped brand icons; these inherit currentColor) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.91 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.014 2.898-.014 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.595 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></symbol>
+  </svg>
+
   <!-- =====================================================
        NAVIGATION
   ===================================================== -->
@@ -1543,7 +1559,7 @@
         <p class="section-desc">R packages for genomic selection, mating optimization, and training set design.</p>
       </div>
       <a href="https://github.com/TheRocinante-lab" class="btn-ghost" target="_blank">
-        <i data-lucide="github" style="width:15px;height:15px;"></i>
+        <svg class="brand-ico" style="width:15px;height:15px;" aria-hidden="true"><use href="#i-github"></use></svg>
         GitHub Org
       </a>
     </div>
@@ -1564,7 +1580,7 @@
         </div>
         <div class="sw-links">
           <a href="https://github.com/TheRocinante-lab/MateR" class="sw-link" target="_blank">
-            <i data-lucide="github" style="width:13px;height:13px;"></i> GitHub
+            <svg class="brand-ico" style="width:13px;height:13px;" aria-hidden="true"><use href="#i-github"></use></svg>GitHub
           </a>
           <a href="https://doi.org/10.1093/genetics/iyag013" class="sw-link" target="_blank">
             <i data-lucide="file-text" style="width:13px;height:13px;"></i> Paper
@@ -1590,7 +1606,7 @@
             <i data-lucide="package" style="width:13px;height:13px;"></i> CRAN
           </a>
           <a href="https://github.com/TheRocinante-lab/GEmetrics" class="sw-link" target="_blank">
-            <i data-lucide="github" style="width:13px;height:13px;"></i> GitHub
+            <svg class="brand-ico" style="width:13px;height:13px;" aria-hidden="true"><use href="#i-github"></use></svg>GitHub
           </a>
         </div>
       </div>
@@ -1609,7 +1625,7 @@
         </div>
         <div class="sw-links">
           <a href="https://github.com/TheRocinante-lab/TrainSel" class="sw-link" target="_blank">
-            <i data-lucide="github" style="width:13px;height:13px;"></i> GitHub
+            <svg class="brand-ico" style="width:13px;height:13px;" aria-hidden="true"><use href="#i-github"></use></svg>GitHub
           </a>
           <a href="https://doi.org/10.3389/fgene.2021.655287" class="sw-link" target="_blank">
             <i data-lucide="file-text" style="width:13px;height:13px;"></i> Paper
@@ -1631,7 +1647,7 @@
         </div>
         <div class="sw-links">
           <a href="https://github.com/cran/CovCombR" class="sw-link" target="_blank">
-            <i data-lucide="github" style="width:13px;height:13px;"></i> Docs
+            <svg class="brand-ico" style="width:13px;height:13px;" aria-hidden="true"><use href="#i-github"></use></svg>Docs
           </a>
           <a href="https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2020.00947/full" class="sw-link" target="_blank">
             <i data-lucide="file-text" style="width:13px;height:13px;"></i> Paper
@@ -1711,6 +1727,24 @@
       <div class="pub-year-group" data-year="2026">
         <h3 class="pub-year-label">2026</h3>
         <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/plantbiotechnology.jpeg" alt="Plant Biotechnology Journal logo" class="pub-journal-logo">
+          <div>
+            <a href="https://doi.org/10.1111/pbi.70673" class="pub-title" target="_blank">
+              Durum Wheat cv. Svevo Reference Genome Rel.2.0: A Comprehensive Tool for Wheat Genomics
+            </a>
+            <p class="pub-authors">Mazzucotelli E et al. <em>Plant Biotechnology Journal</em>.</p>
+          </div>
+        </div>
+        <div class="pub-item fade-in">
+          <img src="assets/img/portfolio/journal/plant_genome.PNG" alt="The Plant Genome journal logo" class="pub-journal-logo">
+          <div>
+            <a href="https://doi.org/10.1002/tpg2.70236" class="pub-title" target="_blank">
+              Genetic control of wheat flour end-use quality and rheology by genome-wide association studies
+            </a>
+            <p class="pub-authors">Juan Menor de Gaspar, Richard D. Cuthbert, Ruan Yuefeng, Ron Knox, BinXiao Fu, Kun Wang, Jatinder S. Sangha, Samia Berraies, Brad Meyer, Firdissa E. Bokore, Julio Isidro y Sánchez. <em>The Plant Genome</em>.</p>
+          </div>
+        </div>
+        <div class="pub-item fade-in">
           <img src="assets/img/portfolio/journal/genetics.png" alt="Genetics" class="pub-journal-logo">
           <div>
             <a href="https://doi.org/10.1093/genetics/iyag013" class="pub-title" target="_blank">
@@ -1720,7 +1754,7 @@
           </div>
         </div>
         <div class="pub-item fade-in">
-          <img src="assets/img/portfolio/journal/plant_genome.png" alt="The Plant Genome" class="pub-journal-logo">
+          <img src="assets/img/portfolio/journal/plant_genome.PNG" alt="The Plant Genome journal logo" class="pub-journal-logo">
           <div>
             <a href="https://acsess.onlinelibrary.wiley.com/doi/epdf/10.1002/tpg2.70237" class="pub-title" target="_blank">
               Phenotypic and genetic resistance to Septoria blotch disease in European wheat varieties
@@ -1899,11 +1933,11 @@
         <img src="assets/img/portfolio/team/Julio.jpg" alt="Julio Isidro y Sánchez" class="pi-avatar">
         <div class="pi-info">
           <h3>Julio Isidro y Sánchez</h3>
-          <p class="pi-role">Group Leader · Associate Professor</p>
-          <p>Associate Professor at Universidad Politécnica de Madrid (UPM) and Group Leader at CBGP.
+          <p class="pi-role">Group Leader · Tenured Scientist</p>
+          <p>Tenured Scientist at Spanish National Research Council and Group Leader at CBGP.
             His research focuses on quantitative genetics, genomic selection, and the development of
             computational tools for crop improvement. He has led projects funded by the EU Horizon 2020,
-            and AEI  and with industry partners across Europe, North America and Asia.</p>
+            and AEI and with industry partners across Europe, North America and Asia.</p>
           <div class="pi-links">
             <a href="https://orcid.org/0000-0002-9044-3221" class="pi-link" target="_blank">
               <i data-lucide="link" style="width:12px;height:12px;"></i> ORCID
@@ -1912,7 +1946,7 @@
               <i data-lucide="graduation-cap" style="width:12px;height:12px;"></i> Google Scholar
             </a>
             <a href="https://github.com/TheRocinante-lab" class="pi-link" target="_blank">
-              <i data-lucide="github" style="width:12px;height:12px;"></i> GitHub
+              <svg class="brand-ico" style="width:12px;height:12px;" aria-hidden="true"><use href="#i-github"></use></svg> GitHub
             </a>
             <a href="https://www.cbgp.upm.es/index.php/es/informacion-cientifica/genomic-assisted-breeding" class="pi-link" target="_blank">
               <i data-lucide="building-2" style="width:12px;height:12px;"></i> CBGP Profile
@@ -1930,7 +1964,7 @@
           <p class="member-role">PhD Student</p>
           <div class="member-links">
             <a href="https://www.linkedin.com/in/juan-martin-del-menor/" target="_blank" aria-label="LinkedIn">
-              <i data-lucide="linkedin" style="width:14px;height:14px;"></i>
+              <img src="assets/img/portfolio/Pics/linkedin.jpeg" alt="LinkedIn" class="li-badge">
             </a>
           </div>
         </div>
@@ -1940,7 +1974,7 @@
           <p class="member-role">PhD Student</p>
           <div class="member-links">
             <a href="https://www.linkedin.com/in/alejandro-domínguez-rondón-378014265/" target="_blank" aria-label="LinkedIn">
-              <i data-lucide="linkedin" style="width:14px;height:14px;"></i>
+              <img src="assets/img/portfolio/Pics/linkedin.jpeg" alt="LinkedIn" class="li-badge">
             </a>
           </div>
         </div>
@@ -1950,28 +1984,43 @@
           <p class="member-role">PhD Student</p>
           <div class="member-links">
             <a href="https://www.linkedin.com/in/metwallys/" target="_blank" aria-label="LinkedIn">
-              <i data-lucide="linkedin" style="width:14px;height:14px;"></i>
+              <img src="assets/img/portfolio/Pics/linkedin.jpeg" alt="LinkedIn" class="li-badge">
             </a>
           </div>
         </div>
         <div class="member-card fade-in">
-          <img src="assets/img/portfolio/team/Juanma.png" alt="Juan Manuel Gallego Rabadan" class="member-avatar">
-          <p class="member-name">Juan Manuel Gallego Rabadan</p>
-          <p class="member-role">Master Student</p>
+          <img src="assets/img/portfolio/team/Habiba.png" alt="Habiba Youssef" class="member-avatar">
+          <p class="member-name">Habiba Youssef</p>
+          <p class="member-role">Master Student · CIHEAM</p>
+          <div class="member-links">
+            <a href="https://www.linkedin.com/in/habiba-youssef111998" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <img src="assets/img/portfolio/Pics/linkedin.jpeg" alt="LinkedIn" class="li-badge">
+            </a>
+          </div>
+        </div>
+        <div class="member-card fade-in">
+          <img src="assets/img/portfolio/team/Nour.png" alt="Nour Selmi" class="member-avatar">
+          <p class="member-name">Nour Selmi</p>
+          <p class="member-role">Master Student · CIHEAM</p>
+          <div class="member-links">
+            <a href="https://www.linkedin.com/in/nour-selmi-417039336" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <img src="assets/img/portfolio/Pics/linkedin.jpeg" alt="LinkedIn" class="li-badge">
+            </a>
+          </div>
+        </div>
+        <div class="member-card fade-in">
+          <img src="assets/img/portfolio/team/Gökalp.png" alt="Gökalp Karamaya" class="member-avatar">
+          <p class="member-name">Gökalp Karamaya</p>
+          <p class="member-role">Master Student · CIHEAM</p>
+          <div class="member-links">
+            <a href="https://www.linkedin.com/in/g%C3%B6kalp-karamaya-0361b3316" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <img src="assets/img/portfolio/Pics/linkedin.jpeg" alt="LinkedIn" class="li-badge">
+            </a>
+          </div>
         </div>
         <div class="member-card fade-in">
           <img src="assets/img/portfolio/team/Ines.png" alt="Inés Vegas Lorenzo" class="member-avatar">
           <p class="member-name">Inés Vegas Lorenzo</p>
-          <p class="member-role">Technician</p>
-        </div>
-        <div class="member-card fade-in">
-          <img src="assets/img/portfolio/team/naomi.png" alt="Naomi López Angulo" class="member-avatar">
-          <p class="member-name">Naomi López Angulo</p>
-          <p class="member-role">Technician</p>
-        </div>
-        <div class="member-card fade-in">
-          <img src="assets/img/portfolio/team/Angela.png" alt="Angela Cardozo" class="member-avatar">
-          <p class="member-name">Angela Cardozo</p>
           <p class="member-role">Technician</p>
         </div>
       </div>
@@ -1980,11 +2029,26 @@
       <p class="team-group-label" style="margin-top:3rem;">Alumni</p>
       <div class="alumni-grid">
         <div class="alumni-card fade-in">
+          <img src="assets/img/portfolio/team/naomi.png" alt="Naomi López Angulo" class="alumni-avatar">
+          <p class="alumni-name">Naomi López Angulo</p>
+          <p class="alumni-where">Technician</p>
+        </div>
+        <div class="alumni-card fade-in">
+          <img src="assets/img/portfolio/team/Angela.png" alt="Angela Cardozo" class="alumni-avatar">
+          <p class="alumni-name">Angela Cardozo</p>
+          <p class="alumni-where">Technician</p>
+        </div>
+        <div class="alumni-card fade-in">
+          <img src="assets/img/portfolio/team/Juanma.png" alt="Juan Manuel Gallego Rabadan" class="alumni-avatar">
+          <p class="alumni-name">Juan Manuel Gallego Rabadan</p>
+          <p class="alumni-where">Master Student</p>
+        </div>
+        <div class="alumni-card fade-in">
           <img src="assets/img/portfolio/team/javier.png" alt="Javier Fernández González" class="alumni-avatar">
           <p class="alumni-name">Javier Fernández González</p>
           <p class="alumni-where">Researcher</p>
           <a href="https://www.linkedin.com/in/javier-fern%C3%A1ndez-gonz%C3%A1lez-22bb681bb/" class="alumni-link" target="_blank">
-            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+            <img src="assets/img/portfolio/Pics/linkedin.jpeg" alt="LinkedIn" class="li-badge">
           </a>
         </div>
         <div class="alumni-card fade-in">
@@ -1992,7 +2056,7 @@
           <p class="alumni-name">Julián García-Abadillo</p>
           <p class="alumni-where">University of Florida</p>
           <a href="https://www.linkedin.com/in/garcia-abadillo-velasco/" class="alumni-link" target="_blank">
-            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+            <img src="assets/img/portfolio/Pics/linkedin.jpeg" alt="LinkedIn" class="li-badge">
           </a>
         </div>
         <div class="alumni-card fade-in">
@@ -2000,7 +2064,7 @@
           <p class="alumni-name">Mohsen Yoosefzadeh</p>
           <p class="alumni-where">University of Guelph</p>
           <a href="https://www.linkedin.com/in/mohsen-yoosefzadeh-n-82365bb2/" class="alumni-link" target="_blank">
-            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+            <img src="assets/img/portfolio/Pics/linkedin.jpeg" alt="LinkedIn" class="li-badge">
           </a>
         </div>
         <div class="alumni-card fade-in">
@@ -2008,7 +2072,7 @@
           <p class="alumni-name">Achille Nyouma</p>
           <p class="alumni-where">University of Yaoundé</p>
           <a href="https://www.linkedin.com/in/achille-nyouma-683aa112a/" class="alumni-link" target="_blank">
-            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+            <img src="assets/img/portfolio/Pics/linkedin.jpeg" alt="LinkedIn" class="li-badge">
           </a>
         </div>
         <div class="alumni-card fade-in">
@@ -2016,7 +2080,7 @@
           <p class="alumni-name">Humberto Fanelli</p>
           <p class="alumni-where">Bayer</p>
           <a href="https://es.linkedin.com/in/humbertofanellicarvalho" class="alumni-link" target="_blank">
-            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+            <img src="assets/img/portfolio/Pics/linkedin.jpeg" alt="LinkedIn" class="li-badge">
           </a>
         </div>
         <div class="alumni-card fade-in">
@@ -2024,7 +2088,7 @@
           <p class="alumni-name">Stacy Rousse</p>
           <p class="alumni-where">PhD at INRA</p>
           <a href="https://www.linkedin.com/in/stacy-rousse-561506171/" class="alumni-link" target="_blank">
-            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+            <img src="assets/img/portfolio/Pics/linkedin.jpeg" alt="LinkedIn" class="li-badge">
           </a>
         </div>
         <div class="alumni-card fade-in">
@@ -2042,7 +2106,7 @@
           <p class="alumni-name">Bleck Tita</p>
           <p class="alumni-where">Data Scientist</p>
           <a href="https://www.linkedin.com/in/blecktita/" class="alumni-link" target="_blank">
-            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+            <img src="assets/img/portfolio/Pics/linkedin.jpeg" alt="LinkedIn" class="li-badge">
           </a>
         </div>
         <div class="alumni-card fade-in">
@@ -2050,7 +2114,7 @@
           <p class="alumni-name">Pablo Atienza Lopez</p>
           <p class="alumni-where">Bioinformatics</p>
           <a href="https://www.linkedin.com/in/pablo-atienza-lopez/" class="alumni-link" target="_blank">
-            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+            <img src="assets/img/portfolio/Pics/linkedin.jpeg" alt="LinkedIn" class="li-badge">
           </a>
         </div>
         <div class="alumni-card fade-in">
@@ -2058,7 +2122,7 @@
           <p class="alumni-name">Kane D'Arcy Cusack</p>
           <p class="alumni-where">Agronomy Manager</p>
           <a href="https://www.linkedin.com/in/kane-d-arcy-cusack-ab0a771a7/" class="alumni-link" target="_blank">
-            <i data-lucide="linkedin" style="width:12px;height:12px;"></i>
+            <img src="assets/img/portfolio/Pics/linkedin.jpeg" alt="LinkedIn" class="li-badge">
           </a>
         </div>
       </div>
@@ -2399,7 +2463,7 @@
         </a>
         <a href="https://github.com/TheRocinante-lab" class="contact-card" target="_blank">
           <div class="cc-icon">
-            <i data-lucide="github" style="width:22px;height:22px;"></i>
+            <svg class="brand-ico" style="width:22px;height:22px;" aria-hidden="true"><use href="#i-github"></use></svg>
           </div>
           <span>GitHub</span>
         </a>
@@ -2411,7 +2475,7 @@
         </a>
         <a href="https://www.linkedin.com/in/rocinante-lab-b96351395/" class="contact-card" target="_blank">
           <div class="cc-icon">
-            <i data-lucide="linkedin" style="width:22px;height:22px;"></i>
+            <svg class="brand-ico" style="width:22px;height:22px;" aria-hidden="true"><use href="#i-linkedin"></use></svg>
           </div>
           <span>LinkedIn</span>
         </a>
